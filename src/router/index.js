@@ -39,6 +39,11 @@ export default new Router({
           component: resolve => require(['@/components/brglpage'],resolve)
          },
          {
+          path:'grblglpage',
+          name:'grblglpage',
+          component: resolve => require(['@/components/grblglpage'],resolve)
+         },
+         {
           path:'blglpage',
           name:'blglpage',
           component: resolve => require(['@/components/blglpage'],resolve)
@@ -53,6 +58,11 @@ export default new Router({
            name:"wzqkpage",
            component: resolve => require(['@/components/wzqkpage'],resolve)
          }
+         ,{
+          path:'yytjpage',
+          name:"yytjpage",
+          component: resolve => require(['@/components/yytjpage'],resolve)
+        }
        ]
     }
   ]
