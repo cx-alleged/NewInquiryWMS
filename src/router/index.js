@@ -44,6 +44,11 @@ export default new Router({
           component: resolve => require(['@/components/brxxpage'],resolve)
          },
          {
+          path:'wjxxpage',
+          name:'wjxxpage',
+          component: resolve => require(['@/components/wjxxpage'],resolve)
+         },
+         {
           path:'grblglpage',
           name:'grblglpage',
           component: resolve => require(['@/components/grblglpage'],resolve)
