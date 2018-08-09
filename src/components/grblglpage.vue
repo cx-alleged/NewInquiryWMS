@@ -19,7 +19,7 @@
             <el-table-column
                 type="selection"
                 width="96">
-                </el-table-column>
+            </el-table-column>
             <el-table-column
             prop="name"
             label="姓名"

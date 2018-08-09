@@ -15,7 +15,7 @@
             </el-date-picker>
         </div>
         <div class="search-input-item">
-            <el-input style="width:400px;margin-right:40px;" placeholder="输入关键字"></el-input>
+            <el-input style="width:435px;margin-right:40px;" placeholder="输入关键字"></el-input>
         </div>
         <div class="search-row-btn-group">
           <el-button class="btn-default btn-deault-size btn-color-blue" @click="gotoyfpage(wzqkpage)">查询</el-button>
@@ -27,11 +27,10 @@
         :header-row-class-name="headerClassname"
         :row-class-name="rowClassname"
         stripe
-        style="border:1px solid #ebeef5;overflow-y:auto;">
+        style="border:1px solid #ebeef5;overflow-y:auto;height:100%;">
         <el-table-column
-        type="index"
-        label="序号"
-        width="160">
+            type="selection"
+            width="96">
         </el-table-column>
         <el-table-column
         prop="pName"
@@ -39,30 +38,32 @@
         width="200">
         </el-table-column>
         <el-table-column
+        prop="inquiryDate"
+        label="就诊时间"
+        width="340">
+        </el-table-column>
+        <el-table-column
+        prop="gender"
+        label="性别"
+        width="130">
+        </el-table-column>
+        <el-table-column
         prop="age"
         label="年龄"
-        width="200">
+        width="130">
         </el-table-column>
         <el-table-column
-        prop="sourceArea"
-        label="来自"
-        width="360">
+        prop="residence"
+        label="来源地"
+        width="300">
         </el-table-column>
         <el-table-column
-        prop="description"
-        label="诊断"
-        width="430">
-        </el-table-column>
-        <el-table-column
-        prop="times"
-        label="第几次"
-        width="240">
-        </el-table-column>
-        <el-table-column
-        prop="amount"
-        label="付数"
-        width="240">
-       
+        label="操作"
+        width="428">
+       <template slot-scope="scope">
+            <el-button @click="handleClick(scope.row)" type="text" class="btn-font-default">查看四诊</el-button>
+            <el-button @click="gotoyfpage(scope.row,bryfpage)" type="text" class="btn-font-default">查看病历</el-button>
+       </template>
         </el-table-column>
     </el-table>
   </div>
@@ -81,14 +82,14 @@
       </el-pagination>
     </div>
     <div class="search-row-btn-group">
-       <el-button class="btn-default btn-deault-size btn-color-blue">打印</el-button>
+       <el-button class="btn-default btn-deault-size btn-color-blue">导出病历</el-button>
     </div>
   </div>
 </div> 
 </template>
 <style lang="scss">
 .blgl-container{
-    padding: 40px;
+    padding: 40px 146px;
     margin: 0px;
     height: calc(100% - 168px);
     min-height: 806px;
@@ -165,11 +166,11 @@
 
   }
   .foot-container{
-    width: 100%;
     margin-top: 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 0px 70px;
     .page-container{
       text-align: center;
       width: 768px;
@@ -233,8 +234,18 @@
       }
       .el-table__body-wrapper{
         max-height: calc(100% - 76px);
+        overflow-x: hidden;
         overflow-y:auto;
       }
+      .el-checkbox__inner{
+        width: 25px;
+        height: 25px;
+    }
+    .el-checkbox__inner::after{
+        height: 14px;
+        left: 9px;
+        top: 3px;
+    }
   }
   .el-table .headerClassname,rowClassname {
     background: #f0f9eb;
@@ -279,96 +290,107 @@
         "total": 1,
         "pages": 1,
         "list": [
-          {
-            "sequenceId": 20,
-            "pId": 20,
-            "pName": "姓名",
-            "age": 20,
-            "sourceArea": "四川成都",
-            "description": "主述",
-            "times": 20,
-            "amount": 20
-          },
-          {
-            "sequenceId": 20,
-            "pId": 20,
-            "pName": "姓名",
-            "age": 20,
-            "sourceArea": "四川成都",
-            "description": "主述",
-            "times": 20,
-            "amount": 20
-          },
-          {
-            "sequenceId": 20,
-            "pId": 20,
-            "pName": "姓名",
-            "age": 20,
-            "sourceArea": "四川成都",
-            "description": "主述",
-            "times": 20,
-            "amount": 20
-          },
-          {
-            "sequenceId": 20,
-            "pId": 20,
-            "pName": "姓名",
-            "age": 20,
-            "sourceArea": "四川成都",
-            "description": "主述",
-            "times": 20,
-            "amount": 20
-          },
-          {
-            "sequenceId": 20,
-            "pId": 20,
-            "pName": "姓名",
-            "age": 20,
-            "sourceArea": "四川成都",
-            "description": "主述",
-            "times": 20,
-            "amount": 20
-          },
-          {
-            "sequenceId": 20,
-            "pId": 20,
-            "pName": "姓名",
-            "age": 20,
-            "sourceArea": "四川成都",
-            "description": "主述",
-            "times": 20,
-            "amount": 20
-          },
-          {
-            "sequenceId": 20,
-            "pId": 20,
-            "pName": "姓名",
-            "age": 20,
-            "sourceArea": "四川成都",
-            "description": "主述",
-            "times": 20,
-            "amount": 20
-          },
-          {
-            "sequenceId": 20,
-            "pId": 20,
-            "pName": "姓名",
-            "age": 20,
-            "sourceArea": "四川成都",
-            "description": "主述",
-            "times": 20,
-            "amount": 20
-          },
-          {
-            "sequenceId": 20,
-            "pId": 20,
-            "pName": "姓名",
-            "age": 20,
-            "sourceArea": "四川成都",
-            "description": "主述",
-            "times": 20,
-            "amount": 20
-          }
+            {
+            "pName": "丁克",
+            "pId": 1,
+            "inquiryDate": "2017.08.09  12:20",
+            "inquiryId": 1,
+            "gender": "男",
+            "residence": "中国四川成都",
+            "age": "20"
+            }
+            ,{
+            "pName": "丁克",
+            "pId": 1,
+            "inquiryDate": "2017.08.09  12:20",
+            "inquiryId": 1,
+            "gender": "男",
+            "residence": "中国四川成都",
+            "age": "20"
+            }
+            ,{
+            "pName": "丁克",
+            "pId": 1,
+            "inquiryDate": "2017.08.09  12:20",
+            "inquiryId": 1,
+            "gender": "男",
+            "residence": "中国四川成都",
+            "age": "20"
+            }
+            ,{
+            "pName": "丁克",
+            "pId": 1,
+            "inquiryDate": "2017.08.09  12:20",
+            "inquiryId": 1,
+            "gender": "男",
+            "residence": "中国四川成都",
+            "age": "20"
+            }
+            ,{
+            "pName": "丁克",
+            "pId": 1,
+            "inquiryDate": "2017.08.09  12:20",
+            "inquiryId": 1,
+            "gender": "男",
+            "residence": "中国四川成都",
+            "age": "20"
+            }
+            ,{
+            "pName": "丁克",
+            "pId": 1,
+            "inquiryDate": "2017.08.09  12:20",
+            "inquiryId": 1,
+            "gender": "男",
+            "residence": "中国四川成都",
+            "age": "20"
+            }
+            ,{
+            "pName": "丁克",
+            "pId": 1,
+            "inquiryDate": "2017.08.09  12:20",
+            "inquiryId": 1,
+            "gender": "男",
+            "residence": "中国四川成都",
+            "age": "20"
+            }
+            ,{
+            "pName": "丁克",
+            "pId": 1,
+            "inquiryDate": "2017.08.09  12:20",
+            "inquiryId": 1,
+            "gender": "男",
+            "residence": "中国四川成都",
+            "age": "20"
+            }
+
+            ,{
+            "pName": "丁克",
+            "pId": 1,
+            "inquiryDate": "2017.08.09  12:20",
+            "inquiryId": 1,
+            "gender": "男",
+            "residence": "中国四川成都",
+            "age": "20"
+            }
+            ,{
+            "pName": "丁克",
+            "pId": 1,
+            "inquiryDate": "2017.08.09  12:20",
+            "inquiryId": 1,
+            "gender": "男",
+            "residence": "中国四川成都",
+            "age": "20"
+            }
+            ,{
+            "pName": "丁克",
+            "pId": 1,
+            "inquiryDate": "2017.08.09  12:20",
+            "inquiryId": 1,
+            "gender": "男",
+            "residence": "中国四川成都",
+            "age": "20"
+            }
+
         ]
       }
       }
