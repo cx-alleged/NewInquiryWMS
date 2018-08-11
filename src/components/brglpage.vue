@@ -46,7 +46,7 @@
         label="操作"
         width="659.99">
         <template slot-scope="scope">
-            <el-button @click="handleClick(scope.row)" type="text" class="btn-font-default">基本信息</el-button>
+            <el-button @click="gotoyfpage(scope.row,brxxpage)" type="text" class="btn-font-default">基本信息</el-button>
             <el-button @click="gotoyfpage(scope.row,bryfpage)" type="text" class="btn-font-default">查看药方</el-button>
             <el-button @click="gotoyfpage(scope.row,table_edit)" type="text" class="btn-font-default">新建复诊</el-button>
             <el-button type="text" class="btn-font-default bnt-font-color">移除</el-button>
@@ -69,6 +69,7 @@
   </div>
 </div> 
 </template>
+
 <style lang="scss">
 .brgl-container{
   padding: 40px;
@@ -213,8 +214,9 @@
   export default {
     data() {
       return {
+        brxxpage:"brxxpage",
         bryfpage:'bryfpage',
-        table_edit:'test',
+        table_edit:'bryfpage',
         input5:'',
         currentPage4:1,
         tableData: [{

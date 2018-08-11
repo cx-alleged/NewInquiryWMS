@@ -25,6 +25,11 @@ export default new Router({
       component: resolve => require(['@/components/no_found'],resolve)
     },
     {
+      path: '/print',
+      name: 'print',
+      component: resolve => require(['@/components/yfprintpage'],resolve)
+    },
+    {
        path:'/Index',
        component: resolve => require(['@/components/index'],resolve),
        children:[
