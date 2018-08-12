@@ -79,6 +79,18 @@ export default new Router({
           component: resolve => require(['@/components/yytjpage'],resolve)
         }
        ]
+    },
+    {
+      path:"/xindex",
+      name:"/xindex",
+      component:resolve => require(['@/components/x_index'],resolve),
+      children:[
+        {
+          path:'xhome',
+          name:'xhome',
+          component: resolve => require(['@/components/x_home'],resolve)
+        }
+      ]
     }
   ]
 })
