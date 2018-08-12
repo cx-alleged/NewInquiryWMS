@@ -89,6 +89,11 @@ export default new Router({
           path:'xhome',
           name:'xhome',
           component: resolve => require(['@/components/x_home'],resolve)
+        },
+        {
+          path:"xlist",
+          name:"xlist",
+          component:resolve => require(['@/components/x_list'],resolve)
         }
       ]
     }

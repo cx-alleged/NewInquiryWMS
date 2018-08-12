@@ -65,7 +65,7 @@
         .now-date-div{
           width: 247px;
 	        height: 40px;
-             @media screen and (min-width: 759px) {
+             @media screen and (min-width: 769px) {
                 margin-left: 50px;
              }
           span{
