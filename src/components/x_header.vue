@@ -87,8 +87,8 @@
 </style>
 
 <script>
- import picLogo from '@/assets/header/logo.png'
- import picAccount from '@/assets/header/accounts.png'
+ import picLogo from '@/assets/img/header/logo.png'
+ import picAccount from '@/assets/img/header/accounts.png'
 export default {
     name:"headervue",
     // 父组件传递选中类型参数

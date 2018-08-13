@@ -276,9 +276,9 @@
 </div>
 </template>
 <script>
-    import Logo from '@/assets/print/logo2.png'
-    import qrcode from '@/assets/print/qr_code.png'
-    import titleImg from '@/assets/print/title.png'
+    import Logo from '@/assets/img/print/logo2.png'
+    import qrcode from '@/assets/img/print/qr_code.png'
+    import titleImg from '@/assets/img/print/title.png'
     export default {
         // 父组件传递选中类型参数
         data() {

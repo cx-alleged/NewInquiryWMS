@@ -12,7 +12,8 @@ export default new Router({
     // },
     {
         path: '/',
-        component: resolve => require(['@/components/index'],resolve)
+        redirect: '/Index/xjczbr'
+        // component: resolve => require(['@/components/index'],resolve)
     },
     {
       path: '/Login',
@@ -94,6 +95,16 @@ export default new Router({
           path:"xlist",
           name:"xlist",
           component:resolve => require(['@/components/x_list'],resolve)
+        },
+        {
+         path:'brxxpage',
+         name:'brxxpage',
+         component: resolve => require(['@/components/brxxpage'],resolve)
+        },
+        {
+         path:'wjxxpage',
+         name:'wjxxpage',
+         component: resolve => require(['@/components/wjxxpage'],resolve)
         }
       ]
     }

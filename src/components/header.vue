@@ -31,103 +31,104 @@
 </template>
 
 <style lang="scss">
-    .header{
-      width: 100%;
-      height: 88px;
-      background-color: #324057;
-      border-radius: 2px;
-      display:flex;
-      flex-direction: row;
-      align-items: center;
-      .logo-icon-div{
-          width: 283px;
-          height: 38px;
-          padding-left: 44px;
-      }
-      .nav-item-div{
-        width: calc(100% - 896px);
-        height: 100%;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        ul{
-            display:inline-block;
-            widows: 100%;
-            height: 100%;
-            margin: 0px;
-            padding: 0px;
-            line-height: 88px;
-            li{
-              display: inline-block;
-              margin-right: 70px;
-              height: 88px;
-            }
-            li.selected{
-                height: 83px;
-                border-bottom: 5px solid #20a0ff;
-            }
-        }
+@import '../assets/css/head.scss';
+    // .header{
+    //   width: 100%;
+    //   height: 88px;
+    //   background-color: #324057;
+    //   border-radius: 2px;
+    //   display:flex;
+    //   flex-direction: row;
+    //   align-items: center;
+    //   .logo-icon-div{
+    //       width: 283px;
+    //       height: 38px;
+    //       padding-left: 44px;
+    //   }
+    //   .nav-item-div{
+    //     width: calc(100% - 896px);
+    //     height: 100%;
+    //     display: flex;
+    //     align-items: center;
+    //     flex-direction: column;
+    //     ul{
+    //         display:inline-block;
+    //         widows: 100%;
+    //         height: 100%;
+    //         margin: 0px;
+    //         padding: 0px;
+    //         line-height: 88px;
+    //         li{
+    //           display: inline-block;
+    //           margin-right: 70px;
+    //           height: 88px;
+    //         }
+    //         li.selected{
+    //             height: 83px;
+    //             border-bottom: 5px solid #20a0ff;
+    //         }
+    //     }
 
-        a,a:link{
-            width: auto;
-            height: 38px;
-            text-decoration:none;
-            font-family: PingFangSC-Medium;
-            font-size: 32px;
-            font-weight: normal;
-            font-stretch: normal;
-            letter-spacing: 0px;
-            color: #ffffff;
-        }
-        a:hover{
-            cursor:pointer;
-        }
-      }
-      .user-info-div{
-        width: 569px;
-        height: 100%;
-        display:flex;
-        flex-direction: row;
-        align-items: center;
-        .user-icon{
-          width: 40px;
-          height: 40px;
-          margin-right: 20px;
-        }
-        .btn-group-div{
-          width: auto;
-          height: auto;
-         span{
-            height: 40px;
-            font-family: PingFangSC-Regular;
-            font-size: 28px;
-            font-weight: normal;
-            font-stretch: normal;
-            letter-spacing: 0px;
-            color: #ffffff;
-            margin-right: 20px;
-         }
-        }
-        .now-date-div{
-          width: 247px;
-	        height: 40px;
-          margin-left: 50px;
-          span{
-            font-family: PingFangSC-Regular;
-            font-size: 28px;
-            font-weight: normal;
-            font-stretch: normal;
-            letter-spacing: 0px;
-            color: #99a9bf;
-          }
-        }
-      }
-    }
+    //     a,a:link{
+    //         width: auto;
+    //         height: 38px;
+    //         text-decoration:none;
+    //         font-family: PingFangSC-Medium;
+    //         font-size: 32px;
+    //         font-weight: normal;
+    //         font-stretch: normal;
+    //         letter-spacing: 0px;
+    //         color: #ffffff;
+    //     }
+    //     a:hover{
+    //         cursor:pointer;
+    //     }
+    //   }
+    //   .user-info-div{
+    //     width: 569px;
+    //     height: 100%;
+    //     display:flex;
+    //     flex-direction: row;
+    //     align-items: center;
+    //     .user-icon{
+    //       width: 40px;
+    //       height: 40px;
+    //       margin-right: 20px;
+    //     }
+    //     .btn-group-div{
+    //       width: auto;
+    //       height: auto;
+    //      span{
+    //         height: 40px;
+    //         font-family: PingFangSC-Regular;
+    //         font-size: 28px;
+    //         font-weight: normal;
+    //         font-stretch: normal;
+    //         letter-spacing: 0px;
+    //         color: #ffffff;
+    //         margin-right: 20px;
+    //      }
+    //     }
+    //     .now-date-div{
+    //       width: 247px;
+	//         height: 40px;
+    //       margin-left: 50px;
+    //       span{
+    //         font-family: PingFangSC-Regular;
+    //         font-size: 28px;
+    //         font-weight: normal;
+    //         font-stretch: normal;
+    //         letter-spacing: 0px;
+    //         color: #99a9bf;
+    //       }
+    //     }
+    //   }
+    // }
 </style>
 
 <script>
- import picLogo from '@/assets/header/logo.png'
- import picAccount from '@/assets/header/accounts.png'
+ import picLogo from '@/assets/img/header/logo.png'
+ import picAccount from '@/assets/img/header/accounts.png'
 export default {
     name:"headervue",
     // 父组件传递选中类型参数
