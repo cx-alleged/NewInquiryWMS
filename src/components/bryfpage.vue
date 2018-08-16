@@ -67,232 +67,21 @@
         </div>
     </div>
 </template>
+
 <style lang="scss">
-/*全局样式  主要是修改element的样式 局部样式无法修改element 组件样式 通过添加最外层的容器避免重盖*/
-.bryf-container{
-    .info-container .bqms-info-container .bqms-input-container textarea{
-        font-family: PingFangSC-Medium;
-        font-size: 34px;
-        font-weight: normal;
-        font-stretch: normal;
-        letter-spacing: 0px;
-        color: #20a0ff;
-        height: 678px;
-        padding: 30px;
-        resize: none;
-    }
-    
-    .btn-default{
-        width: 200px;
-        height: 70px;
-        border: solid 1px #20a0ff;
-        height: 70px;
-        border-radius: 8px;
-        span{
-            font-family: PingFangSC-Regular;
-            font-size: 30px;
-            font-weight: normal;
-            font-stretch: normal;
-            line-height: 23.8px;  
-            letter-spacing: 0px;
-            color: #20a0ff;
-        }
-    }
-    .btn-blue{
-        background-color:#20a0ff;
-        span{
-            color: #ffffff;
-        }
-    }
-    .btn-border-red{
-         border: solid 1px #ff4949;
-         span{
-             color: #ff4949;
-         }
-    }
-    .mainReList-container-div{
-        .btn-default{
-            width: 134px;
-            height: 70px;
-            border: solid 1px #20a0ff;
-            height: 70px;
-            background-color: #ffffff;
-            border-radius: 8px;
-                span{
-                    font-family: PingFangSC-Regular;
-                    font-size: 30px;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    line-height: 23.8px;  
-                    letter-spacing: 0px;
-                    color: #20a0ff;
-                }
-        }
-        .zf-btn-delete {
-            width: 60px;
-            height: 60px;
-            padding: 12px 12px;
-            margin-top: 5px;
-            margin-left: 18px;
-            i{
-                font-size: 30px;
-            }
-        }
-    }
-    .zf-search-info{
-        width: 100%;
-        height: 72px;
-        line-height: 72px;
-        display: flex;
-        span{
-            height: 42px;
-            font-family: PingFangSC-Medium;
-            font-size: 30px;
-            font-weight: normal;
-            font-stretch: normal;
-            letter-spacing: 0px;
-            color: #475669;
-        }
-        span[name="zfname"]{
-            min-width: 80px;
-            padding-right: 15px;
-        }
-        span:nth-child(4){
-            padding-right: 15px;
-        }
-        :nth-child(6){
-            padding-right: 20px;
-        }
-        .new-yfmc{
-            width: 215px;
-            input.el-input__inner{
-                width: 185px;
-                height: 70px;
-                border-radius: 8px;
-                border: solid 1px #c0ccda;
-                background-color: #ffffff;
-                font-family: PingFangSC-Medium;
-                font-size: 32px;
-                line-height: 32px;
-                font-weight: normal;
-                font-stretch: normal;
-                letter-spacing: 0px;
-                color: #475669;
-            }
-        }
-        .ywfs{
-            width: 80px;
-             margin: 0px 20px 0px 0px;
-             input.el-input__inner{
-                width: 80px;
-                height: 70px;
-                border-radius: 8px;
-                border: solid 1px #c0ccda;
-                background-color: #ffffff;
-                font-family: PingFangSC-Medium;
-                font-size: 32px;
-                line-height: 32px;
-                font-weight: normal;
-                font-stretch: normal;
-                letter-spacing: 0px;
-                color: #475669;
-            }
-        }
-        .ywbz{
-            width: 480px;
-            margin: 0px 20px 0px 0px;
-            input.el-input__inner{
-                height: 70px;
-                border-radius: 8px;
-                border: solid 1px #c0ccda;
-                background-color: #ffffff;
-                font-family: PingFangSC-Medium;
-                font-size: 32px;
-                line-height: 32px;
-                font-weight: normal;
-                font-stretch: normal;
-                letter-spacing: 0px;
-                color: #475669;
-            }
-        }
-        .rk-checkbox{
-            span.el-checkbox__inner{
-                width: 40px;
-                height: 40px;
-            }
-            span.el-checkbox__input.is-checked{
-                width: 40px;
-                height: 40px;
-                
-                span.el-checkbox__inner{
-                    width: 40px;
-                    height: 40px;
-                    padding-right: 0px;
-                    border-radius: 8px;
-                }
-                span.el-checkbox__inner::after{
-                    height: 23px;
-                    left: 15px;
-                    top: 4px;
-                    width: 8px;
-                    
-                }
-            }
-            span.el-checkbox__label{
-                font-family: PingFangSC-Medium;
-                font-size: 30px;
-                font-weight: normal;
-                font-stretch: normal;
-                line-height: 33.6px;
-                letter-spacing: 0px;
-                color: #475669;
-                vertical-align: middle;
-            }
-        }
-    }
-    .yf-fs-info{
-        display: flex;
-        align-items: center;
-        span{
-            font-family: PingFangSC-Medium;
-            font-size: 30px;
-            font-weight: normal;
-            font-stretch: normal;
-            letter-spacing: 0px;
-            color: #475669;
-        }
-        .yf-fs-all{
-            width: 88px;
-            height: 72px;
-            margin: 0px 20px;
-            input{
-                font-family: PingFangSC-Medium;
-                font-size: 32px;
-                line-height: 32px;
-                height: 70px;
-                border-radius: 8px;
-                font-weight: normal;
-                font-stretch: normal;
-                letter-spacing: 0px;
-                color: #475669;
-            }
-        }
-    }
-}
-
-
+    @import '../assets/css/bryfpage.scss';
 </style>
 
 <style lang="scss" scoped>
     .titile-container{
-            span{
-                font-family: PingFangSC-Medium;
-                font-size: 40px;
-                font-weight: normal;
-                font-stretch: normal;
-                letter-spacing: 0px;
-                color: #475669;
-            }
+        span{
+            font-family: PingFangSC-Medium;
+            font-size: 40px;
+            font-weight: normal;
+            font-stretch: normal;
+            letter-spacing: 0px;
+            color: #475669;
+        }
     }
     /*左侧两个文本框样式*/
     .bryf-container{
@@ -404,7 +193,6 @@ export default {
                 pName:'张三',
                 diagnoseLabels:'展示问诊问题生成的文字描述，展示问诊问题生成的文字描述，展示问诊问题生成的文字描述，展示问诊问题生成的文字描述，展示问诊问题生成的文字描述，展示问诊问题生成的文字描述，展示问诊问题生成的文字描述，展示问诊问题生成的文字描述，展示问诊问题生成的文字描述，展示问诊问题生成的文字描述',
                 description:'我患高血压20年，现在血压150/120，最高的时候190/150。头昏头痛。服降压药可以控制。我患高血压20年，现在血压150/120，最高的时候190/150。头昏头痛。服降压药可以控制。我患高血压20年，现在血压150/120，最高的时候190/150。头昏头痛。服降压药可以控制。我患高血压20年，现在血压150/120，最高的时候190/150。头昏头痛。服降压药可以控制。我患高血压20年，现在血压150/120。',
-            
             },
             mainReList: [
                 {
@@ -595,7 +383,7 @@ export default {
     ,watch: {
         mainReList: {
     　　　　handler(newValue, oldValue) {
-    　　　　　　console.log("数据已经发生改变："+newValue[0].mainMeList[6].name);
+    　　　　 console.log("数据已经发生改变："+newValue[0].mainMeList[6].name);
             console.log("原本的值为："+newValue);
     　　　　},
     　　　　deep: true

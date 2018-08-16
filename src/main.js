@@ -7,6 +7,10 @@ import router from './router'
 import store from './store/index'
 //引入axios
 import axios from 'axios'
+import '../src/assets/utils/http.js'
+//引入公共部分js
+import common from '../src/assets/utils/common.js'
+
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
@@ -19,6 +23,8 @@ Vue.use(ElementUI)
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 //定义全局变量
 Vue.prototype.$http= axios
+//定义全局属性给公共部分js
+Vue.prototype.$common = common;
 
 
 var gc = new Vue({

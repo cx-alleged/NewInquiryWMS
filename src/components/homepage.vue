@@ -1,52 +1,58 @@
 <template>
    <div class="from-container-div">
       <div class="base-form-c">
-        <el-form ref="form" :model="form" label-width="156px" label-position="left">
-          <el-form-item label="姓名">
-            <el-input v-bind:class="index-input" v-model="form.name" placeholder="请输入姓名"></el-input>
+        <el-form ref="form" :model="form" :rules="rules" label-width="156px" label-position="right">
+          <el-form-item label="姓名" prop="name">
+            <el-input class="index-input" v-model="form.pname" placeholder="请输入姓名"></el-input>
           </el-form-item>
           <el-form-item label="性别">
-             <el-radio-group v-model="form.resource">
-              <el-radio label="男"></el-radio>
-              <el-radio label="女"></el-radio>
+             <el-radio-group v-model="form.gender">
+              <el-radio label="男" value="男"></el-radio>
+              <el-radio label="女" value="女"></el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="年龄">
             <el-row>
-              <el-col :span="6"><el-input class="full-width" v-model="form.name"  placeholder="请输入"></el-input></el-col>
+              <el-col :span="6"><el-input class="full-width" v-model="form.age"  placeholder="请输入"></el-input></el-col>
               <el-col :span="18">
                 <label class="el-form-item__label" style="width: 124px;padding-left:20px;padding-right:20px;">生日</label>
-                <el-date-picker type="date" placeholder="请选择日期" v-model="form.date1" format="yyyy/MM/dd" style="width: calc(100% - 124px);"></el-date-picker>
+                <el-date-picker type="date" placeholder="请选择日期" v-model="form.birthday" format="yyyy/MM/dd" style="width: calc(100% - 124px);"></el-date-picker>
               </el-col>
             </el-row>
           </el-form-item>
           <el-form-item label="来源地">
              <el-row class="lyd">
                <el-col :span="8">
-                  <el-select v-model="form.country" style="margin-right:10px;width(100% - 10px);">
-                    <el-option label="中国" value="中国"></el-option>
-                    <el-option label="外国" value="外国"></el-option>
-                    
+                  <el-select v-model="form.country" style="margin-right:10px;width(100% - 10px);" @change="setProList">
+                    <el-option label="中国" value="0"></el-option>
+                    <el-option label="外国" value="1"></el-option>
                   </el-select>
                </el-col>
                <el-col :span="8">
-                 <el-select v-model="form.province" style="margin-right:10px;margin-left:10px;width(100% - 20px);">
-                    <el-option label="四川" value="四川"></el-option>
-                    <el-option label="四川" value="四川"></el-option>
-                    
+                 <el-select v-model="form.sourceProvince" style="margin-right:10px;margin-left:10px;width(100% - 20px);" @change="setCityList">
+                     <el-option
+                        v-for="item in province"
+                        :key="item.id"
+                        :label="item.provName"
+                        :value="item.id">
+                      </el-option>
                   </el-select>
                </el-col>
                <el-col :span="8">
-                 <el-select v-model="form.city" style="margin-left:10px;width(100% - 10px);">
-                    <el-option label="成都市" value="成都市"></el-option>
-                    <el-option label="宜宾市" value="宜宾市"></el-option>
+                 <el-select v-model="form.sourceCity" style="margin-left:10px;width(100% - 10px);">
+                    <el-option
+                        v-for="item in city"
+                        :key="item.cityId"
+                        :label="item.cityName"
+                        :value="item.cityId">
+                      </el-option>
                   </el-select>
                </el-col>
              </el-row>
           </el-form-item>
           <div class="el-form-item">
             <div class="el-form-item__content" style="height:70px;text-align:center;line-height:70px;">
-              <button type="button" class="el-button el-button--primary normal-btn-primary"><span>初诊</span></button> 
+              <button type="button" class="el-button el-button--primary normal-btn-primary" @click="czSubmit"><span>初诊</span></button> 
               <button type="button" class="el-button el-button--default normal-btn-default"><span>复诊</span></button>
             </div>
           </div>
@@ -61,164 +67,173 @@
       return {
         form: {
           country:'',
-          province:'',
-          city:'',
-          name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
+          sourceProvince:null,
+          sourceCity:null,
+          age:'',
+          pname: '',
+          birthday: '',
+          gender: '男',
+        },
+        placeDate:{},
+        country:[],
+        province:[],
+        city:[],
+        rules: {
+          name: [
+            { required: true, message: '请输入姓名', trigger: 'blur' }
+          ],
         },
         value1:"2018-07-01"
       }
     },
     created () {
+     
+    },
+    beforeMount () {
+       //获取地址请求
+      this.getPlace();
+    },
+    
+    computed: {
+        birthday() {
+    　　　　return this.form.birthday
+    　　}
+    },  
+    watch: {
+        birthday(newValue, oldValue) {
+    　　　　var age  = this.$common.GetAgeByBrithday(newValue);
+            this.form.age = age;
+    　　}
+    },
 
-          this.$http({
-            method: 'post',
-            url:"http://47.106.139.211:8081/zjmbapi/rest/commitData/010105/01",
-            data:{"cdid":"1","cdid_superadmin":"6A1AFAC58B4BE3C2E05010AC296E7BD8","cdid_resource":"6AB7B57A2A3AE957E05010AC296E1F87","yhm":"331002009","mm":"24c72134b6f5828f29fc6f316081f72b7ec31b9c"}
-          }).then((res)=>{
-            debugger
-            console.log(res.data);
-            var data_s =JSON.stringify(res.data);
-         });
-      },
     methods: {
-      input() {
-         console.log('index!');
+      //联动设置 城市 设置为外国时表单的值
+      setCityList(value){
+        //第一次遍历省份列表
+         var proNameList = this.$store.getters.gettersPlaceData.placeList;
+         this.form.sourceCity=null;
+         this.city = [];
+         for(var key in proNameList){
+           if(proNameList[key].id == value){
+             this.city = proNameList[key].cityList;
+             break;
+           }
+         }
       },
-      index() {
-         console.log('index!');
+      //联动设置 省份
+      setProList(selectvalue){
+        //依据值修改省份的下拉值
+          this.province = [];
+          this.city = [];
+          this.form.sourceProvince=null;
+          this.form.sourceCity=null;
+        if(selectvalue=="0"){
+          //代表国内 
+          var proNameList = this.$store.getters.gettersPlaceData.placeList;
+          proNameList = proNameList.slice(1,proNameList.length-1);
+          this.province = proNameList;
+        }else{
+          //国外
+          var proNameList = this.$store.getters.gettersPlaceData.placeList;
+          this.province = proNameList[0].cityList;
+        }
       },
-      onSubmit() {
-        console.log('submit!');
+      //重置外国的字段 不一致
+      updateWgzdm(proList){
+        var newList = new Array();
+        for(var key in proList){
+          var tmpObj = new Object();
+          tmpObj.id = proList[key].cityId;
+          tmpObj.provName = proList[key].cityName;
+          tmpObj.cityList = [];
+          newList.push(tmpObj);
+        }
+        return newList;
+      },
+      //获取相应的国家省份地址
+      getPlace(){
+         var placeData = this.$store.getters.gettersPlaceData;
+          if(placeData && JSON.stringify(placeData) == "{}"){
+            var _that = this;
+            this.$http.get('/index/getPlace')
+            .then(function (response) {
+              placeData = response.data;
+              placeData.placeList[0].cityList = _that.updateWgzdm(placeData.placeList[0].cityList);
+              _that.$store.dispatch("changePlaceData", placeData);
+              _that.placeDate = _that.$store.getters.gettersPlaceData;
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+          }
+      },
+      //return  false 属性有空， true时 校验通过
+      allRequired(formData){
+        var boolean_swt = true;
+          //遍历对象
+          for(var key in formData){
+            if(!formData[key] || formData[key] ==""){
+              debugger
+                if(key=='sourceCity' && formData.country=="1"){
+                  continue;
+                }
+                boolean_swt = false;
+                break;
+            }
+          }
+          return boolean_swt;
+      },
+      openSuccessMsgBox(msg){
+         this.$message({
+          message: msg,
+          type: 'success'
+        });
+      },
+      openLoading(msg){
+          const loading = this.$loading({
+          lock: true,
+          text: msg,
+          spinner: 'el-icon-loading',
+          background: 'rgba(0, 0, 0, 0.7)'
+        });
+        return loading;
+      },
+      openErrorMsgBox(msg) {
+        this.$message.error(msg);
+      },
+      czSubmit() {
+        //初诊数据提交，都必须填写 数据项校验
+        var swt_btn = this.allRequired(this.form);
+        if(!swt_btn){
+          this.openErrorMsgBox("请完整填写基本信息!");
+          return;
+        }
+        //打开加载层
+        var loading = this.openLoading("初诊中");
+        var param = this.form;
+        //特殊处理一下表单  来源为外国的数据
+        if(!param.sourceCity && param.country=="1"){
+            param.sourceCity = param.sourceProvince;
+            param.sourceProvince = param.country;
+        }
+        var _that = this;
+        this.$http.post('/index/firstDiag',param).then(function (response) {
+          if(response.code == "1"){
+            loading.close();
+            _that.openSuccessMsgBox("初诊成功，请开处方");
+            var brinfo = {id:response.data.pId};
+            //跳转组件并且 传递pid
+            _that.$common.GotoPage("bryfpage",brinfo,_that);
+          }
+        }).catch(function (error) {
+          console.log(error);
+          setTimeout(function(){loading.close(); }, 1000);
+        });
       }
     }
 }
   </script>  
 
   <style lang="scss">
-  .no-padding{
-    padding: 0px 0px;
-  }
-  .full-width{
-    width: 100%;
-  }
-  .normal-btn-primary{
-    width: 200px;
-    height: 70px;
-    background-color: #20a0ff;
-    border-radius: 8px;
-    text-align: center;
-    span{
-      width: 146px;
-      height: 24px;
-      font-family: PingFangSC-Regular;
-      font-size: 30px;
-      font-weight: normal;
-      font-stretch: normal;
-      line-height: 23.8px;
-      letter-spacing: 0px;
-      color: #ffffff;
-    }
-  }
-  .normal-btn-default{
-    width: 200px;
-    height: 70px;
-    border-radius: 8px;
-    border: solid 1px #20a0ff;
-    background-color: #ffffff;
-    text-align: center;
-    span{
-      width: 170px;
-      height: 27px;
-      font-family: PingFangSC-Regular;
-      font-size: 30px;
-      font-weight: normal;
-      font-stretch: normal;
-      line-height: 23.8px;
-      letter-spacing: 0px;
-      color: #20a0ff;
-    }
-  }
-  
-  .from-container-div{
-    width: 100%;
-    height: calc(100% - 88px);
-    margin: 0px;
-    padding: 0px;
-    display: flex;
-    flex-direction: row;
-     justify-content:center;
-      align-items: center;
-  }
-  .el-select-dropdown__item{
-      font-size: 42px;
-      height: 60px;
-      line-height:60px;
-  }
-  .base-form-c{
-    width: 736px;
-    height: auto;
-    
-    .el-form-item{
-      margin-bottom: 30px;
-
-    }
-    .el-form-item__label{
-      float: left;
-      font-family: PingFangSC-Medium;
-      font-size: 42px;
-      font-weight: normal;
-      font-stretch: normal;
-      letter-spacing: 0px;
-      color: #5e6d82;
-      padding: 0;
-      line-height: 72px;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-      padding-right: 30px;
-    }
-    .el-input__inner{
-          height: 72px;
-          line-height: 72px;
-          border-radius: 8px;
-          font-size:38px; 
-	        border: solid 1px #c0ccda;
-          color: #20a0ff;
-    }
-    .el-radio-group {
-        height: 72px;
-        display: inline-block;
-        line-height: 88px;
-        vertical-align: middle;
-        font-size: 0;
-    }
-    .el-radio__input{
-        line-height: 41px;
-    }
-    .el-radio__inner{
-          width: 27px;
-          height: 27px;
-    }
-    .el-radio__inner::after{
-       width: 10px;
-                height: 10px;
-    }
-    .el-radio__label{
-      width: 34px;
-      height: 48px;
-      font-family: PingFangSC-Regular;
-      font-size: 34px;
-      font-weight: normal;
-      font-stretch: normal;
-      letter-spacing: 0px;
-      color: #1f2d3d;
-    }
-  }
-
-</style>
+    @import '../assets/css/homepage.scss';
+  </style>
