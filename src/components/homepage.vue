@@ -173,7 +173,6 @@
           //遍历对象
           for(var key in formData){
             if(!formData[key] || formData[key] ==""){
-              debugger
                 if(key=='sourceCity' && formData.country=="1"){
                   continue;
                 }
@@ -183,47 +182,44 @@
           }
           return boolean_swt;
       },
-      openSuccessMsgBox(msg){
-         this.$message({
-          message: msg,
-          type: 'success'
+      //新增问诊获取问诊id
+      newInquiry(brid){
+        var _that = this;
+        var loading = this.$common.openLoading("新建问诊中",_that);
+        var param ={patientId:brid};
+        this.$http.post('/inquiry/newInquiry?patientId='+brid,param).then(function (response) {
+            loading.close();
+            _that.$common.openSuccessMsgBox("初诊成功，请开处方",_that);
+            var brinfo = {pId:brid,inquiryId:response.data.inquiryId};
+            //跳转组件并且 传递pid
+            _that.$common.GotoPage("bryfpage",brinfo,_that);
+        }).catch(function (error) {
+          console.log(error);
+          setTimeout(function(){loading.close(); }, 1000);
         });
       },
-      openLoading(msg){
-          const loading = this.$loading({
-          lock: true,
-          text: msg,
-          spinner: 'el-icon-loading',
-          background: 'rgba(0, 0, 0, 0.7)'
-        });
-        return loading;
-      },
-      openErrorMsgBox(msg) {
-        this.$message.error(msg);
-      },
+      //提交初访
       czSubmit() {
+         var _that = this;
         //初诊数据提交，都必须填写 数据项校验
         var swt_btn = this.allRequired(this.form);
         if(!swt_btn){
-          this.openErrorMsgBox("请完整填写基本信息!");
+          this.$common.openErrorMsgBox("请完整填写基本信息!",_that);
           return;
         }
         //打开加载层
-        var loading = this.openLoading("初诊中");
+        var loading = this.$common.openLoading("初诊中",_that);
         var param = this.form;
         //特殊处理一下表单  来源为外国的数据
         if(!param.sourceCity && param.country=="1"){
             param.sourceCity = param.sourceProvince;
             param.sourceProvince = param.country;
         }
-        var _that = this;
         this.$http.post('/index/firstDiag',param).then(function (response) {
           if(response.code == "1"){
             loading.close();
-            _that.openSuccessMsgBox("初诊成功，请开处方");
-            var brinfo = {id:response.data.pId};
-            //跳转组件并且 传递pid
-            _that.$common.GotoPage("bryfpage",brinfo,_that);
+            //新建病人信息完成，再次新增问诊信息
+            _that.newInquiry(response.data.pId);
           }
         }).catch(function (error) {
           console.log(error);

@@ -10,6 +10,8 @@ import axios from 'axios'
 import '../src/assets/utils/http.js'
 //引入公共部分js
 import common from '../src/assets/utils/common.js'
+//引入打印插件
+import Print from '../src/assets/utils/print.js'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -20,9 +22,12 @@ Vue.config.productionTip = false
    全局注册
 */
 Vue.use(ElementUI)
+//注册打印插件
+// Vue.prototype.$Print= Print;
+Vue.use(Print)
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 //定义全局变量
-Vue.prototype.$http= axios
+Vue.prototype.$http= axios;
 //定义全局属性给公共部分js
 Vue.prototype.$common = common;
 

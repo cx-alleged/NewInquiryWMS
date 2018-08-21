@@ -278,9 +278,10 @@
       },
       //跳转到药方界面
       gotoyfpage(row,pagename) {
+        var param = {pId:12,inquiryId:31};
         this.$router.push({
              name: pagename,
-             params:row
+             params:param
         });
       },
       handleSizeChange(val) {

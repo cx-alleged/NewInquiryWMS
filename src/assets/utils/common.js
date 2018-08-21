@@ -1,10 +1,33 @@
 export default{
+    //页面待参跳转
     GotoPage(pagename,param,_that) {
         _that.$router.push({
              name: pagename,
              params:param
         });
     },
+    //弹出操作成功的信息提示
+    openSuccessMsgBox(msg,_that){
+        _that.$message({
+         message: msg,
+         type: 'success'
+       });
+     },
+     //打开遮罩层
+     openLoading(msg,_that){
+         const loading = _that.$loading({
+         lock: true,
+         text: msg,
+         spinner: 'el-icon-loading',
+         background: 'rgba(0, 0, 0, 0.7)'
+       });
+       return loading;
+     },
+      //弹出操作失败的信息提示
+     openErrorMsgBox(msg,_that) {
+        _that.$message.error(msg);
+     },
+     //依据生日计算年龄
     GetAgeByBrithday:function(birthdayStr){
         var age=-1;
         var today=new Date();
