@@ -4,295 +4,295 @@ export default {
         return {
             allTotal:0,
             yfdata:{
-                "pName":"张三",
-                "inquiryId": 12,
-                "description": "这是病情描述",
+                "pName":"",
+                "inquiryId": 0,
+                "description": "",
                 "diagnoseLabel": null,
-                "age":10,
-                "gender":"男",
-                "date":"2018-07-19",
-                "address":"四川成都",
+                "age":0,
+                "gender":"",
+                "date":"",
+                "address":"",
                 mainReList: [
                     {
-                    "amount": 20,
+                    "amount": 0,
                     "isStock": true,
-                    "remarks": "主方备注",
+                    "remarks": "",
                     "mainMeList": null,
                     "recipeDetailList": [
                       {
-                        "detailId": 105,
-                        "recipeId": 34,
-                        "medicine": "白术申",
-                        "dose": 1000,
+                        "detailId": 0,
+                        "recipeId": 0,
+                        "medicine": "",
+                        "dose": 0,
                         "remark": null
                       },
                       {
-                        "detailId": 106,
-                        "recipeId": 34,
-                        "medicine": "黄芪酉",
-                        "dose": 1000,
+                        "detailId": 0,
+                        "recipeId": 0,
+                        "medicine": "0",
+                        "dose": 0,
                         "remark": null
                       },
                       {
-                        "detailId": 107,
-                        "recipeId": 34,
-                        "medicine": "紫电戌",
-                        "dose": 1000,
+                        "detailId": 0,
+                        "recipeId": 0,
+                        "medicine": "",
+                        "dose": 0,
                         "remark": null
                       },
                       {
-                        "detailId": 108,
-                        "recipeId": 34,
-                        "medicine": "青霜亥",
-                        "dose": 1000,
+                        "detailId": 0,
+                        "recipeId": 0,
+                        "medicine": "",
+                        "dose": 0,
                         "remark": null
                       },
                       {
-                        "detailId": 105,
-                        "recipeId": 34,
-                        "medicine": "白术申",
-                        "dose": 1000,
+                        "detailId": 0,
+                        "recipeId": 0,
+                        "medicine": "",
+                        "dose": 0,
                         "remark": null
                       },
                       {
-                        "detailId": 106,
-                        "recipeId": 34,
-                        "medicine": "黄芪酉",
-                        "dose": 1000,
+                        "detailId": 0,
+                        "recipeId": 0,
+                        "medicine": "",
+                        "dose": 0,
                         "remark": null
                       },
                       {
-                        "detailId": 107,
-                        "recipeId": 34,
-                        "medicine": "紫电戌",
-                        "dose": 1000,
+                        "detailId": 0,
+                        "recipeId": 0,
+                        "medicine": "",
+                        "dose": 0,
                         "remark": null
                       },
                       {
-                        "detailId": 108,
-                        "recipeId": 34,
-                        "medicine": "青霜亥",
-                        "dose": 1000,
+                        "detailId": 0,
+                        "recipeId": 0,
+                        "medicine": "",
+                        "dose": 0,
                         "remark": null
                       },
                       {
-                        "detailId": 105,
-                        "recipeId": 34,
-                        "medicine": "白术申",
-                        "dose": 1000,
+                        "detailId": 0,
+                        "recipeId": 0,
+                        "medicine": "",
+                        "dose": 0,
                         "remark": null
                       },
                       {
-                        "detailId": 106,
-                        "recipeId": 34,
-                        "medicine": "黄芪酉",
-                        "dose": 1000,
+                        "detailId": 0,
+                        "recipeId": 0,
+                        "medicine": "",
+                        "dose": 0,
                         "remark": null
                       },
                       {
-                        "detailId": 107,
-                        "recipeId": 34,
-                        "medicine": "紫电戌",
-                        "dose": 1000,
+                        "detailId": 0,
+                        "recipeId": 0,
+                        "medicine": "",
+                        "dose": 0,
                         "remark": null
                       },
                       {
-                        "detailId": 108,
-                        "recipeId": 34,
-                        "medicine": "青霜亥",
-                        "dose": 1000,
+                        "detailId": 0,
+                        "recipeId": 0,
+                        "medicine": "",
+                        "dose": 0,
                         "remark": null
                       }
                     ],
                     "viceReList": [
                       {
-                        "amount": 20,
+                        "amount": 0,
                         "isStock": true,
-                        "remarks": "副方备注",
+                        "remarks": "先用，与主方同用",
                         "viceMeList": null,
                         "viceRecipeDetailList": [
                           {
-                            "detailId": 153,
-                            "viceRecipeId": 39,
-                            "medicine": "白术",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 154,
-                            "viceRecipeId": 39,
-                            "medicine": "黄芪",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 155,
-                            "viceRecipeId": 39,
-                            "medicine": "紫电",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 156,
-                            "viceRecipeId": 39,
-                            "medicine": "青霜",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 153,
-                            "viceRecipeId": 39,
-                            "medicine": "白术",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 154,
-                            "viceRecipeId": 39,
-                            "medicine": "黄芪",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 155,
-                            "viceRecipeId": 39,
-                            "medicine": "紫电",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 156,
-                            "viceRecipeId": 39,
-                            "medicine": "青霜",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           }
                         ]
                       },
                       {
-                        "amount": 20,
+                        "amount": 0,
                         "isStock": true,
-                        "remarks": "副方备注戊己庚辛壬",
+                        "remarks": "先用，与主方同用",
                         "viceMeList": null,
                         "viceRecipeDetailList": [
                          {
-                            "detailId": 153,
-                            "viceRecipeId": 39,
-                            "medicine": "白术",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 154,
-                            "viceRecipeId": 39,
-                            "medicine": "黄芪",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 155,
-                            "viceRecipeId": 39,
-                            "medicine": "紫电",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 156,
-                            "viceRecipeId": 39,
-                            "medicine": "青霜",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 153,
-                            "viceRecipeId": 39,
-                            "medicine": "白术",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 154,
-                            "viceRecipeId": 39,
-                            "medicine": "黄芪",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 155,
-                            "viceRecipeId": 39,
-                            "medicine": "紫电",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 156,
-                            "viceRecipeId": 39,
-                            "medicine": "青霜",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           }
                         ]
                       },
                       {
-                        "amount": 20,
+                        "amount": 0,
                         "isStock": true,
-                        "remarks": "副方备注戊己庚辛壬",
+                        "remarks": "在月经时用，与主方同用",
                         "viceMeList": null,
                         "viceRecipeDetailList": [
                          {
-                            "detailId": 153,
-                            "viceRecipeId": 39,
-                            "medicine": "白术",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 154,
-                            "viceRecipeId": 39,
-                            "medicine": "黄芪",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 155,
-                            "viceRecipeId": 39,
-                            "medicine": "紫电",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 156,
-                            "viceRecipeId": 39,
-                            "medicine": "青霜",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 153,
-                            "viceRecipeId": 39,
-                            "medicine": "白术",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 154,
-                            "viceRecipeId": 39,
-                            "medicine": "黄芪",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 155,
-                            "viceRecipeId": 39,
-                            "medicine": "紫电",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           },
                           {
-                            "detailId": 156,
-                            "viceRecipeId": 39,
-                            "medicine": "青霜",
-                            "dose": 20,
+                            "detailId": 0,
+                            "viceRecipeId": 0,
+                            "medicine": "",
+                            "dose": 0,
                             "remark": null
                           }
                         ]
@@ -669,23 +669,10 @@ export default {
         this.getyfDate();
     }
     ,watch: {
-        yfdata: {
-            //监听对象计算总付数的变化
-    　　　　handler(newValue, oldValue) {
-                var total = this.getAllTotal(this.yfdata);
-                //更新总付数值
-                if(this.yfdata.allTotal != total){
-                    this.yfdata.allTotal = total;
-                }
-    　　　　},
-    　　　　deep: true
-　　   }
+
     }
     ,methods: {
 
-    hellBryfpage:function(){
-        var rows =  this.$route.params;
-    },
     gotoBryfpage:function(){
          this.$router.push({
              path: '/Index/brglpage'
@@ -707,9 +694,19 @@ export default {
         var allTotal = 0;
         for(var i in mainRelist){
             var zfObj = mainRelist[i];
-            allTotal += zfObj.amount; 
+            if(zfObj.amount==""){
+                zfObj.amount = 0;
+            }else{
+                zfObj.amount =  parseInt(zfObj.amount); 
+            }
+            allTotal = allTotal+zfObj.amount; 
             for(var j in mainRelist[i].viceReList){
-                allTotal += mainRelist[i].viceReList[j].amount;
+                if(mainRelist[i].viceReList[j].amount==""){
+                    mainRelist[i].viceReList[j].amount = 0;
+                }else{
+                    mainRelist[i].viceReList[j].amount = parseInt(mainRelist[i].viceReList[j].amount); 
+                }
+                allTotal = allTotal+mainRelist[i].viceReList[j].amount;
             }
         }
         return allTotal;
@@ -776,15 +773,15 @@ export default {
      * */
     getyfDate:function(){ 
         var _that = this;
-        var inquiryId = _that.$route.params.inquiryId;
+        var r_params = JSON.parse(window.localStorage.getItem('pathParams'));
+        var inquiryId = r_params.data.inquiryId;
+        // var inquiryId = _that.$route.params.inquiryId;
         if(inquiryId){
             var url = "/inquiry/getInquiryInfo?inquiryId="+inquiryId;
             _that.$http.get(url)
             .then(function (response) {
                 if(response.code == "1"){
-                    console.log(response.data.inquiryInfo);
                     var yfdataInfo = response.data.inquiryInfo;
-                    console.log(yfdataInfo);
                     if(JSON.stringify(yfdataInfo.mainReList) === '[]'){
                         //代表为空的新数组，复制模版给对象
                         var mbMainList = new Array();
@@ -809,6 +806,7 @@ export default {
         }
     },
     printYfPage(){
+        this.yfdata.allTotal = this.allTotal;
         this.$Print(this.yfdata,{'n_height':760});
     },
     /**
@@ -964,6 +962,13 @@ export default {
             }
          }
     },
+    /** 
+     * 更新总付数
+     *  */
+    updateAmount:function(e){
+        this.allTotal = this.getAllTotal(this.yfdata);
+        e.target.blur();
+    },
     /**
      * 新增副方药物
      * e 触发事件
@@ -974,6 +979,7 @@ export default {
        console.log("新增副方的药物");
        var value = e.target.value;
        this.updateViceMe(value,vindex,mindex);
+       e.target.value='';
     },
     /**
      * 新增主方药物
@@ -981,10 +987,8 @@ export default {
      * mindex 主方序号
      */
     addzyfyw: function (e,mindex) {
-        console.log("原本的值为："+mindex);
-        console.log("input："+e.target.value);
-        console.log(e);
         this.updateMainMe(mindex,e.target.value);
+        e.target.value='';
     },
       /** 新增副方 */
     addZyfff:function (mrindex){
@@ -1121,7 +1125,6 @@ export default {
       }
     }
     ,beforeMount () {
-       this.hellBryfpage();
         //绑定数据前计算总付数
        this.allTotal = this.getAllTotal(this.yfdata);
     }

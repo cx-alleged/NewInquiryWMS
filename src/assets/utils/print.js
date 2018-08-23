@@ -53,7 +53,7 @@ Print.prototype = {
         var age = this.YfData.age ? this.YfData.age : "";
         var gender = this.YfData.gender ? this.YfData.gender : "";
         var date = this.YfData.date ? this.YfData.date : "";
-        var address = this.YfData.address ? this.YfData.address : "";
+        var address = this.YfData.resisdence ? this.YfData.resisdence : "";
         var date_arry = new Array();
         if(date == ""){
           datae_arry[0]="";

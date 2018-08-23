@@ -192,6 +192,17 @@
             _that.$common.openSuccessMsgBox("初诊成功，请开处方",_that);
             var brinfo = {pId:brid,inquiryId:response.data.inquiryId};
             //跳转组件并且 传递pid
+            var pathParams = new Object();
+            pathParams.path = 'bryfpage';
+            pathParams.data = brinfo;
+            //缓存 目标跳转页面的参数
+            _that.$store.dispatch("setPathParams", JSON.stringify(pathParams));
+            debugger
+            var prePathParams = new Object();
+            prePathParams.path = 'xjczbr';
+            prePathParams.data = {};
+            //缓存 跳转页面的参数
+            _that.$store.dispatch("setPrePathParams", JSON.stringify(prePathParams));
             _that.$common.GotoPage("bryfpage",brinfo,_that);
         }).catch(function (error) {
           console.log(error);
