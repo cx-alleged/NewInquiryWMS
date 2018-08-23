@@ -16,8 +16,8 @@
         margin: 0px;
     }
     .print-container{
-        width: 794px;
-	    height: 1123px;
+        width: 720px;
+	    height: 1050px;
         // padding: 35px;
         margin: 0px auto;
          .label-tag{
@@ -48,7 +48,6 @@
         .print-header-container{
             padding: 0px 10px 10px 10px;
             border-bottom: solid 2px #d02929;
-            padding-top: 30px;
             .print-img-container{
                 text-align: center;
                 margin:12px 0px;
@@ -62,8 +61,7 @@
             }
         }
         .print-foot-container{
-            margin-top: 10px;
-            padding-top: 20px;
+            padding-top: 10px;
             border-top: solid 2px #d02929;
             .underline{
                 display: inline-block;

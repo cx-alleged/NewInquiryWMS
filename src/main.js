@@ -23,9 +23,7 @@ Vue.config.productionTip = false
 */
 Vue.use(ElementUI)
 //注册打印插件
-// Vue.prototype.$Print= Print;
-Vue.use(Print)
-// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+Vue.prototype.$Print= Print;
 //定义全局变量
 Vue.prototype.$http= axios;
 //定义全局属性给公共部分js

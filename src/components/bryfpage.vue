@@ -71,6 +71,9 @@
 <style lang="scss">
     @import '../assets/css/bryfpage.scss';
 </style>
+<style lang ="scss">
+    @import '../assets/css/yfprint.scss';
+</style>
 
 <style lang="scss" scoped>
     .titile-container{

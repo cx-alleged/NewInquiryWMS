@@ -759,10 +759,8 @@ export default {
         _that.$http.post('/inquiry/postInquiryInfo',param).then(function (response) {
             loading.close();
             if(response.code =="1"){
-                _that.$common.openSuccessMsgBox("操作成功，即将打印药方",_that);
-                console.log("药方打印开始!");
-                debugger
-                _that.$Print(_that.yfdata);
+                _that.$common.openSuccessMsgBox("操作成功",_that);
+                _that.openMegBox("是否打印处方",'printYfPage');
             }else{
                 _that.$common.openErrorMsgBox(response.msg,_that);
             }
@@ -810,6 +808,9 @@ export default {
             });
         }
     },
+    printYfPage(){
+        this.$Print(this.yfdata,{'n_height':760});
+    },
     /**
      * 删除时的提示确认框
      * msg 提示内容
@@ -827,6 +828,8 @@ export default {
                 this.deleteZf(mindex);
             }else if(callback === "deleteFf"){
                 this.deleteFf(mindex,vindex);
+            }else if(callback === "printYfPage"){
+                this.printYfPage();
             }else{
 
             }
