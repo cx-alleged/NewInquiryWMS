@@ -39,8 +39,8 @@ export default {
        */
       gotoyfpage(row,pagename) {
         var params = {},
-            _that = this;
-            prePath = "",
+            _that = this,
+            prePath = "";
             params.pId = row.pId;
         var pathParams = {path:pagename,data:params};
         _that.$store.dispatch("setPathParams", JSON.stringify(pathParams));
@@ -52,13 +52,13 @@ export default {
         console.log(`每页 ${val} 条`);
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        this.search_obj.pageNum = val;
+        this.getBrList(this.search_obj);
       },
       //初始化当前组件
       initPage(){
         //从缓存中取出当前页面的参数
         var i_params = JSON.parse(window.localStorage.getItem("pathParams"));
-        debugger
         if(i_params.data.pname!=""){
             this.search_obj.pname = i_params.data.pname;
         }

@@ -15,9 +15,9 @@ export const clearPathParams = (state, payload) =>{
 };
 export const setPrePathParams = (state, payload) =>{
     state.prePathParams = payload;
-    window.localStorage.setItem('prePathParams', state.pathParams);
+    window.localStorage.setItem('prePathParams', state.prePathParams);
 };
 export const clearPrePathParams = (state, payload) =>{
     state.prePathParams = {};
-    window.localStorage.setItem('prePathParams', state.pathParams)
+    window.localStorage.setItem('prePathParams', state.prePathParams)
 };

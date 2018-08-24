@@ -1,10 +1,38 @@
 export default{
-    //页面待参跳转
+    /**
+     * 组件路径跳转
+     * @param {String} pagename 路径名称
+     * @param {object} param 参数对象
+     * @param {object} _that  this
+     */
     GotoPage(pagename,param,_that) {
         _that.$router.push({
              name: pagename,
              params:param
         });
+    },
+    /**
+     * 返回上一个页面
+     * @param {Sting} pathName 当前页面名
+     * @param {obj} param 当前页面参数对象
+     * @param {object} _that this 
+     */
+    GoBackPrePage(pathName,param,_that){
+        debugger
+        var prePageObj = JSON.parse(window.localStorage.getItem("prePathParams"));
+       //跳转组件并且 传递pid
+       var pathParams = prePageObj
+       //缓存 目标跳转页面的参数
+       _that.$store.dispatch("setPathParams", JSON.stringify(pathParams));
+       var prePathParams = new Object();
+       prePathParams.path = pathName;
+       prePathParams.data = param;
+       //缓存 跳转页面的参数
+       _that.$store.dispatch("setPrePathParams", JSON.stringify(prePathParams));
+        _that.$router.push({
+            name: prePageObj.path,
+            params:prePageObj.data
+       });
     },
     //弹出操作成功的信息提示
     openSuccessMsgBox(msg,_that){

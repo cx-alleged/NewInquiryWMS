@@ -516,7 +516,7 @@
         }
          
     }
-    @media screen and (min-width:1600px) and (max-width:1920px){
+    @media screen and (min-width:1600px){
         .brxx-info-container{
             .el-select{
                 width: 100%;

@@ -4,8 +4,8 @@ import qs from 'qs'
 
 // 测试地址
 const API = {
-    local:'http://139.129.118.14:8085',
-    online:'http://139.129.118.14:8085'
+    local:'http://139.129.118.14:8087',
+    online:'http://139.129.118.14:8087'
 }
 
 //production 为生产环境
