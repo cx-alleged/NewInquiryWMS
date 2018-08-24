@@ -768,14 +768,51 @@ export default {
         });
     },
     /**
-     * 依据问诊id 获取问诊信息
-     * 获取问诊数据 
-     * */
-    getyfDate:function(){ 
+     * 获取复诊药方数据
+     */
+    getfzYfData:function(){
         var _that = this;
         var r_params = JSON.parse(window.localStorage.getItem('pathParams'));
         var inquiryId = r_params.data.inquiryId;
-        // var inquiryId = _that.$route.params.inquiryId;
+        var lastinquiryId = r_params.data.lastinquiryId;
+        if(lastinquiryId){
+            var url = "/inquiry/getInquiryInfo?inquiryId="+lastinquiryId;
+            _that.$http.get(url)
+            .then(function (response) {
+                if(response.code == "1"){
+                    var yfdataInfo = response.data.inquiryInfo;
+                    if(JSON.stringify(yfdataInfo.mainReList) === '[]'){
+                        //代表为空的新数组，复制模版给对象
+                        var mbMainList = new Array();
+                        var obj = JSON.parse(JSON.stringify(_that.mbMainObj));
+                        mbMainList.push(obj);
+                        yfdataInfo.mainReList = mbMainList;
+                        yfdataInfo.inquiryId = inquiryId;
+                        _that.yfdata = yfdataInfo;
+                        _that.allTotal = _that.getAllTotal(yfdataInfo);
+                    }else{
+                        //主方数据不为空，规范数据然后赋值
+                          yfdataInfo = _that.normalYwArry(yfdataInfo);
+                          yfdataInfo.inquiryId = inquiryId;
+                        _that.yfdata = yfdataInfo;
+                        _that.allTotal = _that.getAllTotal(yfdataInfo);
+                    }
+                }else{
+                    _that.$common.openErrorMsgBox("数据请求失败",_that);
+                }       
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        }
+    },
+    /**
+     * 获取初诊药方数据
+     */
+    getCzYfData:function(){
+        var _that = this;
+        var r_params = JSON.parse(window.localStorage.getItem('pathParams'));
+        var inquiryId = r_params.data.inquiryId;
         if(inquiryId){
             var url = "/inquiry/getInquiryInfo?inquiryId="+inquiryId;
             _that.$http.get(url)
@@ -805,6 +842,26 @@ export default {
             });
         }
     },
+    /**
+     * 判断是初诊/复诊
+     * 依据问诊id 获取问诊信息
+     * 获取问诊数据 
+     * */
+    getyfDate:function(){ 
+        var _that = this;
+        var r_params = JSON.parse(window.localStorage.getItem('pathParams'));
+        debugger
+        var lastinquiryId = r_params.data.lastinquiryId;
+        if(lastinquiryId == "" || !lastinquiryId){
+            this.getCzYfData();
+        }else{
+            this.getfzYfData();
+        }
+
+    },
+    /** 
+     * 页面打印
+    */
     printYfPage(){
         this.yfdata.allTotal = this.allTotal;
         this.$Print(this.yfdata,{'n_height':760});
@@ -1061,68 +1118,68 @@ export default {
      * return true 为空
      * false 不为空
      */
-      arryEnd4null:function(arry){
-          var switch_btn = true;
-          for(var i = arry.length - 1; i > arry.length-5; i--){
-              if(arry[i].medicine != ""){
-                  switch_btn = false;
-              }
-          }
-          return switch_btn;
-      },
-      /** 
-       * 更新主方药物列表
-       * input失去焦点 
-       * 操作相应的数据
-       * mindex 代表主方序号
-       * findex 代表药物序号
-       * */
-      updateMainYw:function(mindex,findex){
-          //第一步 排除是否为删除操作
-          var ywObj = this.yfdata.mainReList[mindex].recipeDetailList[findex];
-          if(ywObj.medicine == ""){
-              //删除操作 清空这个为空的对象，然后在数组末尾添加一个空的数据，判断最后四个数组对象为空并且数组对象大于等于16 去掉末尾四个数据；
-              this.yfdata.mainReList[mindex].recipeDetailList.splice(findex,1);
-              //末尾添加数组对象
-              var obj = {
-                "detailId": null,
-                "recipeId": null,
-                "medicine": "",
-                "dose": null,
-                "remark": null
-              };
-              this.yfdata.mainReList[mindex].recipeDetailList.push(obj);
-              var sz_length = this.yfdata.mainReList[mindex].recipeDetailList.length;
-              var flag = this.arryEnd4null(this.yfdata.mainReList[mindex].recipeDetailList);
-              if(sz_length>=16 && flag){
-                  this.yfdata.mainReList[mindex].recipeDetailList.splice(sz_length-4,4);
-              }
-              
-          }
-          //是更新数据，直接做数据请求操作
-      },
-      /** 更新 副方药物列表 */
-      updateViceYw:function(mindex,vindex,findex){
-           var ywObj = this.yfdata.mainReList[mindex].viceReList[vindex].viceRecipeDetailList[findex];
-            if(ywObj.medicine == ""){
-              //删除操作 清空这个为空的对象，然后在数组末尾添加一个空的数据，判断最后四个数组对象为空并且数组对象大于等于null 去掉末尾四个数据；
-              this.yfdata.mainReList[mindex].viceReList[vindex].viceRecipeDetailList.splice(findex,1);
-              //末尾添加数组对象
-              var obj = {
-                "detailId": null,
-                "recipeId": null,
-                "medicine": "",
-                "dose": null,
-                "remark": null
-              };
-              this.yfdata.mainReList[mindex].viceReList[vindex].viceRecipeDetailList.push(obj);
-              var sz_length = this.yfdata.mainReList[mindex].viceReList[vindex].viceRecipeDetailList.length;
-              var flag = this.arryEnd4null(this.yfdata.mainReList[mindex].viceReList[vindex].viceRecipeDetailList);
-              if(sz_length>=12 && flag){
-                  this.yfdata.mainReList[mindex].viceReList[vindex].viceRecipeDetailList.splice(sz_length-4,4);
-              }
-          }
-      }
+    arryEnd4null:function(arry){
+        var switch_btn = true;
+        for(var i = arry.length - 1; i > arry.length-5; i--){
+            if(arry[i].medicine != ""){
+                switch_btn = false;
+            }
+        }
+        return switch_btn;
+    },
+    /** 
+     * 更新主方药物列表
+     * input失去焦点 
+     * 操作相应的数据
+     * mindex 代表主方序号
+     * findex 代表药物序号
+     * */
+    updateMainYw:function(mindex,findex){
+        //第一步 排除是否为删除操作
+        var ywObj = this.yfdata.mainReList[mindex].recipeDetailList[findex];
+        if(ywObj.medicine == ""){
+            //删除操作 清空这个为空的对象，然后在数组末尾添加一个空的数据，判断最后四个数组对象为空并且数组对象大于等于16 去掉末尾四个数据；
+            this.yfdata.mainReList[mindex].recipeDetailList.splice(findex,1);
+            //末尾添加数组对象
+            var obj = {
+            "detailId": null,
+            "recipeId": null,
+            "medicine": "",
+            "dose": null,
+            "remark": null
+            };
+            this.yfdata.mainReList[mindex].recipeDetailList.push(obj);
+            var sz_length = this.yfdata.mainReList[mindex].recipeDetailList.length;
+            var flag = this.arryEnd4null(this.yfdata.mainReList[mindex].recipeDetailList);
+            if(sz_length>=16 && flag){
+                this.yfdata.mainReList[mindex].recipeDetailList.splice(sz_length-4,4);
+            }
+            
+        }
+        //是更新数据，直接做数据请求操作
+    },
+    /** 更新 副方药物列表 */
+    updateViceYw:function(mindex,vindex,findex){
+        var ywObj = this.yfdata.mainReList[mindex].viceReList[vindex].viceRecipeDetailList[findex];
+        if(ywObj.medicine == ""){
+            //删除操作 清空这个为空的对象，然后在数组末尾添加一个空的数据，判断最后四个数组对象为空并且数组对象大于等于null 去掉末尾四个数据；
+            this.yfdata.mainReList[mindex].viceReList[vindex].viceRecipeDetailList.splice(findex,1);
+            //末尾添加数组对象
+            var obj = {
+            "detailId": null,
+            "recipeId": null,
+            "medicine": "",
+            "dose": null,
+            "remark": null
+            };
+            this.yfdata.mainReList[mindex].viceReList[vindex].viceRecipeDetailList.push(obj);
+            var sz_length = this.yfdata.mainReList[mindex].viceReList[vindex].viceRecipeDetailList.length;
+            var flag = this.arryEnd4null(this.yfdata.mainReList[mindex].viceReList[vindex].viceRecipeDetailList);
+            if(sz_length>=12 && flag){
+                this.yfdata.mainReList[mindex].viceReList[vindex].viceRecipeDetailList.splice(sz_length-4,4);
+            }
+        }
+    }
     }
     ,beforeMount () {
         //绑定数据前计算总付数
