@@ -2,7 +2,7 @@
 <div class="brgl-container">
     <div class="search-row">
         <div class="search-row-input-item">
-          <el-input placeholder="请输入病人名字" v-model="search_obj.panme">
+          <el-input placeholder="请输入病人名字" v-model="search_obj.pname">
               <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
         </div>
@@ -43,8 +43,7 @@
         width="300">
         </el-table-column>
         <el-table-column
-        label="操作"
-        width="659.99">
+        label="操作">
         <template slot-scope="scope">
             <el-button @click="gotoyfpage(scope.row,brxxpage)" type="text" class="btn-font-default">基本信息</el-button>
             <el-button @click="gotoyfpage(scope.row,bryfpage)" type="text" class="btn-font-default">查看药方</el-button>

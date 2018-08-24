@@ -495,7 +495,7 @@
         }
     }
     //特殊划分为两列
-    @media screen and (max-width:1600px){
+    @media screen and (min-width:1024px) and (max-width:1600px){
         .suffix-input-width{
             width: calc(100% - 24px);
         }
