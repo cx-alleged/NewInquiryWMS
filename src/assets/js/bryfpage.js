@@ -850,7 +850,6 @@ export default {
     getyfDate:function(){ 
         var _that = this;
         var r_params = JSON.parse(window.localStorage.getItem('pathParams'));
-        debugger
         var lastinquiryId = r_params.data.lastinquiryId;
         if(lastinquiryId == "" || !lastinquiryId){
             this.getCzYfData();

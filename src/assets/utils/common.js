@@ -1,5 +1,111 @@
 export default{
     /**
+     * 判断省份是否在国内，
+     * 
+     * @param {number} value 
+     * @param {any} _that 
+     * @returns 0 代表中国， 1 代表外国
+     */
+    isChinaProvince(value,_that){
+      if(value){
+        var btn_switch = 1;
+        var proNameList = _that.$store.getters.gettersPlaceData.placeList;
+         for(var key in proNameList){
+            if(proNameList[key].id == value){
+              btn_switch = 0;
+              break;
+            }
+          }
+          return btn_switch;
+      }else{
+        return null;
+      }
+    },
+    /**
+       * 联动设置， 更新城市一栏的值
+       * 
+       * @param {any} selectvalue 
+       */
+    setCityList(value,_that){
+        //第一次遍历省份列表
+         var proNameList = _that.$store.getters.gettersPlaceData.placeList;
+          var city_list = new Array();
+          for(var key in proNameList){
+            if(proNameList[key].id == value){
+              city_list = proNameList[key].cityList;
+              break;
+            }
+          }
+         return JSON.parse(JSON.stringify(city_list));
+      },
+      
+      /**
+       * 联动设置， 依据国家 更新省份一栏的值
+       * 
+       * @param {any} selectvalue 
+       */
+      setProList(selectvalue,_that){
+        //依据值修改省份的下拉值
+        // _that.province = [];
+        // _that.city = [];
+        // this.form.sourceProvince=null;
+        // this.form.sourceCity=null;
+        if(selectvalue=="0"){
+          //代表国内 
+          var proNameList = _that.$store.getters.gettersPlaceData.placeList;
+          proNameList = proNameList.slice(1,proNameList.length-1);
+          return JSON.parse(JSON.stringify(proNameList));
+        }else{
+          //国外
+          var proNameList = _that.$store.getters.gettersPlaceData.placeList;
+          return JSON.parse(JSON.stringify(proNameList[0].cityList));
+        }
+      },
+      /**
+       * 处理外国字段名 和 国内省份的命名规则不一致的问题
+       * 
+       * @param {any} proList 
+       * @returns 
+       */
+      updateWgzdm(proList){
+        var newList = new Array();
+        for(var key in proList){
+          var tmpObj = new Object();
+          tmpObj.id = proList[key].cityId;
+          tmpObj.provName = proList[key].cityName;
+          tmpObj.cityList = [];
+          newList.push(tmpObj);
+        }
+        return newList;
+      },
+      /**
+       * 获取国家 省份 城市数据
+       * 
+       */
+      getPlace(_that,callback){
+         var placeData = _that.$store.getters.gettersPlaceData;
+          if(placeData && JSON.stringify(placeData) == "{}"){
+            _that.$http.get('/index/getPlace')
+            .then(function (response) {
+              placeData = response.data;
+              placeData.placeList[0].cityList = _that.$common.updateWgzdm(placeData.placeList[0].cityList);
+              _that.$store.dispatch("changePlaceData", placeData);
+              _that.placeDate = _that.$store.getters.gettersPlaceData;
+              if(typeof callback  == 'function'){
+                callback();
+              }
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+          }else{
+            _that.placeDate = placeData;
+            if(typeof callback  == 'function'){
+              callback();
+            }
+          }
+      },
+    /**
      * 组件路径跳转
      * @param {String} pagename 路径名称
      * @param {object} param 参数对象
@@ -18,7 +124,7 @@ export default{
      * @param {object} _that this 
      */
     GoBackPrePage(pathName,param,_that){
-        debugger
+        
         var prePageObj = JSON.parse(window.localStorage.getItem("prePathParams"));
        //跳转组件并且 传递pid
        var pathParams = prePageObj
@@ -41,7 +147,14 @@ export default{
          type: 'success'
        });
      },
-     //打开遮罩层
+     
+     /**
+      * 加载遮罩层
+      * 
+      * @param {String} msg 
+      * @param {any} _that 
+      * @returns 
+      */
      openLoading(msg,_that){
          const loading = _that.$loading({
          lock: true,
@@ -55,8 +168,10 @@ export default{
      openErrorMsgBox(msg,_that) {
         _that.$message.error(msg);
      },
-     //依据生日计算年龄
-    GetAgeByBrithday:function(birthdayStr){
+     /**
+      * 依据出生日期计算年龄
+      */
+     GetAgeByBrithday:function(birthdayStr){
         var age=-1;
         var today=new Date();
         var todayYear=today.getFullYear();

@@ -86,6 +86,62 @@ export default {
             }).catch(function (error) {
                 console.log(error);
             });
+      },
+        /**
+         * 新建问诊 返回问诊id
+         * 
+         * @param {String} brid 病人id
+         * 
+         * return 问诊id
+         */
+      newInquiry_new(brid){
+        var _that = this;
+        var param ={patientId:brid};
+        this.$http.post('/inquiry/newInquiry?patientId='+brid,param).then(function (response) {
+            var brinfo = {pId:brid,inquiryId:response.data.inquiryId};
+            _that.getLastInquiry(brinfo);
+        }).catch(function (error) {
+          console.log(error);
+          setTimeout(function(){loading.close(); }, 1000);
+        });
+      },
+      /**
+       * 获取病人最近一次问诊信息
+       * 
+       */
+      getLastInquiry(brinfo){
+          var url= "/inquiry/getLatestInquiryInfo?patientId="+brinfo.pId;
+          var _that = this;
+          var inquiryID = '';
+          this.$http.get(url)
+            .then(function (response) {
+              if(response.code == "1"){
+                  if(JSON.stringify(response.data)!="{}"){
+                      if(response.data.inquiryInfo.inquiryId){
+                          brinfo.lastinquiryId = response.data.inquiryInfo.inquiryId;
+                      }else{
+                          brinfo.lastinquiryId = "";
+                      }
+                      //跳转组件并且 传递pid
+                      var pathParams = new Object();
+                      pathParams.path = 'bryfpage';
+                      pathParams.data = brinfo;
+                      //缓存 目标跳转页面的参数
+                      _that.$store.dispatch("setPathParams", JSON.stringify(pathParams));
+                      var prePathParams = new Object();
+                      prePathParams.path = 'brglpage';
+                      prePathParams.data = _that.search_obj;
+                      //缓存 跳转页面的参数
+                      _that.$store.dispatch("setPrePathParams", JSON.stringify(prePathParams));
+                      _that.$common.GotoPage("bryfpage",brinfo,_that);
+                  }
+              }
+          }).catch(function (error) {
+              setTimeout(function(){
+                  _that.openErrorMsgBox(error);
+               }, 1000);
+          });
+          
       }
     }
   }

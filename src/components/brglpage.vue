@@ -47,7 +47,7 @@
         <template slot-scope="scope">
             <el-button @click="gotoyfpage(scope.row,brxxpage)" type="text" class="btn-font-default">基本信息</el-button>
             <el-button @click="gotoyfpage(scope.row,grblglpage)" type="text" class="btn-font-default">查看药方</el-button>
-            <el-button @click="gotoyfpage(scope.row,table_edit)" type="text" class="btn-font-default">新建复诊</el-button>
+            <el-button @click="newInquiry_new(scope.row.pId)" type="text" class="btn-font-default">新建复诊</el-button>
             <el-button type="text" class="btn-font-default bnt-font-color">移除</el-button>
         </template>
         </el-table-column>
