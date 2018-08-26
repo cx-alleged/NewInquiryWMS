@@ -1,4 +1,14 @@
 export default{
+  /**
+   * 字符串 转义 " 转义为 \"
+   * @param {*} str 
+   */
+   decodeToStr(str){
+     var r_str = "";
+     if (str.length == 0) return r_str;  
+     r_str = str.replace("\"([^\"]*)\"", "\"");  
+     return r_str;
+   },
     /**
      * 判断省份是否在国内，
      * 

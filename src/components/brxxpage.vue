@@ -197,8 +197,8 @@
                     <el-row :gutter="20"> 
                         <el-col :span="24">
                             <el-form-item label="饮食习惯" style="margin-bottom:0px;">
-                                <el-checkbox-group v-model="basicInfo.eatingHabits">
-                                    <el-checkbox label="非素食者"></el-checkbox>
+                                 <el-checkbox-group v-model="basicInfo.eatingHabits"  @change="setCheckBox('eatingHabits')">
+                                    <el-checkbox label="非素食者" ></el-checkbox>
                                     <el-checkbox label="完全素食者"></el-checkbox>
                                     <el-checkbox label="奶蛋素食"></el-checkbox>
                                     <el-checkbox label="半素食"></el-checkbox>
@@ -215,12 +215,12 @@
                         <el-col :span="24">
                             <el-form-item label="遗传病史" style="margin-bottom:0px;">
                                 <el-checkbox-group v-model="basicInfo.heredityHistory">
-                                    <el-checkbox label="无"></el-checkbox>
-                                    <el-checkbox label="高血压"></el-checkbox>
-                                    <el-checkbox label="糖尿病"></el-checkbox>
-                                    <el-checkbox label="心脑血管疾病"></el-checkbox>
-                                    <el-checkbox label="肿瘤"></el-checkbox>
-                                    <el-checkbox label="心脏病"></el-checkbox>
+                                    <el-checkbox label="无" @change="cLearhCheckbox"></el-checkbox>
+                                    <el-checkbox label="高血压" @change="sethCheckBox"></el-checkbox>
+                                    <el-checkbox label="糖尿病" @change="sethCheckBox"></el-checkbox>
+                                    <el-checkbox label="心脑血管疾病" @change="sethCheckBox"></el-checkbox>
+                                    <el-checkbox label="肿瘤" @change="sethCheckBox"></el-checkbox>
+                                    <el-checkbox label="心脏病" @change="sethCheckBox"></el-checkbox>
                                 </el-checkbox-group>
                             </el-form-item>
                             <el-form-item>
@@ -232,10 +232,10 @@
                         <el-col :span="24">
                             <el-form-item label="传染病史" style="margin-bottom:0px;">
                                 <el-checkbox-group v-model="basicInfo.infectionHistory">
-                                    <el-checkbox label="无"></el-checkbox>
-                                    <el-checkbox label="肝炎"></el-checkbox>
-                                    <el-checkbox label="结核"></el-checkbox>
-                                    <el-checkbox label="痢疾"></el-checkbox>
+                                    <el-checkbox label="无"  @change="clearinCheckbox"></el-checkbox>
+                                    <el-checkbox label="肝炎" @change="setInCheckbox"></el-checkbox>
+                                    <el-checkbox label="结核"  @change="setInCheckbox"></el-checkbox>
+                                    <el-checkbox label="痢疾"  @change="setInCheckbox"></el-checkbox>
                                 </el-checkbox-group>
                             </el-form-item>
                             <el-form-item>
@@ -285,19 +285,19 @@
                 <el-col :span="24">
                     <el-form-item label="接触史">
                         <el-checkbox-group v-model="basicInfo.contactHistory">
-                            <el-checkbox label="无"></el-checkbox>
-                            <el-checkbox label="疫区"></el-checkbox>
-                            <el-checkbox label="疫情"></el-checkbox>
-                            <el-checkbox label="疫水"></el-checkbox>
-                            <el-checkbox label="牧区"></el-checkbox>
-                            <el-checkbox label="矿山"></el-checkbox>
-                            <el-checkbox label="高氟区"></el-checkbox>
-                            <el-checkbox label="低碘区"></el-checkbox>
-                            <el-checkbox label="化学物质"></el-checkbox>
-                            <el-checkbox label="放射物质"></el-checkbox>
-                            <el-checkbox label="有毒物质接触史"></el-checkbox>
-                            <el-checkbox label="吸毒史"></el-checkbox>
-                            <el-checkbox label="冶游史"></el-checkbox>
+                            <el-checkbox label="无" @change="clearConCheckbox"></el-checkbox>
+                            <el-checkbox label="疫区" @change="setConCheckbox"></el-checkbox>
+                            <el-checkbox label="疫情" @change="setConCheckbox"></el-checkbox>
+                            <el-checkbox label="疫水" @change="setConCheckbox"></el-checkbox>
+                            <el-checkbox label="牧区" @change="setConCheckbox"></el-checkbox>
+                            <el-checkbox label="矿山" @change="setConCheckbox"></el-checkbox>
+                            <el-checkbox label="高氟区" @change="setConCheckbox"></el-checkbox>
+                            <el-checkbox label="低碘区" @change="setConCheckbox"></el-checkbox>
+                            <el-checkbox label="化学物质" @change="setConCheckbox"></el-checkbox>
+                            <el-checkbox label="放射物质" @change="setConCheckbox"></el-checkbox>
+                            <el-checkbox label="有毒物质接触史" @change="setConCheckbox"></el-checkbox>
+                            <el-checkbox label="吸毒史" @change="setConCheckbox"></el-checkbox>
+                            <el-checkbox label="冶游史" @change="setConCheckbox"></el-checkbox>
                         </el-checkbox-group>
                          <el-input v-model="basicInfo.chRemark" placeholder="备注"></el-input>
                     </el-form-item>
@@ -317,21 +317,21 @@
                 <el-col :span="24">
                     <el-form-item label="过敏物">
                         <el-checkbox-group v-model="basicInfo.allergy">
-                            <el-checkbox label="无"></el-checkbox>
-                            <el-checkbox label="海鲜"></el-checkbox>
-                            <el-checkbox label="粉尘"></el-checkbox>
-                            <el-checkbox label="牛奶"></el-checkbox>
-                            <el-checkbox label="鸡蛋"></el-checkbox>
-                            <el-checkbox label="酒精"></el-checkbox>
-                            <el-checkbox label="葱"></el-checkbox>
-                            <el-checkbox label="姜"></el-checkbox>
-                            <el-checkbox label="蒜"></el-checkbox>
-                            <el-checkbox label="花生"></el-checkbox>
-                            <el-checkbox label="霉菌"></el-checkbox>
-                            <el-checkbox label="大豆"></el-checkbox>
-                            <el-checkbox label="柳絮"></el-checkbox>
-                            <el-checkbox label="橡胶"></el-checkbox>
-                            <el-checkbox label="芒果"></el-checkbox>
+                            <el-checkbox label="无" @change="clearAllCheckbox"></el-checkbox>
+                            <el-checkbox label="海鲜" @change="setAllCheckbox"></el-checkbox>
+                            <el-checkbox label="粉尘" @change="setAllCheckbox"></el-checkbox>
+                            <el-checkbox label="牛奶" @change="setAllCheckbox"></el-checkbox>
+                            <el-checkbox label="鸡蛋" @change="setAllCheckbox"></el-checkbox>
+                            <el-checkbox label="酒精" @change="setAllCheckbox"></el-checkbox>
+                            <el-checkbox label="葱" @change="setAllCheckbox"></el-checkbox>
+                            <el-checkbox label="姜" @change="setAllCheckbox"></el-checkbox>
+                            <el-checkbox label="蒜" @change="setAllCheckbox"></el-checkbox>
+                            <el-checkbox label="花生" @change="setAllCheckbox"></el-checkbox>
+                            <el-checkbox label="霉菌" @change="setAllCheckbox"></el-checkbox>
+                            <el-checkbox label="大豆" @change="setAllCheckbox"></el-checkbox>
+                            <el-checkbox label="柳絮" @change="setAllCheckbox"></el-checkbox>
+                            <el-checkbox label="橡胶" @change="setAllCheckbox"></el-checkbox>
+                            <el-checkbox label="芒果" @change="setAllCheckbox"></el-checkbox>
                         </el-checkbox-group>
                          <el-input v-model="basicInfo.allRemark" placeholder="备注"></el-input>
                     </el-form-item>
