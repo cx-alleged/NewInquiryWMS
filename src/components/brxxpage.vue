@@ -9,13 +9,13 @@
                 </el-col>
                 <el-col :span="12" class="col-no-padding">
                     <el-col :span="12">
-                    <el-form-item label="身高">
-                        <el-input v-model="basicInfo.height" placeholder="" class="suffix-input-width"></el-input><span class="suffix-input-span">cm</span>
+                    <el-form-item label="身高" prop="height">
+                        <el-input v-model.number="basicInfo.height" placeholder="" class="suffix-input-width"></el-input><span class="suffix-input-span">cm</span>
                     </el-form-item>
                     </el-col>
                     <el-col :span="12">
-                        <el-form-item label="体重">
-                            <el-input v-model="basicInfo.weight" placeholder="" class="suffix-input-width"></el-input><span class="suffix-input-span">kg</span>
+                        <el-form-item label="体重" prop="weight">
+                            <el-input v-model.number="basicInfo.weight" placeholder="" class="suffix-input-width"></el-input><span class="suffix-input-span">kg</span>
                         </el-form-item>
                     </el-col>
                 </el-col>
@@ -23,7 +23,6 @@
             <el-row :gutter="20">
                 <el-col :span="12">
                     <el-form-item label="证件类型">
-                        <!-- <el-input v-model="basicInfo.user" placeholder=""></el-input> -->
                         <el-select v-model="basicInfo.certificatesType" placeholder="请选择证件类型">
                             <el-option label="身份证" value="身份证"></el-option>
                             <el-option label="护照" value="护照"></el-option>
@@ -91,8 +90,8 @@
                               </el-form-item>   
                          </el-col>
                          <el-col :span="8">
-                             <el-form-item label="年龄" label-width="100px" class="age-sm-screen">
-                                <el-input v-model="basicInfo.age"  placeholder="年龄"></el-input>
+                             <el-form-item label="年龄" label-width="100px" class="age-sm-screen" prop="age">
+                                <el-input v-model.number="basicInfo.age"  placeholder="年龄"></el-input>
                              </el-form-item>
                          </el-col>
                      </el-row>
@@ -371,8 +370,8 @@
                         </el-form-item>
                    </el-col> 
                    <el-col :span="9">
-                        <el-form-item label="戒烟时长" label-width="200px">
-                            <el-input v-model="basicInfo.quitSmokeTime" placeholder=""></el-input>
+                        <el-form-item label="戒烟时长" label-width="200px" prop="quitSmokeTime">
+                            <el-input v-model.number="basicInfo.quitSmokeTime" placeholder=""></el-input>
                         </el-form-item>
                    </el-col> 
                 </el-col>
@@ -388,8 +387,8 @@
                         </el-form-item>
                     </el-col>
                     <el-col :lg="10" :sm="12">
-                        <el-form-item label="每日" label-width="120px">
-                            <el-input v-model="basicInfo.dailyDrink" placeholder="" class="suffix-input-width"></el-input><span class="suffix-input-span">两</span>
+                        <el-form-item label="每日" label-width="120px" prop="dailyDrink">
+                            <el-input v-model.number="basicInfo.dailyDrink" placeholder="" class="suffix-input-width"></el-input><span class="suffix-input-span">两</span>
                         </el-form-item>
                     </el-col>
                 </el-col>
@@ -403,8 +402,8 @@
                         </el-form-item>
                    </el-col> 
                    <el-col :span="9">
-                        <el-form-item label="戒酒时长" label-width="200px">
-                            <el-input v-model="basicInfo.quitDrinkTime" placeholder=""></el-input>
+                        <el-form-item label="戒酒时长" label-width="200px" prop="quitDrinkTime">
+                            <el-input v-model.number="basicInfo.quitDrinkTime" placeholder=""></el-input>
                         </el-form-item>
                    </el-col> 
                 </el-col>
@@ -412,13 +411,13 @@
              <el-row>
                  <el-col :span="24">
                     <el-col :lg="5" :sm="4">
-                        <el-form-item label="孕" label-width="170px">
-                             <el-input v-model="basicInfo.pregnant" placeholder=""></el-input>
+                        <el-form-item label="孕" label-width="170px" prop="pregnant">
+                             <el-input v-model.number="basicInfo.pregnant" placeholder=""></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :lg="4" :sm="5">
-                        <el-form-item label="产" label-width="80px">
-                             <el-input v-model="basicInfo.birth" placeholder=""></el-input>
+                        <el-form-item label="产" label-width="80px" prop="birth">
+                             <el-input v-model.number="basicInfo.birth" placeholder=""></el-input>
                         </el-form-item>
                     </el-col>
                      <el-col :lg="4" :sm="5">

@@ -11,8 +11,29 @@ export default {
         sourceProvince:[],
         sourceCity:[],
         rules: {
-            name: [
-              { required: true, message: '请输入姓名', trigger: 'blur' }
+            height: [
+              { type: 'number', message: '只能填写数字',  trigger: 'change' }
+            ],
+            weight:[
+                { type: 'number', message: '只能填写数字',  trigger: 'change' }
+            ],
+            age:[
+                { type: 'number', message: '只能填写数字',  trigger: 'change' }
+            ],
+            quitSmokeTime:[
+                { type: 'number', message: '只能填写数字',  trigger: 'change' }
+            ],
+            dailyDrink:[
+                { type: 'number', message: '只能填写数字',  trigger: 'change' }
+            ],
+            quitDrinkTime:[
+                { type: 'number', message: '只能填写数字',  trigger: 'change' }
+            ],
+            pregnant:[
+                { type: 'number', message: '只能填写数字',  trigger: 'change' }
+            ],
+            birth:[
+                { type: 'number', message: '只能填写数字',  trigger: 'change' }
             ],
           },
         basicInfo: {
@@ -79,7 +100,15 @@ export default {
       }
     },
     computed: {
-        
+        birthday() {
+    　　　　return this.basicInfo.birthday
+    　　}
+    },
+    watch: {
+        birthday(newValue, oldValue) {
+    　　　　var age  = this.$common.GetAgeByBrithday(newValue);
+            this.basicInfo.age = age;
+    　　}
     },
     created () {
        this.$common.getPlace(this,this.getBrxxinfo);
@@ -203,6 +232,11 @@ export default {
                 
             }
         }
+        for(var key in obj){
+            if(obj[key] == "" || !obj[key]){
+                obj[key] = null;
+            }
+        }
         return obj;
       },
       /**
@@ -237,18 +271,42 @@ export default {
         }
         return params_obj;
       },
+      /** 
+       * 表单提交
+       * 
+      */
       onSubmit(){
-          var _that = this; 
-          var params = _that.setSuBmitParams(this.basicInfo);
-          _that.$http.put("/patientManage/updatePatientInfo",params).then(function(response){
-                //数据提交
-                debugger
-                if(response.code == '1'){
-                    _that.$common.openSuccessMsgBox("更新病人信息成功！，即将返回病人管理",_that);
-                }
-          }).catch(function(error){
-            _that.$common.openErrorMsgBox("error",_that);
+        var _that = this; 
+        this.$refs["formName"].validate((valid) => {
+            if (valid) {
+                var params = _that.setSuBmitParams(this.basicInfo);
+                _that.$http.put("/patientManage/updatePatientInfo",params).then(function(response){
+                      //数据提交
+                      if(response.code == '1'){
+                          _that.$common.openSuccessMsgBox("更新病人信息成功！，即将返回病人管理",_that);
+                          _that.goTobrglpage();
+                      }
+                }).catch(function(error){
+                  _that.$common.openErrorMsgBox("error",_that);
+                });
+            } else {
+              _that.$common.openErrorMsgBox("数据项校验未通过",_that);
+              return false;
+            }
           });
-      }
+      },
+      /**
+       * 返回病人管理页面
+       */
+      goTobrglpage:function(){
+        //跳转组件并且 传递pid
+        var pathParams = window.localStorage.getItem("prePathParams");
+        var prePathParams = window.localStorage.getItem("pathParams");
+        //缓存 目标跳转页面的参数
+        this.$store.dispatch("setPathParams", pathParams);
+        this.$store.dispatch("setPrePathParams", prePathParams);
+        //缓存 跳转页面的参数
+        this.$common.GotoPage("brglpage",JSON.parse(pathParams),this);
+      },
     }
   }

@@ -76,6 +76,9 @@ export default {
        */
       getBrList(search_obj){
         var _that = this;
+        if(search_obj != _that.search_obj){
+           search_obj = _that.search_obj;
+        }
         var url = "/patientManage/getPatientList";
         _that.$http.get(url,{
             params: search_obj

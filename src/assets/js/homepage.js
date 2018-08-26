@@ -30,7 +30,6 @@ export default {
          //获取地址请求
         this.getPlace();
       },
-      
       computed: {
           birthday() {
       　　　　return this.form.birthday

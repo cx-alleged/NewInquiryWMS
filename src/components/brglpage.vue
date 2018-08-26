@@ -2,8 +2,8 @@
 <div class="brgl-container">
     <div class="search-row">
         <div class="search-row-input-item">
-          <el-input placeholder="请输入病人名字" v-model="search_obj.pname">
-              <el-button slot="append" icon="el-icon-search"></el-button>
+          <el-input placeholder="请输入病人名字" v-model="search_obj.pname" @keyup.enter.native="getBrList">
+              <el-button slot="append" icon="el-icon-search" @click="getBrList"></el-button>
           </el-input>
         </div>
         <div class="search-row-btn-group">
