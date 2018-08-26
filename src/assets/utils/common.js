@@ -9,6 +9,28 @@ export default{
      r_str = str.replace("\"([^\"]*)\"", "\"");  
      return r_str;
    },
+   /**
+    * 将时间对象转化为string 
+    * @param {Date} date_obj Date对象
+    * @param {String} fmt 格式
+    */
+   dateFormatStr(date_obj,fmt){
+      var o = {   
+        "M+" : date_obj.getMonth()+1,                 //月份   
+        "d+" : date_obj.getDate(),                    //日   
+        "h+" : date_obj.getHours(),                   //小时   
+        "m+" : date_obj.getMinutes(),                 //分   
+        "s+" : date_obj.getSeconds(),                 //秒   
+        "q+" : Math.floor((date_obj.getMonth()+3)/3), //季度   
+        "S"  : date_obj.getMilliseconds()             //毫秒   
+      };   
+      if(/(y+)/.test(fmt))   
+        fmt=fmt.replace(RegExp.$1, (date_obj.getFullYear()+"").substr(4 - RegExp.$1.length));   
+      for(var k in o)   
+        if(new RegExp("("+ k +")").test(fmt))   
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+      return fmt;
+   },
     /**
      * 判断省份是否在国内，
      * 

@@ -6,42 +6,49 @@
                     <el-col :span="8">
                         <el-form-item label="饭量">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                    <el-option label="无进食" value="无进食"></el-option>
+                                    <el-option label="极少" value="极少"></el-option>
+                                    <el-option label="较少" value="较少"></el-option>
+                                    <el-option label="适中" value="适中"></el-option>
+                                    <el-option label="较多" value="较多"></el-option>
+                                    <el-option label="非常多" value="非常多"></el-option>
+                                    <el-option label="异常多" value="异常多"></el-option>
+                                    <el-option label="时多时少" value="时多时少"></el-option>
+                                    <el-option label="无异常" value="无异常"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
-                        <el-form-item label="纳后腹胀">
+                        <el-form-item label="纳后腹痛">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                    <el-option label="无纳后腹痛情况" value="无纳后腹痛情况"></el-option>
+                                    <el-option label="鲜有腹痛" value="鲜有腹痛"></el-option>
+                                    <el-option label="偶尔腹痛" value="偶尔腹痛"></el-option>
+                                    <el-option label="时有腹痛" value="时有腹痛"></el-option>
+                                    <el-option label="常有腹痛" value="常有腹痛"></el-option>
+                                    <el-option label="每进食后都腹痛" value="每进食后都腹痛"></el-option>
+                                    <el-option label="时有时无" value="时有时无"></el-option>
+                                    <el-option label="无异常" value="无异常"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="饮食习惯">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                    <el-option label="喜冷" value="喜冷"></el-option>
+                                    <el-option label="喜热" value="喜热"></el-option>
+                                    <el-option label="畏冷" value="畏冷"></el-option>
+                                    <el-option label="畏热" value="畏热"></el-option>
+                                    <el-option label="喜酸" value="喜酸"></el-option>
+                                    <el-option label="喜甜" value="喜甜"></el-option>
+                                    <el-option label="畏辣" value="畏辣"></el-option>
+                                    <el-option label="无异常" value="无异常"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
@@ -53,43 +60,45 @@
                     <el-col :span="8">
                         <el-form-item label="食欲">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                    <el-option label="毫无食欲" value="毫无食欲"></el-option>
+                                    <el-option label="鲜有食欲" value="鲜有食欲"></el-option>
+                                    <el-option label="食欲较低" value="食欲较低"></el-option>
+                                    <el-option label="食欲正常" value="食欲正常"></el-option>
+                                    <el-option label="食欲较强" value="食欲较强"></el-option>
+                                    <el-option label="食欲旺盛" value="食欲旺盛"></el-option>
+                                    <el-option label="时有时无" value="时有时无"></el-option>
+                                    <el-option label="无异常" value="无异常"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="纳后腹胀">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                    <el-option label="永远吃不饱" value="永远吃不饱"></el-option>
+                                    <el-option label="无明显不适" value="无明显不适"></el-option>
+                                    <el-option label="无不适感" value="无不适感"></el-option>
+                                    <el-option label="吃多一些就觉得胀" value="吃多一些就觉得胀"></el-option>
+                                    <el-option label="吃喝后都觉得胀" value="吃喝后都觉得胀"></el-option>
+                                    <el-option label="无异常" value="无异常"></el-option>
                                 </el-select>
                         </el-form-item>
+                        
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="消化">
-                                 <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
-                                </el-select>
+                            <el-select v-model="value" placeholder="请选择">
+                                <el-option label="消化过快" value="消化过快"></el-option>
+                                <el-option label="正常消化" value="正常消化"></el-option>
+                                <el-option label="不太消化" value="不太消化"></el-option>
+                                <el-option label="不能消化" value="不能消化"></el-option>
+                                <el-option label="无异常" value="无异常"></el-option>
+                            </el-select>
                         </el-form-item>
                         <el-form-item>
                             <el-input v-model="value" placeholder=""></el-input>
@@ -100,12 +109,14 @@
                     <el-col :span="8">
                         <el-form-item label="饥饿感">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                    <el-option label="从无饥饿感" value="从无饥饿感"></el-option>
+                                    <el-option label="鲜有饥饿感" value="鲜有饥饿感"></el-option>
+                                    <el-option label="时有饥饿感" value="时有饥饿感"></el-option>
+                                    <el-option label="饥饿感正常" value="饥饿感正常"></el-option>
+                                    <el-option label="常有饥饿感" value="常有饥饿感"></el-option>
+                                    <el-option label="随时感觉饥饿" value="随时感觉饥饿"></el-option>
+                                    <el-option label="时有时无" value="时有时无"></el-option>
+                                    <el-option label="无异常" value="无异常"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
@@ -115,16 +126,17 @@
                     <el-col :span="8">
                         <el-form-item label="纳后打嗝">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                    <el-option label="无嗝气情况" value="无嗝气情况"></el-option>
+                                    <el-option label="偶尔打嗝" value="偶尔打嗝"></el-option>
+                                    <el-option label="有时打嗝" value="有时打嗝"></el-option>
+                                    <el-option label="常打嗝" value="常打嗝"></el-option>
+                                    <el-option label="一直打嗝" value="一直打嗝"></el-option>
+                                    <el-option label="时有时无" value="时有时无"></el-option>
+                                    <el-option label="无异常" value="无异常"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -133,14 +145,13 @@
                 <el-row :gutter="20">
                     <el-col :span="8">
                         <el-form-item label="入睡快慢">
-                                 <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
-                                </el-select>
+                            <el-select v-model="value" placeholder="请选择">
+                                <el-option label="极易入睡" value="极易入睡"></el-option>
+                                <el-option label="较快入睡" value="较快入睡"></el-option>
+                                <el-option label="很难入睡" value="很难入睡"></el-option>
+                                <el-option label="极难入睡" value="极难入睡"></el-option>
+                                <el-option label="无异常" value="无异常"></el-option>
+                            </el-select>
                         </el-form-item>
                         <el-form-item>
                             <el-input v-model="value" placeholder=""></el-input>
@@ -149,31 +160,30 @@
                     <el-col :span="8">
                         <el-form-item label="做梦频率">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                    <el-option label="无" value="无"></el-option>
+                                    <el-option label="偶尔做梦" value="偶尔做梦"></el-option>
+                                    <el-option label="经常做梦" value="经常做梦"></el-option>
+                                    <el-option label="极多" value="极多"></el-option>
+                                    <el-option label="无异常" value="无异常"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="睡眠质量">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                    <el-option label="极高" value="极高"></el-option>
+                                    <el-option label="较好" value="较好"></el-option>
+                                    <el-option label="中等" value="中等"></el-option>
+                                    <el-option label="较差" value="较差"></el-option>
+                                    <el-option label="极差" value="极差"></el-option>
+                                    <el-option label="无异常" value="无异常"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -181,63 +191,49 @@
                     <el-col :span="8">
                         <el-form-item label="睡眠时长">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                    <el-option label="极少（<4h）" value="极少（<4h）"></el-option>
+                                    <el-option label="较少（4-6h）" value="较少（4-6h）"></el-option>
+                                    <el-option label="正常（6-8h）" value="正常（6-8h）"></el-option>
+                                    <el-option label="较多（9-12h）" value="较多（9-12h）"></el-option>
+                                    <el-option label="极多（>12h）" value="极多（>12h）"></el-option>
+                                    <el-option label="无异常" value="无异常"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="噩梦否">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                    <el-option label="无" value="无"></el-option>
+                                    <el-option label="极少" value="极少"></el-option>
+                                    <el-option label="经常" value="经常"></el-option>
+                                    <el-option label="极多" value="极多"></el-option>
+                                    <el-option label="无异常" value="无异常"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="午睡否">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                    <el-option label="有午睡习惯" value="有午睡习惯"></el-option>
+                                    <el-option label="无午睡习惯" value="无午睡习惯"></el-option>
+                                    <el-option label="无异常" value="无异常"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row :gutter="20">
                     <el-col :span="8">
                         <el-form-item label="起夜次数">
-                                 <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
-                                </el-select>
-                        </el-form-item>
-                        <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="formInline.user" placeholder="" class="suffix-input-width"></el-input><span class="suffix-input-span">次</span>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -260,47 +256,47 @@
                 <el-row :gutter="20">
                     <el-col :span="8">
                         <el-form-item label="大便外观">
-                                 <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
-                                </el-select>
+                            <el-select v-model="value" placeholder="请选择">
+                                <el-option label="水样" value="水样"></el-option>
+                                <el-option label="粥样" value="粥样"></el-option>
+                                <el-option label="溏稀" value="溏稀"></el-option>
+                                <el-option label="香蕉状" value="香蕉状"></el-option>
+                                <el-option label="干硬" value="干硬"></el-option>
+                                <el-option label="羊矢" value="羊矢"></el-option>
+                                <el-option label="无异常" value="无异常"></el-option>
+                            </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="颜色">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                    <el-option label="土黄色" value="土黄色"></el-option>
+                                    <el-option label="褐色" value="褐色"></el-option>
+                                    <el-option label="暗红色" value="暗红色"></el-option>
+                                    <el-option label="黑色" value="黑色"></el-option>
+                                    <el-option label="鲜红色" value="鲜红色"></el-option>
+                                    <el-option label="浅红色" value="浅红色"></el-option>
+                                    <el-option label="紫色" value="紫色"></el-option>
+                                    <el-option label="绿色" value="绿色"></el-option>
+                                    <el-option label="无异常" value="无异常"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="造瘘否">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                    <el-option label="是" value="是"></el-option>
+                                    <el-option label="否" value="否"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -308,46 +304,40 @@
                     <el-col :span="8">
                         <el-form-item label="顺畅度">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                    <el-option label="腹泻" value="腹泻"></el-option>
+                                    <el-option label="常常腹泻" value="常常腹泻"></el-option>
+                                    <el-option label="偶尔腹泻" value="偶尔腹泻"></el-option>
+                                    <el-option label="顺畅" value="顺畅"></el-option>
+                                    <el-option label="偶尔便秘" value="偶尔便秘"></el-option>
+                                    <el-option label="常常便秘" value="常常便秘"></el-option>
+                                    <el-option label="总是便秘" value="总是便秘"></el-option>
+                                    <el-option label="无异常" value="无异常"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="便血否">
-                                 <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
-                                </el-select>
+                                 <el-radio-group v-model="radio2">
+                                    <el-radio :label="是" :value="是">是</el-radio>
+                                    <el-radio :label="否" :value="否">否</el-radio>
+                                </el-radio-group>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="粘连否">
-                                 <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
-                                </el-select>
+                                 <el-radio-group v-model="radio2">
+                                    <el-radio :label="是" :value="是">是</el-radio>
+                                    <el-radio :label="否" :value="否">否</el-radio>
+                                </el-radio-group>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -355,14 +345,14 @@
                      <el-col :span="8">
                          <el-form-item label="开塞露否">
                                 <el-radio-group v-model="radio2">
-                                    <el-radio :label="3">是</el-radio>
-                                    <el-radio :label="6">否</el-radio>
+                                    <el-radio :label="是" :value="是">是</el-radio>
+                                    <el-radio :label="否" :value="否">否</el-radio>
                                 </el-radio-group>
                             </el-form-item>
                      </el-col>
                      <el-col :span="8">
                          <el-form-item label="气味">
-                                <el-input v-model="value" placeholder=""></el-input>
+                                <el-input v-model="value" placeholder="备注"></el-input>
                             </el-form-item>
                      </el-col>
                 </el-row>
@@ -372,46 +362,45 @@
                     <el-col :span="8">
                         <el-form-item label="尿颜色">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                    <el-option label="浅稻黄色" value="浅稻黄色"></el-option>
+                                    <el-option label="黄透明色" value="黄透明色"></el-option>
+                                    <el-option label="深黄色" value="深黄色"></el-option>
+                                    <el-option label="橙色" value="橙色"></el-option>
+                                    <el-option label="粉色" value="粉色"></el-option>
+                                    <el-option label="红色" value="红色"></el-option>
+                                    <el-option label="其他" value="其他"></el-option>
+                                    <el-option label="无异常" value="无异常"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="力量强度">
-                                 <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
-                                </el-select>
+                            <el-select v-model="value" placeholder="请选择">
+                                <el-option label="有力" value="有力"></el-option>
+                                <el-option label="较有力" value="较有力"></el-option>
+                                <el-option label="无力" value="无力"></el-option>
+                                <el-option label="无异常" value="无异常"></el-option>
+                            </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="尿等待">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                   <el-option label="无" value="无"></el-option>
+                                    <el-option label="时有" value="时有"></el-option>
+                                    <el-option label="常有" value="常有"></el-option>
+                                    <el-option label="总是" value="总是"></el-option>
+                                    <el-option label="无异常" value="无异常"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -419,46 +408,45 @@
                     <el-col :span="8">
                         <el-form-item label="尿量">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                   <el-option label="无" value="无"></el-option>
+                                    <el-option label="极少" value="极少"></el-option>
+                                    <el-option label="较少" value="较少"></el-option>
+                                    <el-option label="较多" value="较多"></el-option>
+                                    <el-option label="极多" value="极多"></el-option>
+                                    <el-option label="异常多" value="异常多"></el-option>
+                                    <el-option label="无异常" value="无异常"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="尿不急">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                    <el-option label="无" value="无"></el-option>
+                                    <el-option label="时有" value="时有"></el-option>
+                                    <el-option label="常有" value="常有"></el-option>
+                                    <el-option label="总是" value="总是"></el-option>
+                                    <el-option label="无异常" value="无异常"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="尿频">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                    <el-option label="无" value="无"></el-option>
+                                    <el-option label="时有" value="时有"></el-option>
+                                    <el-option label="常有" value="常有"></el-option>
+                                    <el-option label="总是" value="总是"></el-option>
+                                    <el-option label="无异常" value="无异常"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -466,8 +454,8 @@
                      <el-col :span="8">
                          <el-form-item label="利尿剂否">
                                 <el-radio-group v-model="radio2">
-                                    <el-radio :label="3">是</el-radio>
-                                    <el-radio :label="6">否</el-radio>
+                                    <el-radio :label="是" :value="是">是</el-radio>
+                                    <el-radio :label="否" :value="否">否</el-radio>
                                 </el-radio-group>
                             </el-form-item>
                      </el-col>
@@ -502,12 +490,10 @@
                     <el-col :span="8">
                         <el-form-item label="痛经否">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                    <el-option label="偶尔痛经" value="偶尔痛经"></el-option>
+                                    <el-option label="常常痛经" value="常常痛经"></el-option>
+                                    <el-option label="一直痛经" value="一直痛经"></el-option>
+                                    <el-option label="无异常" value="无异常"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
@@ -548,28 +534,28 @@
                 <el-row :gutter="20">
                     <el-col :span="8">
                         <el-form-item label="周期规律">
-                                 <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
-                                </el-select>
+                            <el-select v-model="value" placeholder="请选择">
+                                <el-option label="规律" value="规律"></el-option>
+                                <el-option label="不规律" value="不规律"></el-option>
+                                <el-option label="有时规律" value="有时规律"></el-option>
+                                <el-option label="无异常" value="无异常"></el-option>
+                            </el-select>
                         </el-form-item>
                         <el-form-item>
-                            <el-input v-model="value" placeholder=""></el-input>
+                            <el-input v-model="value" placeholder="备注"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
                         <el-form-item label="乳房涨否">
                                  <el-select v-model="value" placeholder="请选择">
-                                    <el-option
-                                    v-for="item in options"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                                    </el-option>
+                                    <el-option label="否" value="否"></el-option>
+                                    <el-option label="经前" value="经前"></el-option>
+                                    <el-option label="经后" value="经后"></el-option>
+                                    <el-option label="期间" value="期间"></el-option>
+                                    <el-option label="经前、经期" value="经前、经期"></el-option>
+                                    <el-option label="经前、经后" value="经前、经后"></el-option>
+                                    <el-option label="经期、经后" value="经期、经后"></el-option>
+                                    <el-option label="经前、经期、经后" value="经前、经期、经后"></el-option>
                                 </el-select>
                         </el-form-item>
                         <el-form-item>
@@ -632,251 +618,9 @@
     </div>
 </template>
 <style lang="scss">
-  @media screen and (max-width: 1024px) {
-        .wjxx-info-container{
-            .sczq-label-width{
-                padding-left: 0px !important; 
-                padding-right: 0px !important;
-                &:last-child{
-                    label{
-                        width: 45px !important;
-                    }
-                    .el-form-item__content{
-                        margin-left: 45px !important;
-                    }
-                }
-            }
-            .el-form-item__label{
-                width: 70px !important;
-            }
-            .el-form-item__content{
-                margin-left: 70px !important;
-            }
-            .el-checkbox+.el-checkbox{
-                margin-left: 0px;
-            }
-            .el-checkbox{
-                margin-right: 20px;
-            }
-        }
-    }
-    //特殊划分为两列
-    @media screen and (max-width:1600px){
-        .suffix-input-width{
-            width: calc(100% - 24px);
-        }
-        .suffix-input-span{
-            text-align: right;
-            display: inline-block;
-            width: 24px;
-        }
-    }
-    .wjxx-info-container{
-        padding: 0px 3%;
-        .el-from{
-            &:last-child{
-                border-bottom:0px;
-            }
-        }
-        .wjxx-item{
-                padding-top: 40px;
-                padding-bottom: 18px;
-                border-bottom: 2px solid #e0e6ed;
-        }
-        .no-label-margin{
-            .el-form-item__content{
-                margin-left: 0px !important;
-            }
-        }
-        .el-select{
-            width:100%;
-        }
-    }
-    @media screen and (min-width:1600px) and (max-width:1920px){
-        .wjxx-info-container{
-            
-            .el-select{
-                width: 100%;
-            }
-            .btn-default{
-                width:200px;
-                border-radius:8px;
-                height:70px;
-                line-height:30px;
-                font-size: 30px;
-                border: 1px solid #20a0ff;
-                background-color: #ffffff;
-            }
-            .seconde-col-container .el-row{
-                &:last-child{
-                    .el-form-item{
-                        margin-bottom: 0px;
-                    }
-                }
-            }
-            label.el-form-item__label{
-                font-family: PingFangSC-Medium;
-                font-size: 38px;
-                font-weight: normal;
-                font-stretch: normal;
-                letter-spacing: 0px;
-                color: #5e6d82;
-                line-height: 60px;
-                height: 60px;
-            }
-            input.el-input__inner{
-                height: 60px;
-                line-height: 60px;
-                border-radius: 8px;
-                border: solid 1px #c0ccda;
-                // max-width: 500px;
-                font-family: PingFangSC-Medium;
-                font-size: 36px;
-                font-weight: normal;
-                font-stretch: normal;
-                letter-spacing: 0px;
-                color: #20a0ff;
-            }
-            .suffix-input-width{
-                width: calc(100% - 55px);
-            }
-            .suffix-input-span{
-                    font-family: PingFangSC-Medium;
-                    font-size: 38px;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    letter-spacing: 0px;
-                    color: #5e6d82;
-                    width: 55px;
-                    display: inline-block;
-                    text-align: right;
-            }
-            .col-no-padding{
-                padding: 0px 0px !important;
-            }
-            .el-checkbox-group{
-                span.el-checkbox__input{
-                    line-height: 3;
-                    vertical-align: middle;
-                }
-                span.el-checkbox__inner{
-                        width: 27px;
-                        height: 27px;
-                        border-radius: 6.8px;
-                }
-                .el-checkbox__input.is-checked .el-checkbox__inner::after{
-                    height: 18px;
-                    left: 8px;
-                    top: 0px;
-                    width: 10px;
-                }
-                .el-checkbox__label{
-                    font-family: PingFangSC-Regular;
-                    font-size: 34px;
-                    font-weight: normal;
-                    font-stretch: normal;
-                    letter-spacing: 0px;
-                    color: #1f2d3d;
-                    line-height: 34px;
-                }
-                .el-checkbox__input.is-checked+.el-checkbox__label{
-                    color: #409EFF;
-                }
-                .el-checkbox{
-                    margin-right: 20px;
-                    margin-left: 0px;
-                }
-                .el-checkbox+ .el-checkbox{
-                    margin-left: 0px;
-                }
-            }
-            .el-radio-group{
-                .el-radio__inner{
-                    width: 27px;
-                    height: 27px;
-                }
-                .el-radio__inner::after{
-                    width: 10px;
-                    height: 10px;
-                }
-                label.el-radio{
-                    height: 60px;
-                    line-height: 60px;
-                    .el-radio__input{
-                        line-height: 60px;
-                    }
-                    .el-radio__label{
-                        font-family: PingFangSC-Regular;
-                        font-size: 34px;
-                        font-weight: normal;
-                        font-stretch: normal;
-                        letter-spacing: 0px;
-                    }
-                }
-            }
-            
-            .el-select-dropdown__item {
-                font-size: 42px;
-                height: 60px;
-                line-height: 60px;
-            }
-            textarea{
-                font-family: PingFangSC-Medium;
-                font-size: 36px;
-                font-weight: normal;
-                font-stretch: normal;
-                letter-spacing: 0px;
-                color: #20a0ff;
-            }
-        }
-    }
+  @import '../assets/css/wjxxpage.scss'
 </style>
-<script>
-  export default {
-    data() {
-      return {
-         radio2:"",
-         value:"",
-         options: [{
-          value: '1',
-          label: '正常'
-        }, {
-          value: '2',
-          label: '适中'
-        }, {
-          value: '3',
-          label: '异常'
-        }],
-         checkList:[],
-         formInline: {
-          user: '',
-          region: ''
-        }
-      }
-    },
-    methods: {
-      rowClassname() {
-        return "rowClassname";
-      },
-      headerClassname() {
-        return "headerClassname";
-      },
-      handleClick(row) {
-        console.log(row);
-      },
-      //跳转到药方界面
-      gotoyfpage(row,pagename) {
-        this.$router.push({
-             name: pagename,
-             params:row
-        });
-      },
-      handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-      },
-      handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
-      }
-    }
-  }
+
+<script src="../assets/js/wjxxpage.js">
+  
 </script>
