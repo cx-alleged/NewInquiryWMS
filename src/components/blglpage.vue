@@ -35,7 +35,7 @@
         <el-table-column
         prop="pName"
         label="姓名"
-        width="200">
+        width="250">
         </el-table-column>
         <el-table-column
         prop="inquiryDate"
@@ -58,8 +58,7 @@
         width="300">
         </el-table-column>
         <el-table-column
-        label="操作"
-        width="428">
+        label="操作">
        <template slot-scope="scope">
             <el-button @click="gotoWzxxPage(scope.row)" type="text" class="btn-font-default">查看四诊</el-button>
             <el-button @click="gotoyfpage(scope.row)" type="text" class="btn-font-default">查看病历</el-button>

@@ -32,7 +32,7 @@ export default {
         }
     },
     created ()  {
-        this.getblList();
+        this.initPage();
     },
     methods: {
       rowClassname() {
@@ -51,6 +51,33 @@ export default {
         this.search_obj.pageNum = val;
         this.getblList();
       },
+       //初始化当前组件
+       initPage(){
+        //从缓存中取出当前页面的参数
+        var i_params = JSON.parse(window.localStorage.getItem("pathParams"));
+        if(i_params.data.pname!=""){
+            this.search_obj.pname = i_params.data.pname;
+        }
+        if(i_params.data.pageNum){
+            this.search_obj.pageNum = i_params.data.pageNum;
+        }
+        if(i_params.data.pageSize){
+            this.search_obj.pageSize = i_params.data.pageSize;
+        }
+        if(i_params.data.keyWords){
+          this.search_obj.keyWords = i_params.data.keyWords;
+        }
+        if(i_params.data.startDate){
+          this.search_obj.startDate = i_params.data.startDate;
+        }
+        if(i_params.data.endDate){
+          this.search_obj.endDate = i_params.data.endDate;
+        }
+        if(i_params.data.patientId){
+          this.search_obj.patientId = i_params.data.patientId;
+        }
+        this.getblList();
+      },
       //获取病例table列表
       getblList(){
         var _that = this;
@@ -59,7 +86,6 @@ export default {
         _that.$http.get(url,{
             params: search_obj
            }).then(function (response) {
-               debugger
                 if(JSON.stringify(response.data.pageInfo.list)!="[]"){
                     _that.tableData = response.data.pageInfo;
                 }

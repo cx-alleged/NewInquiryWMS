@@ -1,47 +1,186 @@
 export default {
     data() {
       return {
-         radio2:"",
-         value:"",
-         options: [{
-          value: '1',
-          label: '正常'
-        }, {
-          value: '2',
-          label: '适中'
-        }, {
-          value: '3',
-          label: '异常'
-        }],
-         checkList:[],
-         formInline: {
-          user: '',
-          region: ''
+         basicWjxx:{
+           fl:null,
+           fl_remarks:null,
+           nhft:null,
+           nhft_remarks:null,
+           ysxg:null,
+           ysxg_remarks:null,
+           sy:null,
+           sy_remarks:null,
+           nhfz:null,
+           nhfz_remarks:null,
+           xh:null,
+           xh_remarks:null,
+           jeg:null,
+           jeg_remarks:null,
+           nhdg:null,
+           nhdg_remarks:null,
+           rskm:null,
+           rskm_remarks:null,
+           zmpl:null,
+           zmpl_remarks:null,
+           smzl:null,
+           smzl_remarks:null,
+           smsc:null,
+           smsc_remarks:null,
+           emf:null,
+           emf_remarks:null,
+           wsf:null,
+           wsf_remarks:null,
+           qycs:null,
+           dppl_r:null,
+           dppl_c:null,
+           dpwg:null,
+           dpwg_remarks:null,
+           ys:null,
+           ys_remarks:null,
+           zwf:null,
+           zwf_remarks:null,
+           scd:null,
+           scd_remarks:null,
+           bxf:null,
+           bxf_remarks:null,
+           zlf:null,
+           zlf_remarks:null,
+           kslf:null,
+           qw:null,
+           lys:null,
+           lys_remarks:null,
+           llqd:null,
+           llqd_remarks:null,
+           ldd:null,
+           ldd_remarks:null,
+           ll:null,
+           ll_remarks:null,
+           lbj:null,
+           lbj_remarks:null,
+           lp:null,
+           lp_remarks:null,
+           lljf:null,
+           cc:null,
+           mcyj:null,
+           sc:null,
+           zq:null,
+           tjf:null,
+           tjf_remarks:null,
+           ybbs:null,
+           ybbs_remarks:null,
+           fbbs:null,
+           fbbs_remarks:null,
+           zqgl:null,
+           zqgl_remarks:null,
+           ffzf:null,
+           ffzf_remarks:null,
+           tbbs:null,
+           tbbs_remarks:null,
+           jjf:null,
+           jjnl:null,
+           jjyy:null,
+           djf:null,
+         }
+    }
+  },
+  beforeCreate () {
+    
+  },
+  created () {
+    this.getWjxxData();
+  },
+  methods: {
+    /**
+     * 跳转病历管理页面
+     * 
+     */
+    gotoBlglpage() {
+      //跳转组件并且 传递pid
+      var pathParams = window.localStorage.getItem("prePathParams");
+      var prePathParams = window.localStorage.getItem("pathParams");
+      //缓存 目标跳转页面的参数
+      this.$store.dispatch("setPathParams", pathParams);
+      this.$store.dispatch("setPrePathParams", prePathParams);
+      //缓存 跳转页面的参数
+      this.$common.GotoPage("blglpage",JSON.parse(pathParams),this);
+    },
+    /** 
+     * 获取问卷信息
+    */
+    getWjxxData(){
+      var _that = this;
+      var inquiryId = JSON.parse(window.localStorage.getItem("pathParams")).data.inquiryId;
+      var url = "/inquiry/getInquiryAnswer?inquryId="+inquiryId;
+      _that.$http.get(url)
+      .then(function (response) {
+        if(response.code == "1"){
+          _that.setAnswerFormat(response);
+        }
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
+    },
+    /**
+     * 转化数组列表为对象
+     */
+    setAnswerFormat(res_obj){
+      var answerVOList = res_obj.data.AnswerList.answerVOList;
+      for(var key in answerVOList){
+        var temp_obj = answerVOList[key];
+        if(temp_obj.answer && temp_obj.answer != ""){
+          this.basicWjxx[temp_obj.stem] = temp_obj.answer;
+        }
+        if(temp_obj.remark && temp_obj.remark != ""){
+          this.basicWjxx[temp_obj.stem+"_remarks"] = temp_obj.remark;
         }
       }
     },
-    methods: {
-      rowClassname() {
-        return "rowClassname";
-      },
-      headerClassname() {
-        return "headerClassname";
-      },
-      handleClick(row) {
-        console.log(row);
-      },
-      //跳转到药方界面
-      gotoyfpage(row,pagename) {
-        this.$router.push({
-             name: pagename,
-             params:row
-        });
-      },
-      handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-      },
-      handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+    /**
+     * 封装保存参数
+     */
+    setParamsFormat(){
+      var obj = new Object();
+      var p_arry = new Array();
+      var params = JSON.parse(JSON.stringify(this.basicWjxx));
+      for(var key in params){
+        if(key.indexOf("_remarks") == -1){
+          var temp_p = new Object();
+          if(params[key]=="" || !params[key]){
+            temp_p.answer = null;
+          }else{
+            temp_p.answer = params[key];
+          }
+          if(params[key+"_remarks"]=="" || !params[key+"_remarks"]){
+            temp_p.remark = null;
+          }else{
+            temp_p.remark = params[key+"_remarks"];
+          }
+          temp_p.stem = key;
+          temp_p.questionLabel = key;
+          p_arry.push(temp_p);
+        }else{
+          continue
+        }
       }
+      obj.inquiryId = JSON.parse(window.localStorage.getItem("pathParams")).data.inquiryId;
+      obj.answerVOList = p_arry;
+      return obj;
+    },
+    /**
+     * 问卷信息 保存 提交
+     */
+    onSubmit(){
+      var params = this.setParamsFormat();
+      var _that = this;
+      var loading = _that.$common.openLoading("提交中",_that);
+      _that.$http.post('/inquiry/postInquiryAnswer',params).then(function (response) {
+          _that.$common.openSuccessMsgBox("操作成功",_that);
+          setTimeout(function(){loading.close(); }, 1000);
+      }).catch(function (error) {
+        console.log(error);
+        setTimeout(function(){loading.close(); }, 1000);
+      });
     }
   }
+}
