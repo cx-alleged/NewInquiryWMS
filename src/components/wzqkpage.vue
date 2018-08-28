@@ -2,20 +2,20 @@
 <div class="sjtj-wzqk-container">
     <div class="search-row">
         <div class="search-row-btn-group">
-          <el-button class="btn-default wzqk-btn" @click="gotoyfpage(wzqkpage)">每日问诊情况</el-button>
-          <el-button class="btn-default yytj-btn" @click="gotoyfpage(yytjpage)">用药统计</el-button>
+          <el-button class="btn-default wzqk-btn">每日问诊情况</el-button>
+          <el-button class="btn-default yytj-btn" @click="gotoYytjPage(yytjpage)">用药统计</el-button>
         </div>
     </div>
     <div class="search-row flex-justify-content">
        <el-date-picker
        class="wzrq-input"
-        v-model="input5"
+        v-model="rangeDate"
         type="daterange"
         range-separator="至"
         start-placeholder="开始日期"
         end-placeholder="结束日期">
       </el-date-picker>
-      <span name='wzGjrs'>共计人数：2321</span>
+      <span name='wzGjrs'>共计人数：{{tableData.total}}</span>
     </div>
     <div class="table-continer">
         <el-table
@@ -42,12 +42,12 @@
         <el-table-column
         prop="sourceArea"
         label="来自"
-        width="360">
+        width="450">
         </el-table-column>
         <el-table-column
         prop="description"
         label="诊断"
-        width="430">
+        width="500">
         </el-table-column>
         <el-table-column
         prop="times"
@@ -56,8 +56,7 @@
         </el-table-column>
         <el-table-column
         prop="amount"
-        label="付数"
-        width="240">
+        label="付数">
        
         </el-table-column>
     </el-table>
@@ -69,11 +68,10 @@
         background
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage4"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        :current-page="tableData.pageNum"
+        :page-size="tableData.pageSize"
         layout="total, prev, pager, next, jumper"
-        :total="1000">
+        :total="tableData.total">
       </el-pagination>
     </div>
     <div class="search-row-btn-group">
@@ -83,314 +81,9 @@
 </div> 
 </template>
 <style lang="scss">
-.sjtj-wzqk-container{
-  padding: 40px;
-  margin: 0px;
-  .search-row-btn-group{
-    padding: 0px;
-    .btn-default{
-      border: solid 1px #20a0ff;
-      height: 70px;
-      span{
-        font-family: PingFangSC-Regular;
-        font-size: 30px;
-        font-weight: normal;
-        font-stretch: normal;
-        line-height: 23.8px;  
-        letter-spacing: 0px;
-        color: #20a0ff;
-      }
-    }
-    .wzqk-btn{
-      border-top-left-radius: 8px;
-      border-bottom-left-radius: 8px;
-      background-color: #f0f9ff;
-    }
-    .yytj-btn{
-      margin-left: -6px;
-      border-top-right-radius: 8px;
-      border-bottom-right-radius: 8px;
-      border-right: solid 1px #dcdfe6;
-      border-top: solid 1px #dcdfe6;
-      border-bottom: solid 1px #dcdfe6;
-      span{
-        color: #303133;
-      }
-    }
-  }
-  .search-row.flex-justify-content{
-    justify-content:space-between;
-  }
-  .search-row{
-    width: 100%;
-    height: 72px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    .wzrq-input{
-      width: 510px;
-      height: 72px;
-      i{
-        font-size: 25px;
-      }
-      input{
-        width: 45%;
-        font-family: PingFangSC-Regular;
-        font-size: 34px;
-        font-weight: normal;
-        font-stretch: normal;
-        letter-spacing: 0px;
-        color: #99a9bf;
-      }
-      span.el-range-separator{
-        font-size: 30px;
-        line-height: 70px;
-        width: 6%;
-      }
-    }
-    span[name="wzGjrs"]{
-      font-family: PingFangSC-Regular;
-      font-size: 28px;
-      font-weight: normal;
-      font-stretch: normal;
-      letter-spacing: 0px;
-      color: #8492a6;
-    }
-  }
-  .foot-container{
-    width: 100%;
-    margin-top: 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .page-container{
-      text-align: center;
-      width: 768px;
-      margin-top: 0px;
-        .el-pager li{
-          width: 48px;
-          height: 47px;
-          line-height: 47px;
-          border: solid 1px #d3dce6;
-          margin: 0px;
-        }
-        .el-pagination button{
-          width: 48px;
-          height: 47px;
-        }
-        span.el-pagination__total{
-            font-family: HelveticaNeue;
-            font-size: 22px;
-            height: 47px;
-            line-height: 47px;
-            font-weight: normal;
-            font-stretch: normal;
-            letter-spacing: 0px;
-            color: #475669;
-        }
-        span.el-pagination__jump{
-          font-family: HelveticaNeue;
-          font-size: 22px;
-            height: 47px;
-            line-height: 47px;
-            font-weight: normal;
-              font-stretch: normal;
-              letter-spacing: 0px;
-              color: #475669;
-            input {
-              font-family: HelveticaNeue;
-              font-size: 22px;
-              font-weight: normal;
-              font-stretch: normal;
-              letter-spacing: 0px;
-              color: #475669;
-            }
-        }
-    }
-  }
-  .btn-font-default{
-    font-family: PingFangSC-Regular;
-    font-size: 34px;
-    font-weight: normal;
-    font-stretch: normal;
-    line-height: 34px;
-    letter-spacing: 0px;
-    color: #20a0ff;
-  }
-  .bnt-font-color{
-    color: #ff4949;
-  }
-
-  .table-continer{
-      max-height: 520px;
-      overflow:  auto;
-      .el-table__header-wrapper{
-        background: #e5e9f2;
-      }
-      .el-table__body-wrapper{
-        max-height: 440px;
-        overflow-y:auto;
-      }
-  }
-  .el-table .headerClassname,rowClassname {
-    background: #f0f9eb;
-    height: 76px;
-  }
-  .el-table .headerClassname th{
-    background-color: #e5e9f2;
-
-  }
-  .el-table .headerClassname th>.cell{
-      font-family: PingFangSC-Medium;
-      font-size: 32px;
-      font-weight: normal;
-      font-stretch: normal;
-      letter-spacing: 0px;
-      color: #475669;
-      line-height: 32px;
-  }
-  .el-table .rowClassname .cell{
-    font-family: PingFangSC-Regular;
-    font-size: 34px;
-    line-height: 34px;
-    font-weight: normal;
-    font-stretch: normal;
-    letter-spacing: 0px;
-    color: #1f2d3d;
-  }
-}
+  @import "../assets/css/wzqkpage.scss"
 </style>
 
-<script>
-  export default {
-    data() {
-      return {
-        yytjpage:'yytjpage',
-        wzqkpage:'wzqkpage',
-        input5:'',
-        currentPage4:1,
-        tableData: {
-        "pageNum": 1,
-        "pageSize": 1,
-        "total": 1,
-        "pages": 1,
-        "list": [
-          {
-            "sequenceId": 20,
-            "pId": 20,
-            "pName": "姓名",
-            "age": 20,
-            "sourceArea": "四川成都",
-            "description": "主述",
-            "times": 20,
-            "amount": 20
-          },
-          {
-            "sequenceId": 20,
-            "pId": 20,
-            "pName": "姓名",
-            "age": 20,
-            "sourceArea": "四川成都",
-            "description": "主述",
-            "times": 20,
-            "amount": 20
-          },
-          {
-            "sequenceId": 20,
-            "pId": 20,
-            "pName": "姓名",
-            "age": 20,
-            "sourceArea": "四川成都",
-            "description": "主述",
-            "times": 20,
-            "amount": 20
-          },
-          {
-            "sequenceId": 20,
-            "pId": 20,
-            "pName": "姓名",
-            "age": 20,
-            "sourceArea": "四川成都",
-            "description": "主述",
-            "times": 20,
-            "amount": 20
-          },
-          {
-            "sequenceId": 20,
-            "pId": 20,
-            "pName": "姓名",
-            "age": 20,
-            "sourceArea": "四川成都",
-            "description": "主述",
-            "times": 20,
-            "amount": 20
-          },
-          {
-            "sequenceId": 20,
-            "pId": 20,
-            "pName": "姓名",
-            "age": 20,
-            "sourceArea": "四川成都",
-            "description": "主述",
-            "times": 20,
-            "amount": 20
-          },
-          {
-            "sequenceId": 20,
-            "pId": 20,
-            "pName": "姓名",
-            "age": 20,
-            "sourceArea": "四川成都",
-            "description": "主述",
-            "times": 20,
-            "amount": 20
-          },
-          {
-            "sequenceId": 20,
-            "pId": 20,
-            "pName": "姓名",
-            "age": 20,
-            "sourceArea": "四川成都",
-            "description": "主述",
-            "times": 20,
-            "amount": 20
-          },
-          {
-            "sequenceId": 20,
-            "pId": 20,
-            "pName": "姓名",
-            "age": 20,
-            "sourceArea": "四川成都",
-            "description": "主述",
-            "times": 20,
-            "amount": 20
-          }
-        ]
-      }
-      }
-    },
-    methods: {
-      rowClassname() {
-        return "rowClassname";
-      },
-      headerClassname() {
-        return "headerClassname";
-      },
-      handleClick(row) {
-        console.log(row);
-      },
-      //跳转到药方界面
-      gotoyfpage(pagename) {
-        this.$router.push({
-             name: pagename
-        });
-      },
-      handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
-      },
-      handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
-      }
-    }
-  }
+<script src="../assets/js/wzqkpage.js">
+ 
 </script>

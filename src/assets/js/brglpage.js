@@ -90,6 +90,24 @@ export default {
                 console.log(error);
             });
       },
+      /**
+       * 移除病人信息
+       * @param {object} row 
+       */
+      deleteBrInfo(row){
+        var _that = this;
+        var url = "/index/deletePatient?patientId="+row.pId;
+        _that.$http.delete(url).then(function (response) {
+            if(response.code =="1"){
+              _that.$common.openSuccessMsgBox("病人信息移除成功！",_that);
+              setTimeout(function(){
+                _that.getBrList();
+              },1000);
+            }
+          }).catch(function (error) {
+              console.log(error);
+          });
+      },
         /**
          * 新建问诊 返回问诊id
          * 
