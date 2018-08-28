@@ -19,6 +19,7 @@
     </div>
     <div class="table-continer">
         <el-table
+        id = "wzqktable"
         :data="tableData.list"
         :header-row-class-name="headerClassname"
         :row-class-name="rowClassname"
@@ -75,7 +76,7 @@
       </el-pagination>
     </div>
     <div class="search-row-btn-group">
-       <el-button class="btn-default" style="width:200px;border-radius: 8px;">打印</el-button>
+       <el-button class="btn-default" @click="tableprint" style="width:200px;border-radius: 8px;">打印</el-button>
     </div>
   </div>
 </div> 

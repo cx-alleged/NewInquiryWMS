@@ -228,17 +228,6 @@
               </div>
               </div>
           </div>
-          <!-- <div class="yf-item" v-for="(ffitem, ffindex) in mainReList.viceReList" :key="ffindex">
-              <div class="yw-title">
-                  副方{{'零一二三四五六七八九'.charAt(ffindex+1)+(ffitem.remark && ffitem.remark!="" ? "("+ffitem.remark+")":"")}}
-              </div>
-              <div class="yw-list">
-                  <div class="yw-item"  v-for="(ywitem, ywindex) in ffitem.viceMeList" :key="ywindex">
-                      <span class="yw-bz">{{ywitem.remark && ywitem.remark!="" ? "（"+ywitem.remark+"）":""}}</span>
-                      <span class="yw-name">{{ywitem.name && ywitem.name!="" ? ywitem.name+" "+ywitem.dose+"g":""}}</span>
-                  </div>
-              </div>
-          </div> -->
       </div>
       <div class="print-foot-container">
           <div class="frist-foot-item">

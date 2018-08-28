@@ -85,6 +85,13 @@ export default {
       handleCurrentChange(val) {
         this.search_obj.pageNum = val;
         this.getWzqkList(this.search_obj);
+      },
+      tableprint(){
+        var doc_obj = document.getElementById("wzqktable");
+        var data = {};
+        data.rangDate = this.search_obj.startDate+' ~ '+this.search_obj.endDate;
+        data.list = this.tableData.list;
+        this.$tablePrint(doc_obj,{"data":data,"type":"1"});
       }
     }
   }

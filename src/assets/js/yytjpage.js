@@ -87,7 +87,6 @@ export default {
         _that.$common.GotoPage(pagename,pathParams,_that);
       },
       setThreeList(list){
-          debugger
           //第一步 判断是否整除3
           if(JSON.stringify(list) != "[]"){
               //第二步 不能整除 补齐整除数组
@@ -105,6 +104,15 @@ export default {
               this.tableData.list2 = list.slice(index,index*2-1);
               this.tableData.list3 = list.slice(index*2,list.length-1);
           }
+      },
+      tableprint(){
+        var doc_obj = document.getElementById("wzqktable");
+        var data = {};
+        data.rangDate = (this.search_obj.startDate ? this.search_obj.startDate : '')+' ~ '+(this.search_obj.endDate ? this.search_obj.endDate : '');
+        data.list1 = this.tableData.list1;
+        data.list2 = this.tableData.list2;
+        data.list3 = this.tableData.list3;
+        this.$tablePrint(doc_obj,{"data":data,"type":"2"});
       }
     }
   }

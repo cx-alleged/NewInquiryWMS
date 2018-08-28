@@ -12,6 +12,8 @@ import '../src/assets/utils/http.js'
 import common from '../src/assets/utils/common.js'
 //引入打印插件
 import Print from '../src/assets/utils/print.js'
+//引入表格打印
+import tablePrint from '../src/assets/utils/tablePrint.js'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -24,6 +26,8 @@ Vue.config.productionTip = false
 Vue.use(ElementUI)
 //注册打印插件
 Vue.prototype.$Print= Print;
+//注册table 打印插件
+Vue.prototype.$tablePrint = tablePrint;
 //定义全局变量
 Vue.prototype.$http= axios;
 //定义全局属性给公共部分js

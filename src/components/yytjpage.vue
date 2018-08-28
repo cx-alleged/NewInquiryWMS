@@ -20,7 +20,7 @@
                 end-placeholder="结束日期">
             </el-date-picker>
       </div>
-        <div class="search-row-btn-group"><el-button class="btn-default" style="width:200px">打印</el-button></div>
+        <div class="search-row-btn-group"><el-button class="btn-default" @click="tableprint" style="width:200px">打印</el-button></div>
     </div>
     <div class="table-continer">
         <el-table
@@ -30,7 +30,7 @@
         stripe
         style="border:1px solid #ebeef5;">
         <el-table-column
-        prop="sequenceId"
+        type="index"
         label="序号"
         width="130">
         </el-table-column>
@@ -40,7 +40,7 @@
         width="200">
         </el-table-column>
         <el-table-column
-        prop="sequenceId"
+        prop="dose"
         label="药量(g)"
         width="176">
         </el-table-column>
@@ -52,7 +52,7 @@
         stripe
         style="border:1px solid #ebeef5;">
         <el-table-column
-        prop="sequenceId"
+        type="index"
         label="序号"
         width="130">
         </el-table-column>
@@ -62,7 +62,7 @@
         width="200">
         </el-table-column>
         <el-table-column
-        prop="sequenceId"
+        prop="dose"
         label="药量(g)"
         width="176">
         </el-table-column>
@@ -74,7 +74,7 @@
         stripe
         style="border:1px solid #ebeef5;">
         <el-table-column
-        prop="sequenceId"
+        type="index"
         label="序号"
         width="130">
         </el-table-column>
@@ -84,7 +84,7 @@
         width="200">
         </el-table-column>
         <el-table-column
-        prop="sequenceId"
+        prop="dose"
         label="药量(g)"
         width="176">
         </el-table-column>
