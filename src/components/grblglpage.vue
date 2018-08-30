@@ -2,7 +2,7 @@
 <div class="grblgl-container">
     <div class="search-row">
         <div class="search-row-input-item">
-          <el-input></el-input>
+          <el-input v-model="diagnoseLabels" :readonly=true></el-input>
         </div>
     </div>
     <div class="table-div-continer">

@@ -33,13 +33,11 @@ axios.interceptors.request.use(
         }
       }else{
         config.data = qs.stringify(config.data);
-        console.log(config.data);
         config.headers = {
           'Content-Type':'application/x-www-form-urlencoded'
         }
-        
       }
-
+      console.log(config.data);
       return config;
     },
     err => {

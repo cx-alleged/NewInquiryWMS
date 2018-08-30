@@ -6,6 +6,7 @@ export default {
             pageNum:1,
             pageSize:10
           },
+        diagnoseLabels:"诊断标签：",
         tableData: {
             list:[],
             pageNum:1,
@@ -75,7 +76,25 @@ export default {
         if(i_params.data.pageSize){
             this.search_obj.pageSize = i_params.data.pageSize;
         }
+        this.getBrDiagnoseLabels(this.search_obj.patientId);
         this.getBrList(this.search_obj);
+      },
+      /**
+       * 获取病人的所有诊断标签
+       * @param {*} pId 
+       */
+      getBrDiagnoseLabels(pId){
+          var _that = this;
+          _that.$http.get("/inquiry/getOnePatientLabels?patientId="+pId).then(function (response) {
+                if(response.code == "1"){
+                    var str = JSON.stringify(response.data.diagnoseLabels);
+                    debugger
+                    str = str.replace(/[\[\]\"]*/g, '');  
+                    _that.diagnoseLabels = _that.diagnoseLabels+str;
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
       },
       /**
        * 获取病人的病历列表

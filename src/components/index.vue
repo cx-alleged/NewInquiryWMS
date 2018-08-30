@@ -42,9 +42,11 @@
       }
       ,watch: {
         active:function (val,oldVal){
-          //从导航栏切换不需要缓存数据
-          this.$store.dispatch("clearPathParams",{});
-          this.$store.dispatch("clearPrePathParams",{});
+          var path_obj = this.setPropertyNull(JSON.parse(window.localStorage.getItem("pathParams")));
+          var path_obj1 = this.setPropertyNull(JSON.parse(window.localStorage.getItem("prePathParams")));
+          // 从导航栏切换不需要缓存数据
+          this.$store.dispatch("clearPathParams",path_obj);
+          this.$store.dispatch("clearPrePathParams",path_obj1);
           this.$router.push({
              path: val
           })
@@ -54,6 +56,13 @@
         headCall: function (url) { 
           console.log("父页面："+url)
           this.active = url;
+        }
+        ,setPropertyNull : function(obj){
+          obj.path = null;
+          for(var key in obj.data){
+            obj.data[key] = null;
+          }
+          return obj;
         }
       }
   }

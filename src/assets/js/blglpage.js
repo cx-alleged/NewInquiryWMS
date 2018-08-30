@@ -76,6 +76,7 @@ export default {
         if(i_params.data.patientId){
           this.search_obj.patientId = i_params.data.patientId;
         }
+        
         this.getblList();
       },
       //获取病例table列表

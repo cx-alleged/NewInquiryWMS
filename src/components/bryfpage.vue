@@ -10,8 +10,15 @@
                         <i class="el-icon-caret-bottom"></i>
                     </span>
                 </div>
-                <div class="wzwt-input-container">
-                     {{yfdata.diagnoseLabels}}
+                <div class="wzwt-input-container" @click="triggerSelected">
+                      <el-select class="basicInfo_select" v-model="diagnoseLabels" filterable multiple placeholder="请选择">
+                        <el-option
+                        v-for="item in options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value">
+                        </el-option>
+                    </el-select>
                 </div>
             </div>
             <div class="bqms-info-container">
@@ -44,12 +51,12 @@
             <div class="mainReList-container-div">
                 <!-- 这里循环遍历药品对象，为空时默认生成null个单元格 每四个就添加一列，不足四个补足四个， -->
                 <div class="mainReList-container" v-for="(item, mrindex) in yfdata.mainReList" :key="mrindex">
-                    <div class="zf-search-info"><span name="zfname">主方{{mrindex+1}}</span><el-input class="new-yfmc" @keyup.enter.native="addzyfyw($event,mrindex)"></el-input><el-input class="ywfs" @keyup.enter.native="updateAmount($event)" v-model="item.amount"></el-input><span>付</span><el-input class="ywbz" v-model="item.remarks"></el-input><el-checkbox name="isStock" v-model="item.isStock" class="rk-checkbox">入库</el-checkbox><el-button class="btn-default" type="primary" @click="addZyfff(mrindex)">加副方</el-button><el-button icon="el-icon-delete" @click="openMegBox('是否删除主方','deleteZf',mrindex,'')" class="zf-btn-delete"></el-button></div>
+                    <div class="zf-search-info"><span name="zfname">主方{{mrindex+1}}</span><el-input class="new-yfmc" @keyup.enter.native="addzyfyw($event,mrindex)"></el-input><el-input class="ywfs" @change="updateAmount" v-model="item.amount"></el-input><span>付</span><el-input class="ywbz" v-model="item.remarks"></el-input><el-checkbox name="isStock" v-model="item.isStock" class="rk-checkbox">入库</el-checkbox><el-button class="btn-default" type="primary" @click="addZyfff(mrindex)">加副方</el-button><el-button icon="el-icon-delete" @click="openMegBox('是否删除主方','deleteZf',mrindex,'')" class="zf-btn-delete"></el-button></div>
                 <div class="mainMeList-container" >
                     <div class="yp-item" v-for="(h, i) in item.recipeDetailList" :key="i"><input v-model="h.medicine" @blur="updateMainYw(mrindex,i)"/></div>
                 </div>
                 <div class="viceReList-container" v-for="(vice, vindex) in item.viceReList" :key="vindex">
-                        <div class="zf-search-info"><span name="zfname">副方{{vindex+1}}</span><el-input class="new-yfmc"  @keyup.enter.native="addfyfyw($event,vindex,mrindex)"></el-input><el-input class="ywfs"  @keyup.enter.native="updateAmount($event)" v-model="vice.amount"></el-input><span>付</span><el-input class="ywbz" v-model="vice.remarks"></el-input><el-checkbox name="isStock" v-model="vice.isStock" class="rk-checkbox">入库</el-checkbox><el-button icon="el-icon-delete" @click="openMegBox('是否删除副方','deleteFf',mrindex,vindex)" class="zf-btn-delete"></el-button></div>
+                        <div class="zf-search-info"><span name="zfname">副方{{vindex+1}}</span><el-input class="new-yfmc"  @keyup.enter.native="addfyfyw($event,vindex,mrindex)"></el-input><el-input class="ywfs"  @change="updateAmount" v-model="vice.amount"></el-input><span>付</span><el-input class="ywbz" v-model="vice.remarks"></el-input><el-checkbox name="isStock" v-model="vice.isStock" class="rk-checkbox">入库</el-checkbox><el-button icon="el-icon-delete" @click="openMegBox('是否删除副方','deleteFf',mrindex,vindex)" class="zf-btn-delete"></el-button></div>
                     <div class="mainMeList-container" >
                             <div class="yp-item" v-for="(vim, m) in vice.viceRecipeDetailList" :key="m"><input v-model="vim.medicine" @blur="updateViceYw(mrindex,vindex,m)"/></div>
                         </div>

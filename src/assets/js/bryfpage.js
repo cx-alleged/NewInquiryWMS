@@ -3,6 +3,8 @@ export default {
     ,data() {
         return {
             allTotal:0,
+            diagnoseLabels:[],
+            options: [],
             yfdata:{
                 "pName":"",
                 "inquiryId": 0,
@@ -29,7 +31,7 @@ export default {
                       {
                         "detailId": 0,
                         "recipeId": 0,
-                        "medicine": "0",
+                        "medicine": "",
                         "dose": 0,
                         "remark": null
                       },
@@ -665,6 +667,7 @@ export default {
         //
     }
     ,created () {
+        this.initDiagnoseLabel();
         //请求药方数据
         this.getyfDate();
     }
@@ -672,15 +675,55 @@ export default {
 
     }
     ,methods: {
-
+    //点击最外层触发下拉
+    triggerSelected:function(e){
+        var wrap_select = e.target.firstChild;
+        var input_doc = wrap_select.childNodes[1].children[0];
+        input_doc.click();
+    },
+    //触发下拉
     gotoBryfpage:function(){
          this.$router.push({
              path: '/Index/brglpage'
           })
     },
+    /**
+     * 初始化标签
+     */
+    initDiagnoseLabel:function(){
+        var obj_str= window.localStorage.getItem("diagnoseLabels");
+        if(obj_str && obj_str!=""){
+            this.options = JSON.parse(obj_str);
+        }else{
+            this.getAllDiagnoseLabel();
+        }
+    },
+    /**
+     * 获取所有的诊断标签
+     */
+    getAllDiagnoseLabel:function(){
+        var _that = this;
+        _that.$http.get("/inquiry/getDiagnoseLabels").then(function (response) {
+            if(response.code == "1"){
+                var lable_all_aryy = new Array();
+                var lable_aryy = response.data.diagnoseLabels;
+                for(var key in lable_aryy){
+                    var temp = new Object();
+                    temp.label = lable_aryy[key];
+                    temp.value = lable_aryy[key];
+                    lable_all_aryy.push(temp);
+                }
+                _that.options = lable_all_aryy;
+                window.localStorage.setItem("diagnoseLabels",JSON.stringify(lable_all_aryy));
+            }
+        }).catch(function (error) {
+            _that.$common.openErrorMsgBox(error,_that);
+        });
+    },
     /** 
      * 清除操作
-     *  */
+     *  
+     * */
     clearAllYw:function(){
         var model_list = new Array();
         model_list.push(this.mbMainObj);
@@ -747,24 +790,55 @@ export default {
         return tmpObj;
     },
     /**
+     * 异步提交诊断标签
+     */
+    async SubmitDiagnoseLabels (){
+        var r_params = JSON.parse(window.localStorage.getItem('pathParams'));
+        var s_parms = {};
+        s_parms.patientId = r_params.data.pId;
+        s_parms.inquiryId = r_params.data.inquiryId;
+        s_parms.diagnoseLabels = this.diagnoseLabels;
+        let data = await new Promise((resolve, reject) => { 
+            this.$http.post('/inquiry/postDiagnoseLabels',s_parms).then((data) =>  {
+                resolve(data);
+            }).catch(function (error) {
+                reject(error);
+            });
+        });
+        return data;
+    },
+    /**
      * 完成诊断 提交数据
      */
     submitYfData:function(){
         var _that = this;
+        var btn_switch = false;
         var loading = this.$common.openLoading("正在新增/修改问诊信息，请稍候",_that);
         var param = _that.setSubmitYfData(_that.yfdata);
-        _that.$http.post('/inquiry/postInquiryInfo',param).then(function (response) {
-            loading.close();
-            if(response.code =="1"){
-                _that.$common.openSuccessMsgBox("操作成功",_that);
-                _that.openMegBox("是否打印处方",'printYfPage');
+        this.SubmitDiagnoseLabels().then((data) => {
+            if(typeof data.code == "undefined" || data.code!="1"){
+                loading.close();
+                _that.$common.openErrorMsgBox("基本信息的诊断标签保存失败！",_that);
+                btn_switch = true;
             }else{
-                _that.$common.openErrorMsgBox(response.msg,_that);
+                _that.$http.post('/inquiry/postInquiryInfo',param).then(function (response) {
+                    loading.close();
+                    if(response.code =="1"){
+                        _that.$common.openSuccessMsgBox("操作成功",_that);
+                        _that.openMegBox("是否打印处方",'printYfPage');
+                    }else{
+                        _that.$common.openErrorMsgBox(response.msg,_that);
+                    }
+                    
+                }).catch(function (error) {
+                    loading.close();
+                  setTimeout(function(){
+                    _that.$common.openErrorMsgBox(error,_that); 
+                    }, 1000);
+                });
             }
-            
-        }).catch(function (error) {
-          console.log(error);
-          setTimeout(function(){loading.close(); }, 1000);
+        }, (error) => {
+            _that.$common.openErrorMsgBox(error,_that);
         });
     },
     /**
@@ -776,6 +850,13 @@ export default {
         var inquiryId = r_params.data.inquiryId;
         var lastinquiryId = r_params.data.lastinquiryId;
         if(lastinquiryId){
+            //获取诊断标签
+            _that.$http.get("/inquiry/getInquiryLabels?inquiryId="+lastinquiryId).then(function (response) {
+                if(response.code == "1"){
+                    _that.diagnoseLabels = response.data.diagnoseLabels;
+                }
+            }).catch(function(error){});
+            //获取药方信息
             var url = "/inquiry/getInquiryInfo?inquiryId="+lastinquiryId;
             _that.$http.get(url)
             .then(function (response) {
@@ -814,6 +895,13 @@ export default {
         var r_params = JSON.parse(window.localStorage.getItem('pathParams'));
         var inquiryId = r_params.data.inquiryId;
         if(inquiryId){
+            //获取诊断标签数据
+            _that.$http.get("/inquiry/getInquiryLabels?inquiryId="+inquiryId).then(function (response) {
+                if(response.code == "1"){
+                    _that.diagnoseLabels = response.data.diagnoseLabels;
+                }
+            }).catch(function(error){});
+            //获取药方数据
             var url = "/inquiry/getInquiryInfo?inquiryId="+inquiryId;
             _that.$http.get(url)
             .then(function (response) {
@@ -890,7 +978,7 @@ export default {
         }).catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消删除'
+            message: '操作已取消'
           });          
         });
       },
@@ -1023,7 +1111,6 @@ export default {
      *  */
     updateAmount:function(e){
         this.allTotal = this.getAllTotal(this.yfdata);
-        e.target.blur();
     },
     /**
      * 新增副方药物

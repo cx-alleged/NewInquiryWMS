@@ -11,7 +11,25 @@
         padding: 30px;
         resize: none;
     }
-    
+    .basicInfo_select{
+        width: 100%;
+        border: 0px;
+        .el-select__tags{
+            max-width: 100% !important;
+            min-width: 100% !important;
+        }
+        .el-input.el-input--suffix.is-focus input{
+            border: 0px;
+            width: 100%;
+            padding: 0px;
+        }
+        .el-input.el-input--suffix input{
+            border: 0px;
+        }
+        span.el-input__suffix{
+            display: none
+        }
+    }
     .btn-default{
         width: 200px;
         height: 70px;
