@@ -37,6 +37,7 @@ export default {
             ],
           },
         basicInfo: {
+            "inquiryId":null,
             "id": null,
             "patientId": null,
             "certificatesType": null,
@@ -84,9 +85,9 @@ export default {
             "birth": null,
             "prematureLabour": null,
             "abortion": null,
-            "insertDate": 1534608000000,
-            "sourceProvince": 10,
-            "sourceCity": 1001,
+            "insertDate": null,
+            "sourceProvince": null,
+            "sourceCity": null,
             "incuProvince": null,
             "incuCity": null,
             "quitSmokeTime": null,
@@ -111,7 +112,7 @@ export default {
     　　}
     },
     created () {
-       this.$common.getPlace(this,this.getBrxxinfo);
+       this.$common.getPlace(this,this.initBrxxinfo,"/infoGather/getPlace");
     },
     methods: {
     clearAllCheckbox(val){
@@ -173,12 +174,11 @@ export default {
      */
     setCityList(type){
         if(type == 1){
-            this.city = this.$common.setCityList(this.basicInfo.incuProvince,this);
-            this.basicInfo.incuCity = null;
-            
-        }else{
             this.sourceCity = this.$common.setCityList(this.basicInfo.sourceProvince,this);
             this.basicInfo.sourceCity = null;
+        }else{
+            this.city = this.$common.setCityList(this.basicInfo.incuProvince,this);
+            this.basicInfo.incuCity = null;
         }
     },
      /**
@@ -188,13 +188,14 @@ export default {
       */
      setProList(type){
         if(type  == 1){
-            this.province = this.$common.setProList(this.b_country,this);
-            this.basicInfo.incuProvince = null;
-            this.basicInfo.incuCity = null;
-        }else{
+            //代表
             this.sourceProvince = this.$common.setProList(this.s_country,this);
             this.basicInfo.sourceProvince = null;
             this.basicInfo.sourceCity = null;
+        }else{
+            this.province = this.$common.setProList(this.b_country,this);
+            this.basicInfo.incuProvince = null;
+            this.basicInfo.incuCity = null;
         }
      },
       /**
@@ -216,11 +217,6 @@ export default {
       },
       /**
        * 设置空数组
-      /**
-       *
-       *
-       * @param {*} t_obj
-       * @returns
        */
       setNullArray:function(t_obj){
         var obj = JSON.parse(JSON.stringify(t_obj));
@@ -248,23 +244,24 @@ export default {
        * 获取病人信息
        * 
        */
-      getBrxxinfo(){
-         var param = JSON.parse(window.localStorage.getItem("pathParams"));
-         var _that = this;
-         var url = "/patientManage/getPatientInfo";
-         _that.$http.get(url,{
-             params: param.data
-            }).then(function (response) {
-                 //得到个人信息的数据，对个人信息进行处理后绑定
-                 if(response.code == "1"){
-                     _that.detailBrbrth(response.data.patientInfo);
-                     _that.basicInfo = _that.setNullArray(response.data.patientInfo);
-                 }else{
-                     _that.$common.openErrorMsgBox("获取病人信息失败",_that);
-                 }
-             }).catch(function (error) {
-                _that.$common.openErrorMsgBox("error",_that);
-             });
+      initBrxxinfo(){
+         
+         var params_obj = JSON.parse(window.localStorage.getItem("pathParams"));
+         this.basicInfo = this.setNullArray(this.basicInfo);
+         if(params_obj.data){
+            this.basicInfo.inquiryId = params_obj.data.inquiryId;
+            debugger
+            if(!params_obj.data.sourceCity){
+                params_obj.data.sourceCity = null;
+            }
+            this.detailBrbrth(params_obj.data);
+            this.basicInfo.pname = params_obj.data.pname;
+            this.basicInfo.age = parseInt(params_obj.data.age);
+            this.basicInfo.gender = params_obj.data.gender;
+            this.basicInfo.sourceProvince =  params_obj.data.sourceProvince;
+            this.basicInfo.sourceCity = params_obj.data.sourceCity;
+            this.basicInfo.iqDate = params_obj.data.iqDate;
+         }
       },
       setSuBmitParams(obj){
          var params_obj = JSON.parse(JSON.stringify(obj));
@@ -285,11 +282,11 @@ export default {
         this.$refs["formName"].validate((valid) => {
             if (valid) {
                 var params = _that.setSuBmitParams(this.basicInfo);
-                _that.$http.put("/patientManage/updatePatientInfo",params).then(function(response){
+                _that.$http.post("/infoGather/newPatient",params).then(function(response){
                       //数据提交
                       if(response.code == '1'){
-                          _that.$common.openSuccessMsgBox("更新病人信息成功！，即将返回病人管理",_that);
-                          _that.goTobrglpage();
+                          _that.$common.openSuccessMsgBox("新增病人信息成功，即将跳转问卷信息",_that);
+                          _that.goTowjxxpage();
                       }
                 }).catch(function(error){
                   _that.$common.openErrorMsgBox("error",_that);
@@ -303,15 +300,14 @@ export default {
       /**
        * 返回病人管理页面
        */
-      goTobrglpage:function(){
+      goTowjxxpage:function(){
         //跳转组件并且 传递pid
-        var pathParams = window.localStorage.getItem("prePathParams");
-        var prePathParams = window.localStorage.getItem("pathParams");
+        var pathParams = JSON.parse(window.localStorage.getItem("pathParams"));
+        pathParams.path = "xwjxxpage";
         //缓存 目标跳转页面的参数
-        this.$store.dispatch("setPathParams", pathParams);
-        this.$store.dispatch("setPrePathParams", prePathParams);
+        this.$store.dispatch("setPathParams", JSON.stringify(pathParams));
         //缓存 跳转页面的参数
-        this.$common.GotoPage("brglpage",JSON.parse(pathParams),this);
+        this.$common.GotoPage("xwjxxpage",pathParams,this);
       },
     }
   }

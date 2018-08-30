@@ -84,27 +84,27 @@ export default new Router({
     {
       path:"/xindex",
       name:"/xindex",
-      component:resolve => require(['@/components/x_index'],resolve),
+      component:resolve => require(['@/components/xxsj/x_index'],resolve),
       children:[
         {
           path:'xhome',
           name:'xhome',
-          component: resolve => require(['@/components/x_home'],resolve)
+          component: resolve => require(['@/components/xxsj/x_home'],resolve)
         },
         {
           path:"xlist",
           name:"xlist",
-          component:resolve => require(['@/components/x_list'],resolve)
+          component:resolve => require(['@/components/xxsj/x_list'],resolve)
         },
         {
-         path:'brxxpage',
-         name:'brxxpage',
-         component: resolve => require(['@/components/brxxpage'],resolve)
+         path:'xbrxxpage',
+         name:'xbrxxpage',
+         component: resolve => require(['@/components/xxsj/x_brxxpage'],resolve)
         },
         {
-         path:'wjxxpage',
-         name:'wjxxpage',
-         component: resolve => require(['@/components/wjxxpage'],resolve)
+         path:'xwjxxpage',
+         name:'xwjxxpage',
+         component: resolve => require(['@/components/xxsj/x_wjxxpage'],resolve)
         }
       ]
     }

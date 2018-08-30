@@ -114,10 +114,14 @@ export default{
        * 获取国家 省份 城市数据
        * 
        */
-      getPlace(_that,callback){
+      getPlace(_that,callback,urlpath){
+         var url = '/index/getPlace';
+         if(urlpath){
+          url = urlpath;
+         }
          var placeData = _that.$store.getters.gettersPlaceData;
           if(placeData && JSON.stringify(placeData) == "{}"){
-            _that.$http.get('/index/getPlace')
+            _that.$http.get(url)
             .then(function (response) {
               placeData = response.data;
               placeData.placeList[0].cityList = _that.$common.updateWgzdm(placeData.placeList[0].cityList);

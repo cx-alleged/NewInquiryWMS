@@ -455,8 +455,8 @@
     </div>
 </template>
 <style lang="scss">
-    @import '../assets/css/brxxpage.scss';
+    @import '../../assets/css/brxxpage.scss';
 </style>
 
-<script src = "../assets/js/brxxpage.js">
+<script src = "../../assets/js/xxsj/x_brxxpage.js">
 </script>

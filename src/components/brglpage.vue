@@ -7,7 +7,10 @@
           </el-input>
         </div>
         <div class="search-row-btn-group">
-          <el-button class="btn-default">同步基本信息</el-button>
+          <el-button class="btn-default" @click="triggerSelect">同步基本信息</el-button>
+          <input type="file"  
+           :style="{display: 'none'}"  
+           ref="fileinput" @change="selectedFile"/>  
         </div>
     </div>
     <div class="table-continer">

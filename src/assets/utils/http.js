@@ -6,6 +6,8 @@ import qs from 'qs'
 const API = {
     local:'http://139.129.118.14:8087',
     online:'http://139.129.118.14:8087'
+    // local:'http://139.129.118.14:8086',
+    // online:'http://139.129.118.14:8086'
 }
 
 //production 为生产环境
@@ -15,13 +17,19 @@ axios.defaults.timeout = 6000;
 //http request 拦截器（对发送的数据做提前处理）
 axios.interceptors.request.use(
     config => {
+      
       if(config.method!="get"){
-        if(typeof(config.data)=="object"){
-          console.log(JSON.stringify(config.data));
-          config.data = JSON.stringify(config.data);
-        }
-        config.headers = {
-          'Content-Type': 'application/json;charset=UTF-8'
+        if(config.url == "/inquiry/getObjFromFile"){
+          config.headers = {
+            'Content-Type': 'multipart/form-data'
+          }
+        }else{
+          if(typeof(config.data)=="object"){
+            config.data = JSON.stringify(config.data);
+          }
+          config.headers = {
+            'Content-Type': 'application/json;charset=UTF-8'
+          }
         }
       }else{
         config.data = qs.stringify(config.data);
@@ -29,6 +37,7 @@ axios.interceptors.request.use(
         config.headers = {
           'Content-Type':'application/x-www-form-urlencoded'
         }
+        
       }
 
       return config;

@@ -163,6 +163,41 @@ export default {
                }, 1000);
           });
           
-      }
+      },
+      triggerSelect () {  
+        this.$refs.fileinput.click()  
+      },  
+    
+      selectedFile (e) {  
+        console.log(e.target.files[0])  
+        //根据项目需求做具体处理，比如说获取文件名  
+        this.uploadFile();
+      },  
+    
+      async uploadFile () {
+        var _that = this;
+        //如果不需要用到上传后的返回值可以把 async...await 语法去掉  
+        let files = this.$refs.fileinput.files;  
+        if(files.length > 0) {
+         var loading =  _that.$common.openLoading("数据同步中",_that);  
+          let form = new FormData();  
+          form.append('file', files[0])  
+          let data = await new Promise((resolve, reject) => { 
+            debugger 
+              _that.$http.post("/inquiry/getObjFromFile",form).then(res => {  
+                resolve(res)  
+              })
+              .catch(err => {
+                reject(err)  
+              });
+            });
+            loading.close();
+            if(data.code == "1"){
+              _that.$common.openSuccessMsgBox("病人信息同步完成！",_that);
+            }else{
+              _that.$common.openErrorMsgBox("病人信息同步失败，请稍后重试",_that);
+            } 
+        }  
+      }  
     }
   }
