@@ -42,8 +42,13 @@
       }
       ,watch: {
         active:function (val,oldVal){
-          var path_obj = this.setPropertyNull(JSON.parse(window.localStorage.getItem("pathParams")));
-          var path_obj1 = this.setPropertyNull(JSON.parse(window.localStorage.getItem("prePathParams")));
+          var pathParams = window.localStorage.getItem("pathParams");
+          var path_obj = {path:"",data:{}},
+              path_obj1 ={path:"",data:{}};
+          // if(pathParams && pathParams!=""){
+          //     path_obj = this.setPropertyNull(JSON.parse(window.localStorage.getItem("pathParams")));
+          // }
+          // var path_obj1 = this.setPropertyNull(JSON.parse(window.localStorage.getItem("prePathParams")));
           // 从导航栏切换不需要缓存数据
           this.$store.dispatch("clearPathParams",path_obj);
           this.$store.dispatch("clearPrePathParams",path_obj1);

@@ -86,9 +86,10 @@
 </div> 
 </template>
 <style lang="scss">
+    // @import "@/assets/css/blglpage.scss"
     @import "../assets/css/blglpage.scss"
 </style>
 
 <script src = "../assets/js/blglpage.js">
-  
+
 </script>
