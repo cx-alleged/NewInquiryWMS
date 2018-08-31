@@ -5,7 +5,7 @@
                 <div class="search-range-date-item">
                     <el-date-picker
                         class="rq-input"
-                        v-model="input5"
+                        v-model="rangDate"
                         type="daterange"
                         range-separator="至"
                         start-placeholder="开始日期"
@@ -28,20 +28,20 @@
                         width="96">
                     </el-table-column>
                     <el-table-column
-                    prop="inquiryDate"
+                    prop="iqDate"
                     label="就诊时间"
                     width="340">
                     </el-table-column>
                     <el-table-column
-                    prop="pName"
+                    prop="pname"
                     label="姓名"
                     width="150">
                     </el-table-column>
                     <el-table-column
                     label="操作">
                 <template slot-scope="scope">
-                        <el-button @click="handleClick(scope.row)" type="text" class="btn-font-default">查看</el-button>
-                        <el-button @click="gotoyfpage(scope.row,bryfpage)" type="text" class="btn-font-default">删除</el-button>
+                        <el-button @click="searchBrxx(scope.row)" type="text" class="btn-font-default">查看</el-button>
+                        <el-button @click="deleteBlObj(scope.row)" type="text" class="btn-font-default">删除</el-button>
                 </template>
                     </el-table-column>
                 </el-table>
@@ -52,12 +52,10 @@
                     background
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
-                    :current-page="currentPage4"
-                    :page-sizes="[100, 200, 300, 400]"
-                    :page-size="100"
-                    :pager-count=5
+                    :current-page="tableData.pageNum"
+                    :page-size="tableData.pageSize"
                     layout="total, prev, pager, next, jumper"
-                    :total="1000">
+                    :total="tableData.total">
                 </el-pagination>
                 </div>
                 <div class="search-row-btn-group">

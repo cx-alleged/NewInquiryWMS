@@ -3,131 +3,29 @@ export default {
       return {
         yytjpage:'yytjpage',
         wzqkpage:'wzqkpage',
-        input5:'',
-        currentPage4:1,
+        rangDate:null,
         search_obj:{
-          pname:"",
           startDate:null,
           endDate:null,
           pageNum:1,
-          pageSize:10
+          pageSzie:10
         },
-        // tableData: {
-        //   list:[],
-        //   pageNum:1,
-        //   pageSize:10,
-        //   total:0
-        // }
         tableData: {
-        "pageNum": 1,
-        "pageSize": 1,
-        "total": 1,
-        "pages": 1,
-        "list": [
-            {
-            "pName": "丁克",
-            "pId": 1,
-            "inquiryDate": "2017.08.09  12:20",
-            "inquiryId": 1,
-            "gender": "男",
-            "residence": "中国四川成都",
-            "age": "20"
-            }
-            ,{
-            "pName": "丁克",
-            "pId": 1,
-            "inquiryDate": "2017.08.09  12:20",
-            "inquiryId": 1,
-            "gender": "男",
-            "residence": "中国四川成都",
-            "age": "20"
-            }
-            ,{
-            "pName": "丁克",
-            "pId": 1,
-            "inquiryDate": "2017.08.09  12:20",
-            "inquiryId": 1,
-            "gender": "男",
-            "residence": "中国四川成都",
-            "age": "20"
-            }
-            ,{
-            "pName": "丁克",
-            "pId": 1,
-            "inquiryDate": "2017.08.09  12:20",
-            "inquiryId": 1,
-            "gender": "男",
-            "residence": "中国四川成都",
-            "age": "20"
-            }
-            ,{
-            "pName": "丁克",
-            "pId": 1,
-            "inquiryDate": "2017.08.09  12:20",
-            "inquiryId": 1,
-            "gender": "男",
-            "residence": "中国四川成都",
-            "age": "20"
-            }
-            ,{
-            "pName": "丁克",
-            "pId": 1,
-            "inquiryDate": "2017.08.09  12:20",
-            "inquiryId": 1,
-            "gender": "男",
-            "residence": "中国四川成都",
-            "age": "20"
-            }
-            ,{
-            "pName": "丁克",
-            "pId": 1,
-            "inquiryDate": "2017.08.09  12:20",
-            "inquiryId": 1,
-            "gender": "男",
-            "residence": "中国四川成都",
-            "age": "20"
-            }
-            ,{
-            "pName": "丁克",
-            "pId": 1,
-            "inquiryDate": "2017.08.09  12:20",
-            "inquiryId": 1,
-            "gender": "男",
-            "residence": "中国四川成都",
-            "age": "20"
-            }
-
-            ,{
-            "pName": "丁克",
-            "pId": 1,
-            "inquiryDate": "2017.08.09  12:20",
-            "inquiryId": 1,
-            "gender": "男",
-            "residence": "中国四川成都",
-            "age": "20"
-            }
-            ,{
-            "pName": "丁克",
-            "pId": 1,
-            "inquiryDate": "2017.08.09  12:20",
-            "inquiryId": 1,
-            "gender": "男",
-            "residence": "中国四川成都",
-            "age": "20"
-            }
-            ,{
-            "pName": "丁克",
-            "pId": 1,
-            "inquiryDate": "2017.08.09  12:20",
-            "inquiryId": 1,
-            "gender": "男",
-            "residence": "中国四川成都",
-            "age": "20"
-            }
-
-        ]
+          list:[],
+          pageNum:1,
+          pageSize:10,
+          total:0
+        }
       }
-      }
+    },
+    watch: {
+        rangeDate: function (newQuestion, oldQuestion) {
+          this.search_obj.startDate = this.$common.dateFormatStr(this.rangeDate[0],'yyyy-MM-dd');   
+          this.search_obj.endDate = this.$common.dateFormatStr(this.rangeDate[1],'yyyy-MM-dd');   
+        }
+    },
+    created ()  {
+        this.getBlList();
     },
     methods: {
       rowClassname() {
@@ -136,20 +34,50 @@ export default {
       headerClassname() {
         return "headerClassname";
       },
-      handleClick(row) {
-        console.log(row);
+      searchBrxx(row){
+        var pathParams = {},
+        _that = this;
+        pathParams.path = "xbrxxpage";
+        var params  = JSON.parse(JSON.stringify(row));
+        pathParams.data = params;
+        _that.$store.dispatch("setPathParams", JSON.stringify(pathParams));
+       _that.$common.GotoPage("xbrxxpage",pathParams,_that);
       },
-      //跳转到药方界面
-      gotoyfpage(pagename) {
-        this.$router.push({
-             name: pagename
-        });
+      deleteBlObj(row){
+        var _that = this;
+        debugger
+        var url ='/infoGather/getPatientInfo?inquiryId='+row.inquiryId;
+        _that.$http.delete(url).then(function (response) {
+          if(response.code=="1"){
+            _that.$common.openSuccessMsgBox("病历删除成功!",_that);
+            //重新触发列表加载
+            _that.getBlList();
+          }
+        }).catch(function (error) {});
       },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
       },
       handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+        this.search_obj.pageNum = val;
+        this.getWzqkList(this.search_obj);
+      },
+      /**
+       * 获取问诊情况列表
+       */
+      getBlList(){
+        var _that = this;
+        var search_obj = this.search_obj;
+        var url = "/infoGather/getRecordList";
+        _that.$http.get(url,{
+            params: search_obj
+           }).then(function (response) {
+                if(JSON.stringify(response.data.pageInfo.list)!="[]"){
+                    _that.tableData = response.data.pageInfo;
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
       },
       /**
        *下载文件

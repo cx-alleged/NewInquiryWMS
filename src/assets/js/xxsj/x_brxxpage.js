@@ -245,12 +245,33 @@ export default {
        * 
        */
       initBrxxinfo(){
-         
+        var param = JSON.parse(window.localStorage.getItem("pathParams"));
+        var _that = this;
+        var url = "/infoGather/getPatientInfo";
+        _that.$http.get(url,{
+            params: param.data
+           }).then(function (response) {
+                //得到个人信息的数据，对个人信息进行处理后绑定
+                if(response.code == "1"){
+                    _that.detailBrbrth(response.data.patientInfo);
+                    _that.basicInfo = _that.setNullArray(response.data.patientInfo);
+                    _that.setBasicBrxx();
+                }else{
+                    _that.$common.openErrorMsgBox("获取病人信息失败",_that);
+                }
+            }).catch(function (error) {
+               _that.$common.openErrorMsgBox("error",_that);
+            });
+     },
+      /**
+       * 获取病人信息
+       * 
+       */
+      setBasicBrxx(){
          var params_obj = JSON.parse(window.localStorage.getItem("pathParams"));
          this.basicInfo = this.setNullArray(this.basicInfo);
          if(params_obj.data){
             this.basicInfo.inquiryId = params_obj.data.inquiryId;
-            debugger
             if(!params_obj.data.sourceCity){
                 params_obj.data.sourceCity = null;
             }
