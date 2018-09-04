@@ -3,7 +3,9 @@ export default {
     ,data() {
         return {
             allTotal:0,
-            diagnoseLabels:[],
+            diagnoseLabels:null,
+            d_isActive:false,
+            b_isActive:false,
             options: [],
             yfdata:{
                 "pName":"",
@@ -667,7 +669,7 @@ export default {
         //
     }
     ,created () {
-        this.initDiagnoseLabel();
+        // this.initDiagnoseLabel();
         //请求药方数据
         this.getyfDate();
     }
@@ -675,6 +677,21 @@ export default {
 
     }
     ,methods: {
+    setActiveSyle:function(type){
+        if(type == 1){
+            if(this.d_isActive == false){
+                this.d_isActive = true;
+            }else{
+                this.d_isActive = false;
+            }
+        }else{
+            if(this.b_isActive == false){
+                this.b_isActive = true;
+            }else{
+                this.b_isActive = false;
+            }
+        }
+    },
     //点击最外层触发下拉
     triggerSelected:function(e){
         var wrap_select = e.target.firstChild;
@@ -690,36 +707,36 @@ export default {
     /**
      * 初始化标签
      */
-    initDiagnoseLabel:function(){
-        var obj_str= window.localStorage.getItem("diagnoseLabels");
-        if(obj_str && obj_str!=""){
-            this.options = JSON.parse(obj_str);
-        }else{
-            this.getAllDiagnoseLabel();
-        }
-    },
+    // initDiagnoseLabel:function(){
+    //     var obj_str= window.localStorage.getItem("diagnoseLabels");
+    //     if(obj_str && obj_str!=""){
+    //         this.options = JSON.parse(obj_str);
+    //     }else{
+    //         this.getAllDiagnoseLabel();
+    //     }
+    // },
     /**
      * 获取所有的诊断标签
      */
-    getAllDiagnoseLabel:function(){
-        var _that = this;
-        _that.$http.get("/inquiry/getDiagnoseLabels").then(function (response) {
-            if(response.code == "1"){
-                var lable_all_aryy = new Array();
-                var lable_aryy = response.data.diagnoseLabels;
-                for(var key in lable_aryy){
-                    var temp = new Object();
-                    temp.label = lable_aryy[key];
-                    temp.value = lable_aryy[key];
-                    lable_all_aryy.push(temp);
-                }
-                _that.options = lable_all_aryy;
-                window.localStorage.setItem("diagnoseLabels",JSON.stringify(lable_all_aryy));
-            }
-        }).catch(function (error) {
-            _that.$common.openErrorMsgBox(error,_that);
-        });
-    },
+    // getAllDiagnoseLabel:function(){
+    //     var _that = this;
+    //     _that.$http.get("/inquiry/getDiagnoseLabels").then(function (response) {
+    //         if(response.code == "1"){
+    //             var lable_all_aryy = new Array();
+    //             var lable_aryy = response.data.diagnoseLabels;
+    //             for(var key in lable_aryy){
+    //                 var temp = new Object();
+    //                 temp.label = lable_aryy[key];
+    //                 temp.value = lable_aryy[key];
+    //                 lable_all_aryy.push(temp);
+    //             }
+    //             _that.options = lable_all_aryy;
+    //             window.localStorage.setItem("diagnoseLabels",JSON.stringify(lable_all_aryy));
+    //         }
+    //     }).catch(function (error) {
+    //         _that.$common.openErrorMsgBox(error,_that);
+    //     });
+    // },
     /** 
      * 清除操作
      *  
@@ -797,7 +814,18 @@ export default {
         var s_parms = {};
         s_parms.patientId = r_params.data.pId;
         s_parms.inquiryId = r_params.data.inquiryId;
-        s_parms.diagnoseLabels = this.diagnoseLabels;
+        //转化字符串为字符数组
+        if(this.diagnoseLabels){
+            var str = this.diagnoseLabels.replace(/\uff0c/g, ','); 
+            var d_arry = str.split(",");
+            if(d_arry){
+                s_parms.diagnoseLabels = d_arry;
+            }else{
+                s_parms.diagnoseLabels = null;
+            }
+        }else{
+              s_parms.diagnoseLabels = null;
+        }
         let data = await new Promise((resolve, reject) => { 
             this.$http.post('/inquiry/postDiagnoseLabels',s_parms).then((data) =>  {
                 resolve(data);
@@ -853,7 +881,13 @@ export default {
             //获取诊断标签
             _that.$http.get("/inquiry/getInquiryLabels?inquiryId="+lastinquiryId).then(function (response) {
                 if(response.code == "1"){
-                    _that.diagnoseLabels = response.data.diagnoseLabels;
+                    var d_str = JSON.stringify(response.data.diagnoseLabels);
+                    if(d_str == "[]"){
+                        _that.diagnoseLabels = null;
+                    }else{
+                        _that.diagnoseLabels = d_str.replace(/[\[\]\"]*/g, '');
+                    }
+                    // _that.diagnoseLabels = JSON.stringify(response.data.diagnoseLabels);
                 }
             }).catch(function(error){});
             //获取药方信息
@@ -898,7 +932,12 @@ export default {
             //获取诊断标签数据
             _that.$http.get("/inquiry/getInquiryLabels?inquiryId="+inquiryId).then(function (response) {
                 if(response.code == "1"){
-                    _that.diagnoseLabels = response.data.diagnoseLabels;
+                    var d_str = JSON.stringify(response.data.diagnoseLabels);
+                    if(d_str == "[]"){
+                        _that.diagnoseLabels = null;
+                    }else{
+                        _that.diagnoseLabels = d_str.replace(/[\[\]\"]*/g, '');
+                    }
                 }
             }).catch(function(error){});
             //获取药方数据
@@ -1166,7 +1205,6 @@ export default {
     * 
     */
     IsMbYwArry:function(arry,type){
-        
         var normal_length = 12;
         var normal_arry = JSON.parse(JSON.stringify(arry));
         if(type == 2){
@@ -1174,7 +1212,7 @@ export default {
         }
         //第一步是否符合模版的长度
         if(JSON.stringify(arry) == '[]'){
-            for(var i = 0; i<noraml_length; i++){
+            for(var i = 0; i<normal_length; i++){
                 var obj = {
                 "detailId": null,
                 "recipeId": null,

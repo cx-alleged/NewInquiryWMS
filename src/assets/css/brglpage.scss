@@ -27,18 +27,7 @@
       }
     }
   }
-  .btn-font-default{
-    font-family: PingFangSC-Regular;
-      font-size: 34px;
-      font-weight: normal;
-      font-stretch: normal;
-      line-height: 34px;
-      letter-spacing: 0px;
-      color: #20a0ff;
-  }
-  .bnt-font-color{
-    color: #ff4949;
-  }
+ 
   .search-row-btn-group{
     padding-left: 50px;
     .btn-default{
@@ -64,6 +53,18 @@
       .el-table__body-wrapper{
         max-height: 540px;
         overflow-y:auto;
+      }
+      .btn-font-default{
+        font-family: PingFangSC-Regular;
+          font-size: 34px;
+          font-weight: normal;
+          font-stretch: normal;
+          line-height: 34px;
+          letter-spacing: 0px;
+          color: #20a0ff;
+      }
+      .bnt-font-color{
+        color: #ff4949;
       }
   }
   .el-table .headerClassname,rowClassname {

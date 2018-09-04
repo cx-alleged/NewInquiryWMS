@@ -449,6 +449,7 @@
             <el-row>
                 <el-form-item style="text-align:center;margin-top:40px;">
                     <el-button type="primary" @click="onSubmit" class="btn-blue" >提交</el-button>
+                    <el-button type="primary" @click="gotoBlglpage" class="btn-default" >返回</el-button>
                 </el-form-item>
             </el-row>
      </el-form>

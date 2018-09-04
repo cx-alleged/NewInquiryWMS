@@ -35,7 +35,7 @@ Print.prototype = {
     //引入打印样式
     getStyle: function (path) {
       var str = "",
-      styles = document.querySelectorAll('style');
+      styles = document.querySelectorAll('style,link');
       for (var i = 0; i < styles.length; i++) {
         str += styles[i].outerHTML;
       }
@@ -205,10 +205,10 @@ Print.prototype = {
       //给图片一些加载时间
       setTimeout(function () {
         _that.toPrint(w);
-      },500);
+      },1000);
       setTimeout(function () {
         document.body.removeChild(iframe)
-      }, 1000);
+      }, 1500);
     },
     addCssByStyle(doc,cssString){
       var style=doc.createElement("style");

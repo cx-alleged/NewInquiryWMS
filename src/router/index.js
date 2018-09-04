@@ -5,8 +5,8 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
-  mode : 'history',
-  base: '/zywzxt/', 
+  // mode : 'history',
+  // base: '/zywzxt/', 
   routes: [
     // {
     //   path: '/',
@@ -14,6 +14,7 @@ export default new Router({
     // },
     {
         path: '/',
+        // redirect:'/xindex/xhome'
         redirect: '/Index/xjczbr'
         // component: resolve => require(['@/components/index'],resolve)
     },

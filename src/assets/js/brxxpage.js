@@ -114,6 +114,20 @@ export default {
        this.$common.getPlace(this,this.getBrxxinfo);
     },
     methods: {
+         /**
+     * 跳转病历管理页面
+     * 
+     */
+    gotoBlglpage() {
+        //跳转组件并且 传递pid
+        var pathParams = window.localStorage.getItem("prePathParams");
+        var prePathParams = window.localStorage.getItem("pathParams");
+        //缓存 目标跳转页面的参数
+        this.$store.dispatch("setPathParams", pathParams);
+        this.$store.dispatch("setPrePathParams", prePathParams);
+        //缓存 跳转页面的参数
+        this.$common.GotoPage("brglpage",JSON.parse(pathParams),this);
+      },
     clearAllCheckbox(val){
         if(val){
             this.basicInfo.allergy = ["无"];

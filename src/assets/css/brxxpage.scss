@@ -68,6 +68,16 @@
             line-height:30px;
             font-size: 30px;
         }
+        .btn-default{
+            width:200px;
+            border-radius:8px;
+            height:70px;
+            line-height:30px;
+            font-size: 30px;
+            border: 1px solid #20a0ff;
+            background-color: #ffffff;
+            color: #20a0ff;
+        }
         .seconde-col-container .el-row{
             &:last-child{
                 .el-form-item{

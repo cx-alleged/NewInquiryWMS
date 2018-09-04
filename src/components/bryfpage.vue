@@ -2,35 +2,37 @@
     <div class="bryf-container">
         <div class="info-container">
             <div class="wzwt-info-container">
-                <div class="titile-container">
+                <div class="titile-container" @click="setActiveSyle(1)">
                     <span>
                         基本信息
                     </span>
                     <span>
-                        <i class="el-icon-caret-bottom"></i>
+                        <i v-bind:class="[d_isActive ? 'el-icon-caret-top' : 'el-icon-caret-bottom']"></i>
+                        <!-- <i class="el-icon-caret-bottom"></i> -->
                     </span>
                 </div>
-                <div class="wzwt-input-container" @click="triggerSelected">
-                      <el-select class="basicInfo_select" v-model="diagnoseLabels" filterable multiple placeholder="请选择">
-                        <el-option
-                        v-for="item in options"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
-                        </el-option>
-                    </el-select>
+                <div v-bind:class="[{ 'isdisplaynone': d_isActive }, 'wzwt-input-container']">
+                    <el-input
+                        type="textarea"
+                        :rows="4"
+                        placeholder="请输入诊断标签，以逗号分隔"
+                        class="bqms"
+                        v-model="diagnoseLabels">
+                        </el-input>
                 </div>
             </div>
             <div class="bqms-info-container">
-                <div class="titile-container">
+                <div class="titile-container" @click="setActiveSyle(2)">
                     <span>
                         病情描述
                     </span>
                     <span>
-                        <i class="el-icon-caret-bottom"></i>
+                        <i v-bind:class="[b_isActive ? 'el-icon-caret-top' : 'el-icon-caret-bottom']"></i>
+                        <!-- <i class="el-icon-caret-bottom"></i> -->
                     </span>
                 </div>
-                <div class="bqms-input-container">
+                <div v-bind:class="[{ 'isdisplaynone': b_isActive }, 'bqms-input-container']">
+                <!-- <div class="bqms-input-container"> -->
                      <el-input
                         type="textarea"
                         :rows="7"
@@ -93,6 +95,9 @@
             color: #475669;
         }
     }
+    .isdisplaynone{
+        display: none;
+    }
     /*左侧两个文本框样式*/
     .bryf-container{
         height: calc(100% - 148px);
@@ -106,46 +111,28 @@
             padding: 0px;
             .wzwt-info-container{
                 width: 100%;
-                height: 580px;
+                // height: 580px;
+                height: auto;
+                margin-bottom: 20px;
                 .wzwt-input-container{
-                        width: 448px;
-                        height: 428px;
+                        // width: 448px;
+                        height: 489px;
                         margin-top:20px;
-                        background-color: #ffffff;
-                        border-radius: 8px;
-                        border: solid 1px #c0ccda;
-                        padding: 30px;
-                        overflow: hidden;
-                        font-family: PingFangSC-Regular;
-                        font-size: 34px;
-                        font-weight: normal;
-                        font-stretch: normal;
-                        letter-spacing: 0px;
-                        color: #1f2d3d;
                 }
             }
             .bqms-info-container{
                 width: 100%;
-                height: 754px;
+                // height: 754px;
+                height: auto;
                 .bqms-input-container{
                     margin-top: 20px;
-                    /*这里有一个奇葩的问题 全局样式生效  局部样式无法选中texarea*/
-                    .bqms textarea.el-textarea__inner{
-                        font-family: PingFangSC-Medium;
-                        font-size: 34px;
-                        font-weight: normal;
-                        font-stretch: normal;
-                        letter-spacing: 0px;
-                        color: #20a0ff;
-                        height: 678px;
-                        padding: 30px;
-                    }
                 }
             }
         }
     .yf-foot-container{
         text-align: center;
         margin-top: 10px;
+        margin-bottom: 10px;
     } 
     }
     /*右侧药物的列表样式*/
@@ -170,26 +157,30 @@
     }
     //药品列表样式
     .mainMeList-container{
-        width:1320px;
+        width:1321px;
         height: auto;
         margin-top:17px;
         margin-bottom:17px;
         display: flex;
         flex-wrap:wrap;
-        border: 1px solid #c0ccda;
+        border-bottom: 1px solid #c0ccda;
+        border-right:1px solid #c0ccda;
         .yp-item{
             width:330px;
             height: 70px;
             input{  
-                max-width: 286px;
-                padding: 7px 20px 7px 20px;
-                font-family: PingFangSC-Regular;
-                font-size: 40px;
-                font-weight: normal;
-                font-stretch: normal;
-                letter-spacing: 0px;
-                color: #475669;
-                outline:none;
+                    max-width: 290px;
+                    padding: 8px 20px 9px 20px;
+                    font-family: PingFangSC-Regular;
+                    font-size: 40px;
+                    font-weight: normal;
+                    font-stretch: normal;
+                    letter-spacing: 0px;
+                    color: #475669;
+                    outline: none;
+                    border: 1px solid #c0ccda;
+                    border-bottom: 0px;
+                    border-right: 0px;
             }
         }
 }

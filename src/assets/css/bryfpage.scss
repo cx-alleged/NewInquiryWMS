@@ -1,5 +1,16 @@
 /*全局样式  主要是修改element的样式 局部样式无法修改element 组件样式 通过添加最外层的容器避免重盖*/
 .bryf-container{
+    .info-container .wzwt-info-container .wzwt-input-container textarea{
+        font-family: PingFangSC-Medium;
+        font-size: 34px;
+        font-weight: normal;
+        font-stretch: normal;
+        letter-spacing: 0px;
+        color: #1f2d3d;
+        height: 489px;
+        padding: 30px;
+        resize: none;
+    }
     .info-container .bqms-info-container .bqms-input-container textarea{
         font-family: PingFangSC-Medium;
         font-size: 34px;
@@ -7,7 +18,7 @@
         font-stretch: normal;
         letter-spacing: 0px;
         color: #20a0ff;
-        height: 678px;
+        height: 658px;
         padding: 30px;
         resize: none;
     }

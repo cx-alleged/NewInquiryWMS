@@ -88,7 +88,6 @@ export default {
           _that.$http.get("/inquiry/getOnePatientLabels?patientId="+pId).then(function (response) {
                 if(response.code == "1"){
                     var str = JSON.stringify(response.data.diagnoseLabels);
-                    debugger
                     str = str.replace(/[\[\]\"]*/g, '');  
                     _that.diagnoseLabels = _that.diagnoseLabels+str;
                 }
