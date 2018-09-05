@@ -28,7 +28,7 @@
         :header-row-class-name="headerClassname"
         :row-class-name="rowClassname"
         stripe
-        style="border:1px solid #ebeef5;">
+        >
         <el-table-column
         type="index"
         label="序号"
@@ -50,7 +50,7 @@
         :header-row-class-name="headerClassname"
         :row-class-name="rowClassname"
         stripe
-        style="border:1px solid #ebeef5;">
+        >
         <el-table-column
         type="index"
         label="序号"
@@ -72,7 +72,7 @@
         :header-row-class-name="headerClassname"
         :row-class-name="rowClassname"
         stripe
-        style="border:1px solid #ebeef5;">
+        >
         <el-table-column
         type="index"
         label="序号"
