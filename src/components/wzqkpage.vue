@@ -41,7 +41,7 @@
         width="200">
         </el-table-column>
         <el-table-column
-        prop="sourceArea"
+        prop="residence"
         label="来自"
         width="450">
         </el-table-column>
