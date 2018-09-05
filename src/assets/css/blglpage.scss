@@ -48,12 +48,13 @@
             font-weight: normal;
             font-stretch: normal;
             letter-spacing: 0px;
-            color: #20a0ff;
+            color: #1f2d3d;
         }
     }
     .rq-input{
       width: 510px;
-      height: 72px;
+      height: 70px;
+      border-radius: 8px;
       margin-right: 40px;
       i{
         font-size: 25px;
@@ -61,11 +62,11 @@
       input{
         width: 45%;
         font-family: PingFangSC-Regular;
-        font-size: 34px;
+        font-size: 32px;
         font-weight: normal;
         font-stretch: normal;
         letter-spacing: 0px;
-        color: #20a0ff;
+        color: #1f2d3d;
       }
       span.el-range-separator{
         font-size: 30px;
@@ -88,7 +89,7 @@
         .el-pager li{
           width: 48px;
           height: 47px;
-          line-height: 47px;
+          line-heght: 47px;
           border: solid 1px #d3dce6;
           margin: 0px;
         }

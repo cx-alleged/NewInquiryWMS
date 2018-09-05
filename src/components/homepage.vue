@@ -2,7 +2,7 @@
    <div class="from-container-div">
       <div class="base-form-c">
         <el-form ref="form" :model="form" :rules="rules" label-width="156px" label-position="right">
-          <el-form-item label="姓名" prop="name">
+          <el-form-item label="姓名" prop="pname">
             <el-input class="index-input" v-model="form.pname" placeholder="请输入姓名"></el-input>
           </el-form-item>
           <el-form-item label="性别">

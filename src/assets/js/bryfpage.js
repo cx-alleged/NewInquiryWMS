@@ -6,6 +6,8 @@ export default {
             diagnoseLabels:null,
             d_isActive:false,
             b_isActive:false,
+            is_display_zd:false,
+            is_display_fh:true,
             options: [],
             yfdata:{
                 "pName":"",
@@ -670,6 +672,7 @@ export default {
     }
     ,created () {
         // this.initDiagnoseLabel();
+        this.initPage();
         //请求药方数据
         this.getyfDate();
     }
@@ -677,6 +680,16 @@ export default {
 
     }
     ,methods: {
+    /**
+     * 初始化页面的按钮
+     */
+    initPage:function(){
+        var prePathParams = JSON.parse(window.localStorage.getItem("prePathParams"));
+        if(prePathParams.path == "brglpage" || prePathParams.path == "grblglpage"){
+            this.is_display_fh = false;
+            this.is_display_zd = true;
+        }
+    },
     setActiveSyle:function(type){
         if(type == 1){
             if(this.d_isActive == false){
@@ -692,18 +705,23 @@ export default {
             }
         }
     },
-    //点击最外层触发下拉
-    triggerSelected:function(e){
-        var wrap_select = e.target.firstChild;
-        var input_doc = wrap_select.childNodes[1].children[0];
-        input_doc.click();
+    gotoLastPage:function(){
+        //跳转组件并且 传递pid
+      var pathParams = window.localStorage.getItem("prePathParams");
+      var prePathParams = window.localStorage.getItem("pathParams");
+      prePathParams = JSON.parse(prePathParams);
+      prePathParams.path = "brglpage";
+      //缓存 目标跳转页面的参数
+      this.$store.dispatch("setPathParams", pathParams);
+      this.$store.dispatch("setPrePathParams", JSON.stringify(prePathParams));
+      //缓存 跳转页面的参数
+      this.$common.GotoPage(JSON.parse(pathParams).path,JSON.parse(pathParams),this);
     },
-    //触发下拉
-    gotoBryfpage:function(){
-         this.$router.push({
-             path: '/Index/brglpage'
-          })
-    },
+    // gotoBryfpage:function(){
+    //      this.$router.push({
+    //          path: '/Index/brglpage'
+    //       })
+    // },
     /**
      * 初始化标签
      */

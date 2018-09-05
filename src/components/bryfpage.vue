@@ -71,7 +71,8 @@
                 </div>
             </div>
             <div class="yf-foot-container">
-                 <el-button class="btn-default btn-blue" @click="submitYfData">完成诊断</el-button>
+                 <el-button :class="[{'isdisplaynone': is_display_zd },'btn-default btn-blue']" @click="submitYfData">完成诊断</el-button>
+                 <el-button  @click="gotoLastPage" :class="[{'isdisplaynone': is_display_fh },'btn-default']" >返回</el-button>
             </div>
         </div>
     </div>

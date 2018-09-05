@@ -8,7 +8,7 @@ export default {
             endDate:null,
             medicine:null,
             pageNum:1,
-            pageSize:10
+            pageSize:500
           },
         tableData: {
             list1:[],
@@ -20,6 +20,24 @@ export default {
     created () {
         //获取页面的初始化数据  
         this.initPage();
+    },
+    watch: {
+      rangeDate:function(newQuestion, oldQuestion){
+        if(this.rangeDate){
+          this.search_obj.startDate = this.$common.dateFormatStr(this.rangeDate[0],'yyyy-MM-dd');   
+          this.search_obj.endDate = this.$common.dateFormatStr(this.rangeDate[1],'yyyy-MM-dd'); 
+        }else{
+          this.search_obj.startDate = null;   
+          this.search_obj.endDate = null; 
+        }
+           
+      },
+      search_obj: {
+        　　　　handler(newValue, oldValue) {
+        　　　　　　this.getYytjList();
+        　　　　},
+        　　　　deep: true
+      }
     },
     methods: {
       rowClassname() {
@@ -91,18 +109,46 @@ export default {
           if(JSON.stringify(list) != "[]"){
               //第二步 不能整除 补齐整除数组
               if(list.length%3 != 0){
-                var l_number = 3- list.length%3;
-                for( var i = 0; i < l_number; i++){
-                    var temp_obj = new Object();
-                    temp_obj.dose = null;
-                    temp_obj.medicine = null;
-                    list.push(temp_obj);
+                var min_number = Math.floor(list.length/3);
+                var arry1 = new Array(),
+                    arry2 = new Array(),
+                    arry3 = new Array();
+                var l_number = list.length%3;
+                if(min_number!=0){
+                   arry1 = list.slice(0,min_number);
+                   arry2 = list.slice(min_number,2*min_number);
+                   arry3 = list.slice(2*min_number,3*min_number);
+                }else{
+                  l_number = list.length;
                 }
+                if(l_number==1){
+                  arry1.push(list[list.length-1]);
+                  var temp_obj = new Object();
+                  temp_obj.dose = null;
+                  temp_obj.medicine = null;
+                  arry2.push(temp_obj);
+                  var temp_obj1 = new Object();
+                  temp_obj1.dose = null;
+                  temp_obj1.medicine = null;
+                  arry3.push(temp_obj1);
+                }else{
+                  arry1.push(list[list.length-2]);
+                  arry2.push(list[list.length-1]);
+                  var temp_obj1 = new Object();
+                  temp_obj1.dose = null;
+                  temp_obj1.medicine = null;
+                  arry3.push(temp_obj1);
+                }
+                this.tableData.list1 =arry1;
+                this.tableData.list2 = arry2;
+                this.tableData.list3 = arry3;
               }
+              
+          }else{
               var index = list.length/3;
-              this.tableData.list1 = list.slice(0,index-1);
-              this.tableData.list2 = list.slice(index,index*2-1);
-              this.tableData.list3 = list.slice(index*2,list.length-1);
+              this.tableData.list1 = list.slice(0,index);
+              this.tableData.list2 = list.slice(index,index*2);
+              this.tableData.list3 = list.slice(index*2,list.length);
           }
       },
       tableprint(){

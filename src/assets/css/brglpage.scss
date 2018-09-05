@@ -1,7 +1,11 @@
 .brgl-container{
     padding: 40px;
     margin: 0px;
-    
+    .page-container{
+      .el-pager li{
+        margin: 0px;
+      }
+    }
   }
   
   .search-row{
@@ -18,7 +22,7 @@
         font-weight: normal;
         font-stretch: normal;
         letter-spacing: 0px;
-        color: #20a0ff;
+        color: #1f2d3d;
         line-height: 70px;
         height: 70px;
       }

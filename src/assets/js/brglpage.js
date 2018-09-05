@@ -42,6 +42,7 @@ export default {
             _that = this,
             prePath = "";
             params.pId = row.pId;
+            params.pname = this.search_obj.pname;
         var pathParams = {path:pagename,data:params};
         _that.$store.dispatch("setPathParams", JSON.stringify(pathParams));
         var prePathParams = {path:"brglpage",data:_that.search_obj};
@@ -183,7 +184,6 @@ export default {
           let form = new FormData();  
           form.append('file', files[0])  
           let data = await new Promise((resolve, reject) => { 
-            debugger 
               _that.$http.post("/inquiry/getObjFromFile",form).then(res => {  
                 resolve(res)  
               })

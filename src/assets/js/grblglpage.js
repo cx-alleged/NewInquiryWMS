@@ -2,6 +2,7 @@ export default {
     data() {
       return {
         search_obj:{
+            pname:null,
             patientId:null,
             pageNum:1,
             pageSize:10
@@ -28,7 +29,7 @@ export default {
       },
       handleClick(row) {
           var _that = this;
-          var brinfo = {pId:row.pId,inquiryId:row.inquiryId,lastinquiryId:''};
+          var brinfo = {pId:row.pId,inquiryId:row.inquiryId,lastinquiryId:'',pname:this.search_obj.pname};
            //跳转组件并且 传递pid
            var pathParams = new Object();
            pathParams.path = 'bryfpage';
@@ -67,8 +68,15 @@ export default {
       initPage(){
         //从缓存中取出当前页面的参数
         var i_params = JSON.parse(window.localStorage.getItem("pathParams"));
-        if(i_params.data.pId!=""){
+        
+        if(i_params.data.pId!="" && i_params.data.pId){
             this.search_obj.patientId = i_params.data.pId;
+        }
+        if(i_params.data.patientId!="" && i_params.data.patientId){
+            this.search_obj.patientId = i_params.data.patientId;
+        }
+        if(i_params.data.pname!=""){
+            this.search_obj.pname = i_params.data.pname;
         }
         if(i_params.data.pageNum){
             this.search_obj.pageNum = i_params.data.pageNum;

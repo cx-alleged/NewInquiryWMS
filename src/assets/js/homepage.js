@@ -16,8 +16,8 @@ export default {
           province:[],
           city:[],
           rules: {
-            name: [
-              { required: true, message: '请输入姓名', trigger: 'blur' }
+            pname: [
+              { required: true, message: '请输入姓名'}
             ],
           },
           value1:"2018-07-01"
@@ -39,7 +39,15 @@ export default {
           birthday(newValue, oldValue) {
       　　　　var age  = this.$common.GetAgeByBrithday(newValue);
               this.form.age = age;
-      　　}
+      　　},
+         placeDate(newValue,oldValue){
+            //默认 患者来源地 0 24 1348
+            this.setProList("0");
+            this.setCityList("24");
+            this.form.country = "0";
+            this.form.sourceProvince = 24;
+            this.form.sourceCity =1348;
+         }
       },
   
       methods: {
@@ -58,6 +66,7 @@ export default {
         },
         //联动设置 省份
         setProList(selectvalue){
+          console.log(selectvalue);
           //依据值修改省份的下拉值
             this.province = [];
             this.city = [];
