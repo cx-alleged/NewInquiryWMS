@@ -144,6 +144,7 @@ export default {
                       }else{
                           brinfo.lastinquiryId = "";
                       }
+                      
                       //跳转组件并且 传递pid
                       var pathParams = new Object();
                       pathParams.path = 'bryfpage';
@@ -153,6 +154,7 @@ export default {
                       var prePathParams = new Object();
                       prePathParams.path = 'brglpage';
                       prePathParams.data = _that.search_obj;
+                      prePathParams.data.xzfz = "new";
                       //缓存 跳转页面的参数
                       _that.$store.dispatch("setPrePathParams", JSON.stringify(prePathParams));
                       _that.$common.GotoPage("bryfpage",brinfo,_that);

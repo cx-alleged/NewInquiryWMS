@@ -178,7 +178,7 @@ export default {
                       {
                         "amount": 0,
                         "isStock": true,
-                        "remarks": "先用，与主方同用",
+                        "remarks": "后用，与主方同用",
                         "viceMeList": null,
                         "viceRecipeDetailList": [
                          {
@@ -242,7 +242,7 @@ export default {
                       {
                         "amount": 0,
                         "isStock": true,
-                        "remarks": "在月经时用，与主方同用",
+                        "remarks": "最后用，与主方同用",
                         "viceMeList": null,
                         "viceRecipeDetailList": [
                          {
@@ -686,8 +686,12 @@ export default {
     initPage:function(){
         var prePathParams = JSON.parse(window.localStorage.getItem("prePathParams"));
         if(prePathParams.path == "brglpage" || prePathParams.path == "grblglpage"){
-            this.is_display_fh = false;
-            this.is_display_zd = true;
+            //排除从病人管理的新建复诊
+            if(prePathParams.data.xzfz != "new"){
+                this.is_display_fh = false;
+                this.is_display_zd = true;
+            }
+            
         }
     },
     setActiveSyle:function(type){

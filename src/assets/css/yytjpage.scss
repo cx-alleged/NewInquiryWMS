@@ -116,9 +116,12 @@
         }
         .el-table__header-wrapper{
           background: #e5e9f2;
+          border: 1px solid #ebeef5;
         }
         .el-table__body-wrapper{
           overflow: hidden;
+          min-height: 0px;
+          border-left: 1px solid #ebeef5;
         }
         .el-table .headerClassname,rowClassname {
           background: #f0f9eb;

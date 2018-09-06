@@ -27,8 +27,7 @@
         :data="tableData.list1"
         :header-row-class-name="headerClassname"
         :row-class-name="rowClassname"
-        stripe
-        >
+        stripe>
         <el-table-column
         type="index"
         label="序号"
@@ -49,8 +48,7 @@
         :data="tableData.list2"
         :header-row-class-name="headerClassname"
         :row-class-name="rowClassname"
-        stripe
-        >
+        stripe>
         <el-table-column
         type="index"
         label="序号"
@@ -71,8 +69,7 @@
         :data="tableData.list3"
         :header-row-class-name="headerClassname"
         :row-class-name="rowClassname"
-        stripe
-        >
+        stripe>
         <el-table-column
         type="index"
         label="序号"

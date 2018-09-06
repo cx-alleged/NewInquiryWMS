@@ -208,7 +208,7 @@ Print.prototype = {
       },1000);
       setTimeout(function () {
         document.body.removeChild(iframe)
-      }, 1500);
+      }, 2000);
     },
     addCssByStyle(doc,cssString){
       var style=doc.createElement("style");

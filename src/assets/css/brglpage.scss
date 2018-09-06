@@ -1,12 +1,10 @@
 .brgl-container{
     padding: 40px;
     margin: 0px;
-    .page-container{
-      .el-pager li{
+    .el-pagination.is-background .el-pager li{
         margin: 0px;
-      }
     }
-  }
+ 
   
   .search-row{
     width: 100%;
@@ -140,4 +138,4 @@
            }
       }
    }
-  
+  }
