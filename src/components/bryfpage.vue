@@ -158,7 +158,7 @@
     }
     //药品列表样式
     .mainMeList-container{
-        width:1321px;
+        width:1323px;
         height: auto;
         margin-top:17px;
         margin-bottom:17px;
@@ -166,12 +166,13 @@
         flex-wrap:wrap;
         border-bottom: 1px solid #c0ccda;
         border-right:1px solid #c0ccda;
+        overflow: hidden;
         .yp-item{
             width:330px;
             height: 70px;
             input{  
                     max-width: 290px;
-                    padding: 8px 20px 9px 20px;
+                    padding: 8px 20px 8px 20px;
                     font-family: PingFangSC-Regular;
                     font-size: 40px;
                     font-weight: normal;
