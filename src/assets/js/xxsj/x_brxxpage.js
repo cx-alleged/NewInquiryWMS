@@ -20,15 +20,15 @@ export default {
             age:[
                 { type: 'number', message: '只能填写数字',  trigger: 'change' }
             ],
-            quitSmokeTime:[
-                { type: 'number', message: '只能填写数字',  trigger: 'change' }
-            ],
+            // quitSmokeTime:[
+            //     { type: 'number', message: '只能填写数字',  trigger: 'change' }
+            // ],
             dailyDrink:[
                 { type: 'number', message: '只能填写数字',  trigger: 'change' }
             ],
-            quitDrinkTime:[
-                { type: 'number', message: '只能填写数字',  trigger: 'change' }
-            ],
+            // quitDrinkTime:[
+            //     { type: 'number', message: '只能填写数字',  trigger: 'change' }
+            // ],
             pregnant:[
                 { type: 'number', message: '只能填写数字',  trigger: 'change' }
             ],
@@ -173,12 +173,14 @@ export default {
      * @param {any} type 
      */
     setCityList(type){
+        debugger
         if(type == 1){
-            this.sourceCity = this.$common.setCityList(this.basicInfo.sourceProvince,this);
-            this.basicInfo.sourceCity = null;
-        }else{
-            this.city = this.$common.setCityList(this.basicInfo.incuProvince,this);
+             this.city = this.$common.setCityList(this.basicInfo.incuProvince,this);
             this.basicInfo.incuCity = null;
+            
+        }else{
+           this.sourceCity = this.$common.setCityList(this.basicInfo.sourceProvince,this);
+            this.basicInfo.sourceCity = null;
         }
     },
      /**
@@ -187,15 +189,17 @@ export default {
       * @param {any} type 
       */
      setProList(type){
+         debugger
         if(type  == 1){
+            this.province = this.$common.setProList(this.b_country,this);
+            this.basicInfo.incuProvince = null;
+            this.basicInfo.incuCity = null;
+            
+        }else{
             //代表
             this.sourceProvince = this.$common.setProList(this.s_country,this);
             this.basicInfo.sourceProvince = null;
             this.basicInfo.sourceCity = null;
-        }else{
-            this.province = this.$common.setProList(this.b_country,this);
-            this.basicInfo.incuProvince = null;
-            this.basicInfo.incuCity = null;
         }
      },
       /**
@@ -203,42 +207,45 @@ export default {
        * 
        */
       detailBrbrth(obj){
-        if(obj.sourceProvince){
-            this.s_country = this.$common.isChinaProvince(obj.sourceProvince,this);
-            this.sourceProvince = this.$common.setProList(this.s_country,this);
-            this.sourceCity = this.$common.setCityList(obj.sourceProvince,this);
-        }
-        if(obj.incuProvince){
-            this.b_country = this.$common.isChinaProvince(obj.incuProvince,this);
-            this.province = this.$common.setProList(this.b_country,this);
-            this.city = this.$common.setCityList(obj.incuProvince,this);
-        }
-       
+            if(obj && JSON.stringify(obj)!="{}"){
+                if(obj.sourceProvince){
+                    this.s_country = this.$common.isChinaProvince(obj.sourceProvince,this);
+                    this.sourceProvince = this.$common.setProList(this.s_country,this);
+                    this.sourceCity = this.$common.setCityList(obj.sourceProvince,this);
+                }
+                if(obj.incuProvince){
+                    this.b_country = this.$common.isChinaProvince(obj.incuProvince,this);
+                    this.province = this.$common.setProList(this.b_country,this);
+                    this.city = this.$common.setCityList(obj.incuProvince,this);
+                }
+            }
       },
       /**
        * 设置空数组
        */
       setNullArray:function(t_obj){
-        var obj = JSON.parse(JSON.stringify(t_obj));
-        for(var key in obj){
-            if(obj[key] == "" || !obj[key]){
-                obj[key] = null;
-            }
-        }
-        var arry_name = ["eatingHabits","heredityHistory","infectionHistory","traumaHistory","contactHistory","meAllergy","allergy"];
-        for(var key in arry_name){
-            if(!obj[arry_name[key]]){
-                obj[arry_name[key]]= new Array();
-            }else{
-                try {
-                    obj[arry_name[key]] = JSON.parse(obj[arry_name[key]])
-                } catch (error) {
-                    obj[arry_name[key]] = new Array();
+          if(t_obj && JSON.stringify(t_obj)!="{}"){
+            var obj = JSON.parse(JSON.stringify(t_obj));
+            for(var key in obj){
+                if(obj[key] == "" || !obj[key]){
+                    obj[key] = null;
                 }
-                
             }
-        }
-        return obj;
+            var arry_name = ["eatingHabits","heredityHistory","infectionHistory","traumaHistory","contactHistory","meAllergy","allergy"];
+            for(var key in arry_name){
+                if(!obj[arry_name[key]]){
+                    obj[arry_name[key]]= new Array();
+                }else{
+                    try {
+                        obj[arry_name[key]] = JSON.parse(obj[arry_name[key]])
+                    } catch (error) {
+                        obj[arry_name[key]] = new Array();
+                    }
+                    
+                }
+            }
+            return obj;
+          }
       },
       /**
        * 获取病人信息
@@ -254,13 +261,17 @@ export default {
                 //得到个人信息的数据，对个人信息进行处理后绑定
                 if(response.code == "1"){
                     _that.detailBrbrth(response.data.patientInfo);
-                    _that.basicInfo = _that.setNullArray(response.data.patientInfo);
+                    var temp_obj = _that.setNullArray(response.data.patientInfo);
+                    if(temp_obj){
+                        _that.basicInfo = temp_obj;
+                    }
                     _that.setBasicBrxx();
                 }else{
                     _that.$common.openErrorMsgBox("获取病人信息失败",_that);
                 }
             }).catch(function (error) {
-               _that.$common.openErrorMsgBox("error",_that);
+                
+               _that.$common.openErrorMsgBox(error.message,_that);
             });
      },
       /**
@@ -269,7 +280,10 @@ export default {
        */
       setBasicBrxx(){
          var params_obj = JSON.parse(window.localStorage.getItem("pathParams"));
-         this.basicInfo = this.setNullArray(this.basicInfo);
+         var temp_obj = this.setNullArray(this.basicInfo);
+         if(temp_obj){
+            this.basicInfo = temp_obj;
+         }
          if(params_obj.data){
             this.basicInfo.inquiryId = params_obj.data.inquiryId;
             if(!params_obj.data.sourceCity){

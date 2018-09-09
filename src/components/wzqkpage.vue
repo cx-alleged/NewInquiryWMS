@@ -43,12 +43,12 @@
         <el-table-column
         prop="residence"
         label="来自"
-        width="450">
+        width="400">
         </el-table-column>
         <el-table-column
         prop="description"
         label="诊断"
-        width="500">
+        width="400">
         </el-table-column>
         <el-table-column
         prop="times"

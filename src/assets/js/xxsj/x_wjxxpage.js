@@ -150,6 +150,25 @@ export default {
       obj.answerVOList = p_arry;
       return obj;
     },
+      /**
+     * 是否保存
+     */
+    isonSubmit(){
+      var _that = this;
+      this.$confirm("是否提交问卷信息", '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+            _that.onSubmit();
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '操作已取消'
+          });          
+        });
+    },
+
     /**
      * 问卷信息 保存 提交
      */
@@ -161,7 +180,7 @@ export default {
            loading.close();
           _that.$common.openSuccessMsgBox("操作成功",_that);
           setTimeout(function(){ 
-            _thiat.$common.GotoPage("xhome",{},_that);
+            _that.$common.GotoPage("xhome",{},_that);
           }, 1000);
       }).catch(function (error) {
         console.log(error);

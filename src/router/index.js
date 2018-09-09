@@ -14,8 +14,8 @@ export default new Router({
     // },
     {
         path: '/',
-        // redirect:'/xindex/xhome'
-        redirect: '/Index/xjczbr'
+        redirect:'/xindex/xhome'
+        // redirect: '/Index/xjczbr'
         // component: resolve => require(['@/components/index'],resolve)
     },
     {

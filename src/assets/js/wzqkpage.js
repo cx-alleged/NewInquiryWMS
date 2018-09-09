@@ -3,7 +3,7 @@ export default {
       return {
         yytjpage:'yytjpage',
         wzqkpage:'wzqkpage',
-        rangeDate:null,
+        rangeDate:[new Date(),new Date()],
         search_obj:{
             startDate:"",
             endDate:"",
@@ -20,8 +20,13 @@ export default {
     },
     watch: {
         rangeDate: function (newQuestion, oldQuestion) {
-          this.search_obj.startDate = this.$common.dateFormatStr(this.rangeDate[0],'yyyy-MM-dd');   
-          this.search_obj.endDate = this.$common.dateFormatStr(this.rangeDate[1],'yyyy-MM-dd');   
+          debugger
+          if(newQuestion){
+              this.search_obj.startDate = this.$common.dateFormatStr(this.rangeDate[0],'yyyy-MM-dd');   
+              this.search_obj.endDate = this.$common.dateFormatStr(this.rangeDate[1],'yyyy-MM-dd');
+              this.getWzqkList(); 
+          }
+            
         }
     },
     created ()  {
@@ -56,9 +61,13 @@ export default {
         }
         if(i_params.data.startDate){
           this.search_obj.startDate = i_params.data.startDate;
+        }else{
+          this.search_obj.startDate = this.$common.dateFormatStr(new Date(),'yyyy-MM-dd');
         }
         if(i_params.data.endDate){
           this.search_obj.endDate = i_params.data.endDate;
+        }else{
+          this.search_obj.endDate = this.$common.dateFormatStr(new Date(),'yyyy-MM-dd');
         }
         this.getWzqkList();
       },

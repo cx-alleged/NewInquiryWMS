@@ -4,7 +4,7 @@
             <el-row :gutter="20">
                 <el-col :span="12">
                     <el-form-item label="病人编号">
-                        <el-input v-model="basicInfo.patientId" placeholder="" :readonly="true"></el-input>
+                        <el-input v-model="basicInfo.patientId" placeholder="" :disabled="true"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="12" class="col-no-padding">
@@ -370,8 +370,8 @@
                         </el-form-item>
                    </el-col> 
                    <el-col :span="9">
-                        <el-form-item label="戒烟时长" label-width="200px" prop="quitSmokeTime">
-                            <el-input v-model.number="basicInfo.quitSmokeTime" placeholder=""></el-input>
+                        <el-form-item label="戒烟时长" label-width="200px" >
+                            <el-input v-model="basicInfo.quitSmokeTime" placeholder=""></el-input>
                         </el-form-item>
                    </el-col> 
                 </el-col>
@@ -402,8 +402,8 @@
                         </el-form-item>
                    </el-col> 
                    <el-col :span="9">
-                        <el-form-item label="戒酒时长" label-width="200px" prop="quitDrinkTime">
-                            <el-input v-model.number="basicInfo.quitDrinkTime" placeholder=""></el-input>
+                        <el-form-item label="戒酒时长" label-width="200px">
+                            <el-input v-model="basicInfo.quitDrinkTime" placeholder=""></el-input>
                         </el-form-item>
                    </el-col> 
                 </el-col>
