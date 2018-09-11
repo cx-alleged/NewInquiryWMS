@@ -24,10 +24,12 @@
     <div class="table-continer">
         <el-table
         :data="tableData.list"
+        ref="table"
         :header-row-class-name="headerClassname"
         :row-class-name="rowClassname"
         stripe
-        style="border:1px solid #ebeef5;overflow-y:auto;height:100%;">
+        style="border:1px solid #ebeef5;overflow-y:auto;height:100%;"
+        @selection-change="handleSelectionChange">
         <el-table-column
             type="selection"
             width="96">

@@ -8,6 +8,9 @@ export default {
             pageSize:10
           },
         diagnoseLabels:"诊断标签：",
+        multipleSelectionAll:[],//所有选中的数据包含跨页数据
+        multipleSelection:[],// 当前页选中的数据
+        idKey: 'inquiryId', // 标识列表数据中每一行的唯一键的名称
         tableData: {
             list:[],
             pageNum:1,
@@ -47,9 +50,79 @@ export default {
         console.log(`每页 ${val} 条`);
       },
       handleCurrentChange(val) {
+          this.changePageCoreRecordData();
          this.search_obj.pageNum = val;
          this.getBrList(this.search_obj);
       },
+        handleSelectionChange (val) {
+            this.multipleSelection = val;
+            //实时记录选中的数据
+            setTimeout(()=>{
+                this.changePageCoreRecordData();
+            }, 50)
+        },
+        setSelectRow() {
+            if (!this.multipleSelectionAll || this.multipleSelectionAll.length <= 0) {
+                return;
+            }
+            // 标识当前行的唯一键的名称
+            let idKey = this.idKey;
+            let selectAllIds = [];
+            let that = this;
+            this.multipleSelectionAll.forEach(row=>{
+                selectAllIds.push(row[idKey]);
+            })
+            this.$refs.table.clearSelection();
+            for(var i = 0; i < this.tableData.list.length; i++) {                    
+                if (selectAllIds.indexOf(this.tableData.list[i][idKey]) >= 0) {
+                    // 设置选中，记住table组件需要使用ref="table"
+                    this.$refs.table.toggleRowSelection(this.tableData.list[i], true);
+                }
+            }
+        },
+        // 记忆选择核心方法
+            changePageCoreRecordData () {
+                // 标识当前行的唯一键的名称
+                let idKey = this.idKey;
+                let that = this;
+                // 如果总记忆中还没有选择的数据，那么就直接取当前页选中的数据，不需要后面一系列计算
+                if (this.multipleSelectionAll.length <= 0) {
+                    this.multipleSelectionAll = this.multipleSelection;
+                    return;
+                }
+                // 总选择里面的key集合
+                let selectAllIds = [];
+                this.multipleSelectionAll.forEach(row=>{
+                    selectAllIds.push(row[idKey]);
+                })
+                let selectIds = []
+                // 获取当前页选中的id
+                this.multipleSelection.forEach(row=>{
+                    selectIds.push(row[idKey]);
+                    // 如果总选择里面不包含当前页选中的数据，那么就加入到总选择集合里
+                    if (selectAllIds.indexOf(row[idKey]) < 0) {
+                        that.multipleSelectionAll.push(row);
+                    }
+                })
+                let noSelectIds = [];
+                // 得到当前页没有选中的id
+                this.tableData.list.forEach(row=>{
+                    if (selectIds.indexOf(row[idKey]) < 0) {
+                        noSelectIds.push(row[idKey]);
+                    }
+                })
+                noSelectIds.forEach(id=>{
+                    if (selectAllIds.indexOf(id) >= 0) {
+                        for(let i = 0; i< that.multipleSelectionAll.length; i ++) {
+                            if (that.multipleSelectionAll[i][idKey] == id) {
+                                // 如果总选择中有未被选中的，那么就删除这条
+                                that.multipleSelectionAll.splice(i, 1);
+                                break;
+                            }
+                        }
+                    }
+                })
+            },
       toggleSelection(rows) {
         if (rows) {
         rows.forEach(row => {
@@ -115,6 +188,9 @@ export default {
            }).then(function (response) {
                 if(JSON.stringify(response.data.pageInfo.list)!="[]"){
                     _that.tableData = response.data.pageInfo;
+                    setTimeout(()=>{
+                        _that.setSelectRow();
+                    }, 50);
                 }
             }).catch(function (error) {
                 console.log(error);

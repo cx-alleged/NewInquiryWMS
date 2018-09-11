@@ -8,7 +8,7 @@
     <div class="table-div-continer">
     <div class="table-continer">
             <el-table
-            ref="multipleTable"
+            ref="table"
             tooltip-effect="dark"
             @selection-change="handleSelectionChange"
             :data="tableData.list"
