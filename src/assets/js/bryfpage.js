@@ -374,7 +374,7 @@ export default {
             mbMainObj:{
                     "amount": 0,
                     "isStock": true,
-                    "remarks": "主方备注",
+                    "remarks": "",
                     "mainMeList": null,
                     "recipeDetailList": [
                         {
@@ -466,7 +466,7 @@ export default {
                         {
                             "amount": 0,
                             "isStock": true,
-                            "remarks": "副方备注",
+                            "remarks": "先用，与主方同用",
                             "viceMeList": null,
                             "viceRecipeDetailList": [
                             {
@@ -530,7 +530,7 @@ export default {
                         {
                             "amount": 0,
                             "isStock": true,
-                            "remarks": "副方备注",
+                            "remarks": "后用，与主方同用",
                             "viceMeList": null,
                             "viceRecipeDetailList": [
                             {
@@ -595,7 +595,7 @@ export default {
                         {
                             "amount": 0,
                             "isStock": true,
-                            "remarks": "副方备注",
+                            "remarks": "最后用，与主方同用",
                             "viceMeList": null,
                             "viceRecipeDetailList": [
                             {
@@ -1198,6 +1198,13 @@ export default {
     addZyfff:function (mrindex){
         var obj = JSON.parse(JSON.stringify(this.mbViceObj));
         //   var obj = Object.assign({}, this.mbViceObj);
+            if(this.yfdata.mainReList[mrindex].viceReList.length == 0){
+                obj.remarks = "先用，与主方同用";
+            }else if(this.yfdata.mainReList[mrindex].viceReList.length == 1){
+                obj.remarks = "后用，与主方同用";
+            }else{
+                obj.remarks = "最后用，与主方同用";
+            }
           this.yfdata.mainReList[mrindex].viceReList.push(obj);
       },
     /**

@@ -8,25 +8,23 @@ export default {
             startDate:"",
             endDate:"",
             pageNum:1,
-            pageSize:10
+            pageSize:50
           },
         tableData: {
             list:[],
             pageNum:1,
-            pageSize:10,
+            pageSize:50,
             total:0
           }
       }
     },
     watch: {
         rangeDate: function (newQuestion, oldQuestion) {
-          debugger
           if(newQuestion){
               this.search_obj.startDate = this.$common.dateFormatStr(this.rangeDate[0],'yyyy-MM-dd');   
               this.search_obj.endDate = this.$common.dateFormatStr(this.rangeDate[1],'yyyy-MM-dd');
               this.getWzqkList(); 
           }
-            
         }
     },
     created ()  {
@@ -56,7 +54,7 @@ export default {
         if(i_params.data.pageNum){
             this.search_obj.pageNum = i_params.data.pageNum;
         }
-        if(i_params.data.pageSize){
+        if(i_params.data.pageSize && i_params.data.pageSize>=50){
             this.search_obj.pageSize = i_params.data.pageSize;
         }
         if(i_params.data.startDate){
@@ -81,11 +79,18 @@ export default {
         _that.$http.get(url,{
             params: search_obj
            }).then(function (response) {
+             if(response.code == "1"){
                 if(JSON.stringify(response.data.pageInfo.list)!="[]"){
                     _that.tableData = response.data.pageInfo;
+                }else{
+                   _that.tableData = [];
                 }
+             }else{
+               _that.$common.openErrorMsgBox("数据请求接口报错",_that);
+             }
+                
             }).catch(function (error) {
-                console.log(error);
+                _that.$common.openErrorMsgBox(error,_that);
             });
       },
       handleSizeChange(val) {

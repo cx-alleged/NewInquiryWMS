@@ -84,6 +84,7 @@ export default {
     }
     ,methods: {
         gotopage:function(value){
+            
             this.$emit('headCallBack', value);
         },
         //检查是不是为两位数字，不足补全

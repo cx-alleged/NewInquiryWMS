@@ -36,31 +36,35 @@
        "v-header": Vheader
       }
       ,beforeMount () {
-        var currentName = this.$route.name
+        //保证页面刷新后还在原来的界面上
+        var currentName = this.$route.name;
         console.log(currentName);
         this.active="/Index/"+currentName;
+        this.navGotoPage("/Index/"+currentName);
       }
-      ,watch: {
-        active:function (val,oldVal){
+      ,methods: {
+        headCall: function (url) {
+          // console.log("父页面："+url);
+          // this.active = url;
+          this.navGotoPage(url);
+        }
+        ,navGotoPage:function(val){
+          //当期路径为跳转路径时不执行跳转操作
+          var currentName ="/Index/"+this.$route.name;
+          if(val == currentName){
+            return false;
+          }else{
+            this.active = val;
+          }
           var pathParams = window.localStorage.getItem("pathParams");
           var path_obj = {path:"",data:{}},
               path_obj1 ={path:"",data:{}};
-          // if(pathParams && pathParams!=""){
-          //     path_obj = this.setPropertyNull(JSON.parse(window.localStorage.getItem("pathParams")));
-          // }
-          // var path_obj1 = this.setPropertyNull(JSON.parse(window.localStorage.getItem("prePathParams")));
           // 从导航栏切换不需要缓存数据
           this.$store.dispatch("clearPathParams",path_obj);
           this.$store.dispatch("clearPrePathParams",path_obj1);
           this.$router.push({
              path: val
-          })
-        }
-      }
-      ,methods: {
-        headCall: function (url) { 
-          console.log("父页面："+url)
-          this.active = url;
+          });
         }
         ,setPropertyNull : function(obj){
           obj.path = null;

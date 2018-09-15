@@ -209,6 +209,35 @@ export default {
          //缓存 跳转页面的参数
          _that.$store.dispatch("setPrePathParams", JSON.stringify(prePathParams));
          _that.$common.GotoPage("bryfpage",brinfo,_that);
+      },
+      /**
+       * 导出病历功能
+       */
+      exportBlList(){
+          var _that = this;
+          var params_obj = {};
+          params_obj.inquiryIdList =[];
+        if(JSON.stringify(this.multipleSelectionAll)=='[]'){
+            _that.$common.openErrorMsgBox("请选中要导出的病历信息",_that);
+            return false;
+        }else{
+            for(var i=0;i<this.multipleSelectionAll.length;i++){
+                params_obj.inquiryIdList.push(this.multipleSelectionAll[i].inquiryId);
+            }
+        }
+        console.log(JSON.stringify(params_obj));
+        var url = "/MrManage/exportBl";
+        
+        // _that.$http.get(url,{
+        //     params: params_obj
+        //    }).then(function (response) {
+        //         if(response.code == "1"){
+        //             //打印的请求数据成功 把数据传递给打印控件；
+        //             _that.$blprint.init(response.data);
+        //         }
+        //     }).catch(function (error) {
+        //         _that.$common.openErrorMsgBox(error,_that);
+        //     });
       }
     }
   }

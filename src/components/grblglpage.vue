@@ -10,12 +10,12 @@
             <el-table
             ref="table"
             tooltip-effect="dark"
-            @selection-change="handleSelectionChange"
             :data="tableData.list"
             :header-row-class-name="headerClassname"
             :row-class-name="rowClassname"
             stripe
-            style="width:968px;border:1px solid #ebeef5;overflow-y:auto;">
+            style="width:968px;border:1px solid #ebeef5;overflow-y:auto;"
+            @selection-change="handleSelectionChange">
             <el-table-column
                 type="selection"
                 width="96">
@@ -52,7 +52,7 @@
       </el-pagination>
     </div>
     <div class="search-row-btn-group">
-       <el-button class="btn-blue">导出病历</el-button>
+       <el-button class="btn-blue" @click="exportBlList">导出病历</el-button>
        <el-button class="btn-default"  @click="GobackPage()">返回</el-button>
     </div>
   </div>

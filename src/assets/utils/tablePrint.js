@@ -82,13 +82,13 @@ tablePrint.prototype = {
            list_lenght = data_obj.list.length;
        }
        for(var i = 0 ;i < list_lenght; i++){
+         debugger
            var pName = data_obj.list[i].pName ? data_obj.list[i].pName : '';
            var age = data_obj.list[i].age ? data_obj.list[i].age : '';
-           var sourceArea = data_obj.list[i].sourceArea ? data_obj.list[i].sourceArea :'';
-           var description = data_obj.list[i].description ? data_obj.list[i].description :'';
+           var sourceArea = data_obj.list[i].residence ? data_obj.list[i].residence :'';
            var times = data_obj.list[i].times ? data_obj.list[i].times :'';
            var amount = data_obj.list[i].amount ? data_obj.list[i].amount :'';
-           str = str+ '<tr><td>'+(i+1)+'</td><td>'+pName+'</td><td>'+age+'</td><td>'+sourceArea+'</td><td>'+description+'</td><td>'+times+'</td><td>'+amount+'</td></tr>';
+           str = str+ '<tr><td>'+(i+1)+'</td><td>'+pName+'</td><td>'+age+'</td><td>'+sourceArea+'</td><td>'+times+'</td><td>'+amount+'</td></tr>';
        }
        str = headStr+content_head+str + '</tbody> </table> </div>';
        return str;
