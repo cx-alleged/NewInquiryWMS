@@ -1,3 +1,4 @@
+import qs from 'qs'
 export default {
     data() {
       return {
@@ -211,12 +212,15 @@ export default {
          _that.$common.GotoPage("bryfpage",brinfo,_that);
       },
       /**
-       * 导出病历功能
+       * 导出病历
+       * 
        */
       exportBlList(){
           var _that = this;
           var params_obj = {};
           params_obj.inquiryIdList =[];
+		  params_obj.all = false;
+		  params_obj.patientId = null;
         if(JSON.stringify(this.multipleSelectionAll)=='[]'){
             _that.$common.openErrorMsgBox("请选中要导出的病历信息",_that);
             return false;
@@ -226,18 +230,27 @@ export default {
             }
         }
         console.log(JSON.stringify(params_obj));
-        var url = "/MrManage/exportBl";
-        
-        // _that.$http.get(url,{
-        //     params: params_obj
-        //    }).then(function (response) {
-        //         if(response.code == "1"){
-        //             //打印的请求数据成功 把数据传递给打印控件；
-        //             _that.$blprint.init(response.data);
-        //         }
-        //     }).catch(function (error) {
-        //         _that.$common.openErrorMsgBox(error,_that);
-        //     });
+        var url = "/dataStatistics/getInquiryInfoList";
+		var loading = _that.$common.openLoading("病历导出中，请耐心等待",_that);
+        _that.$http.get(url,{
+            params: params_obj,
+			paramsSerializer: function(params) {
+				return qs.stringify(params, {arrayFormat: 'repeat'})
+			}
+           }).then(function (response) {
+                if(response.code == "1"){
+                    //打印的请求数据成功 把数据传递给打印控件；
+					if(response.data.inquiryInfo && JSON.stringify(response.data.inquiryInfo)!="{}"){
+						_that.$exportPrint(response.data.inquiryInfo,{});
+					}
+					loading.close();
+                }
+            }).catch(function (error) {
+				debugger
+				loading.close();
+                _that.$common.openErrorMsgBox(error,_that);
+				
+            });
       }
     }
   }

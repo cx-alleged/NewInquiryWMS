@@ -82,7 +82,7 @@
       </el-pagination>
     </div>
     <div class="search-row-btn-group">
-       <el-button class="btn-default btn-deault-size btn-color-blue">导出病历</el-button>
+       <el-button class="btn-default btn-deault-size btn-color-blue" @click="exportBlList">导出病历</el-button>
     </div>
   </div>
 </div> 

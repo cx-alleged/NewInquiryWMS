@@ -12,7 +12,11 @@ const exportPrint =function(exportData, options) {
     this.exportData = exportData;
   }
   if((typeof this.exportData) === "object"){
-    this.init();
+    if(this.exportData.type && this.exportData.type == "1"){
+      this.init();
+    }else{
+      this.new_page_print();
+    }
   }
 };
 
@@ -53,6 +57,26 @@ exportPrint.prototype = {
       setTimeout(function () {
         _that.toPrint(w);
       },100);
+    },
+    new_page_print:function(){
+        var oWin = window.open("print.html","_blank");
+        if(oWin) {
+          oWin.document.open();
+          for(var key in this.exportData){
+            var str = this.getContentStr(this.exportData[key]);
+            oWin.document.write(str);
+          }
+          oWin.document.close();
+          var cssString = '@media print{.bl-print-container{page-break-after:always;}}body{margin: 0px;padding: 0px;}.bl-print-container{width: 560px;height: 794px;min-width: 560px;min-height: 794px;}.print-item-container{width: 100%;height: auto;margin-bottom: 30px;}.title span{width: 56px;height: 20px;font-family: PingFangSC-Medium;font-size: 14px;font-weight: normal;font-stretch: normal;letter-spacing: 0px;color: #000000;}.division-line{border: 0.5px solid #000000;}.basic-container .basic-container-item{width: 100%;display: flex;justify-content:flex-start;}.basic-container .basic-container-item span{font-family: PingFangSC-Regular;font-size: 14px;font-weight: normal;font-stretch: normal;letter-spacing: 0px;color: #000000;margin-left: 20px;}.basic-container .basic-container-item span:first-child{margin-left: 0px;}.font-style{font-family: PingFangSC-Regular;font-size: 14px;font-weight: normal;font-stretch: normal;letter-spacing: 0px;color: #000000;}.yf-title{display: flex;justify-content: space-between;}.yp-item-container{display: flex;justify-content: space-between;flex-wrap: wrap;}.yp-item{width: 140px;text-align: center;font-family: PingFangSC-Regular;font-size: 14px;font-weight: normal;font-stretch: normal;letter-spacing: 0px;color: #000000;margin-bottom: 6px;}.yf-item{margin-bottom: 20px;}';
+      
+          this.addCssByStyle(oWin.document,cssString);
+          oWin.print();
+          setTimeout(function () {
+            oWin.close();
+          },100);
+        }
+        else {
+        }
     },
     //默认参数值修改
     extend: function (obj, obj2) {
@@ -103,12 +127,14 @@ exportPrint.prototype = {
                 con_str = con_str + title_str;
                 if(obj_data.mainReList[i].recipeDetailList&&JSON.stringify(obj_data.mainReList[i].recipeDetailList) != "[]"){
                     var ywStr = '<div class="yp-item-container">';
-                    for(var j in obj_data.mainReList[i].recipeDetailList[j]){
+                    for(var j in obj_data.mainReList[i].recipeDetailList){
                         var yw_temp_str = '<span class="yp-item">'+obj_data.mainReList[i].recipeDetailList[j].medicine+'</span>';
                         ywStr = ywStr +yw_temp_str;
                     }
                     ywStr = ywStr + '</div></div>';
                     con_str = con_str + ywStr;
+                }else{
+                    con_str =con_str+'</div>';
                 }
                 //构建副方药物
                 if(obj_data.mainReList[i].viceReList && JSON.stringify(obj_data.mainReList[i].viceReList) != "[]"){
@@ -125,12 +151,14 @@ exportPrint.prototype = {
                             }
                             ywStr = ywStr + '</div></div>';
                             con_str = con_str + ywStr;
+                        }else{
+                          con_str = con_str +'</div>'
                         }
                     }
                 }
             }
             con_str = con_str + '</div>'
-        }
+          }
         return con_str;
     },
     /**
