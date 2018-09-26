@@ -24,7 +24,7 @@
             <el-row>
                 <el-form-item label="诊断日期">
                    <el-date-picker
-                    v-model="form.birthday"
+                    v-model="form.iqDate"
                     format="yyyy/MM/dd"
                     type="date"
                     placeholder="选择日期">

@@ -118,7 +118,7 @@ export default {
               }
           }).catch(function (error) {
             loading.close();
-            setTimeout(function(){ _that.$common.openErrorMsgBox(err,_that) }, 1000);
+            setTimeout(function(){ _that.$common.openErrorMsgBox(error,_that) }, 1000);
           });
       },
        /**
@@ -145,7 +145,7 @@ export default {
             }
         }).catch(function (error) {
           loading.close();
-          setTimeout(function(){ _that.$common.openErrorMsgBox(err,_that) }, 1000);
+          setTimeout(function(){ _that.$common.openErrorMsgBox(error,_that) }, 1000);
         });
       }
     }
