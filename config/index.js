@@ -46,14 +46,14 @@ module.exports = {
 
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, '../zywzxt/index.html'),
-    // index: path.resolve(__dirname, '../zyxxsj/index.html'),
+    // index: path.resolve(__dirname, '../zywzxt/index.html'),
+    index: path.resolve(__dirname, '../zyxxsj/index.html'),
     // Paths
-    assetsRoot: path.resolve(__dirname, '../zywzxt'),
-    // assetsRoot: path.resolve(__dirname, '../zyxxsj'),
+    // assetsRoot: path.resolve(__dirname, '../zywzxt'),
+    assetsRoot: path.resolve(__dirname, '../zyxxsj'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/zywzxt/',
-    // assetsPublicPath: '/zyxxsj/',
+    // assetsPublicPath: '/zywzxt/',
+    assetsPublicPath: '/zyxxsj/',
 
     /**
      * Source Maps
