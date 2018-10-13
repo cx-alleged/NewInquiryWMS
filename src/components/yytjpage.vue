@@ -7,7 +7,7 @@
         </div>
         <div class="search-input-item">
           <el-input placeholder="请输入药名" v-model="search_obj.medicine">
-              <el-button slot="append" icon="el-icon-search"></el-button>
+              <el-button slot="append" icon="el-icon-search" @click="getYytjList"></el-button>
           </el-input>
         </div>
         <div class="search-rangedate-item">
@@ -29,7 +29,7 @@
         :row-class-name="rowClassname"
         stripe>
         <el-table-column
-        type="index"
+         prop="yindex"
         label="序号"
         width="130">
         </el-table-column>
@@ -50,7 +50,7 @@
         :row-class-name="rowClassname"
         stripe>
         <el-table-column
-        type="index"
+         prop="yindex"
         label="序号"
         width="130">
         </el-table-column>
@@ -71,7 +71,7 @@
         :row-class-name="rowClassname"
         stripe>
         <el-table-column
-        type="index"
+         prop="yindex"
         label="序号"
         width="130">
         </el-table-column>

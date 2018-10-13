@@ -38,7 +38,7 @@
             </el-row>
             <el-row :gutter="20">
                 <el-col :span="12">
-                    <el-form-item label="证件编号">
+                    <el-form-item label="证件编号" prop="certificatesNumber">
                         <el-input v-model="basicInfo.certificatesNumber" placeholder=""></el-input>
                     </el-form-item>
                 </el-col>

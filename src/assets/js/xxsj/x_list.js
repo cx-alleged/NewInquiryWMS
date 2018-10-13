@@ -3,7 +3,7 @@ export default {
       return {
         yytjpage:'yytjpage',
         wzqkpage:'wzqkpage',
-        rangDate:null,
+        rangeDate:null,
         search_obj:{
           startDate:null,
           endDate:null,
@@ -20,8 +20,13 @@ export default {
     },
     watch: {
         rangeDate: function (newQuestion, oldQuestion) {
-          this.search_obj.startDate = this.$common.dateFormatStr(this.rangeDate[0],'yyyy-MM-dd');   
-          this.search_obj.endDate = this.$common.dateFormatStr(this.rangeDate[1],'yyyy-MM-dd');   
+          if(this.rangeDate){
+            this.search_obj.startDate = this.$common.dateFormatStr(this.rangeDate[0],'yyyy-MM-dd');   
+            this.search_obj.endDate = this.$common.dateFormatStr(this.rangeDate[1],'yyyy-MM-dd'); 
+          }else{
+            this.search_obj.startDate = null;   
+            this.search_obj.endDate = null; 
+          } 
         }
     },
     created ()  {
@@ -45,7 +50,7 @@ export default {
       },
       deleteBlObj(row){
         var _that = this;
-        debugger
+        
         var url ='/infoGather/getPatientInfo?inquiryId='+row.inquiryId;
         _that.$http.delete(url).then(function (response) {
           if(response.code=="1"){
@@ -60,12 +65,13 @@ export default {
       },
       handleCurrentChange(val) {
         this.search_obj.pageNum = val;
-        this.getWzqkList(this.search_obj);
+        this.getBlList();
       },
       /**
        * 获取问诊情况列表
        */
       getBlList(){
+        
         var _that = this;
         var search_obj = this.search_obj;
         var url = "/infoGather/getRecordList";
@@ -89,7 +95,7 @@ export default {
           responseType:'blob'
         })
         .then(function (res) {
-            let blob = new Blob([res.data],{type:"application/octet-stream"});
+            let blob = new Blob([res],{type:"application/octet-stream"});
             let objectUrl = URL.createObjectURL(blob);
             let link = document.createElement('a');
             link.style.display = 'none';

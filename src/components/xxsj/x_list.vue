@@ -5,7 +5,7 @@
                 <div class="search-range-date-item">
                     <el-date-picker
                         class="rq-input"
-                        v-model="rangDate"
+                        v-model="rangeDate"
                         type="daterange"
                         range-separator="至"
                         start-placeholder="开始日期"
@@ -13,7 +13,7 @@
                     </el-date-picker>
                 </div>
                 <div class="search-row-btn-group">
-                    <el-button class="btn-default btn-deault-size btn-color-blue" @click="gotoyfpage(wzqkpage)">查询</el-button>
+                    <el-button class="btn-default btn-deault-size btn-color-blue" @click="getBlList">查询</el-button>
                 </div>
             </div>
             <div class="table-continer">

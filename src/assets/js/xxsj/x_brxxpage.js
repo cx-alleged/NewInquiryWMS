@@ -1,5 +1,25 @@
 export default {
     data() {
+        var checkCardNum = (rule, value, callback) => {
+        if (!value) {
+          callback();
+        } else {
+          const reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;  
+          //   校验护照
+          const re1 = /^[a-zA-Z]{5,17}$/;
+          const re2 = /^[a-zA-Z0-9]{5,17}$/;
+          //   港澳通行证
+          const re3 = /^[HMhm]{1}([0-9]{10}|[0-9]{8})$/;
+          if(value && value != ""){
+            value = value.trim();
+          }
+          if (reg.test(value)||re1.test(value)||re2.test(value)||re3.test(value)) {
+            callback();
+          } else {
+            return callback(new Error('请输入正确的证件号'));
+          }
+        }
+      };
       return {
           //来源地
         b_country:null,
@@ -19,6 +39,9 @@ export default {
             ],
             age:[
                 { type: 'number', message: '只能填写数字',  trigger: 'change' }
+            ],
+            certificatesNumber:[
+                {validator: checkCardNum, trigger: 'change'}
             ],
             // quitSmokeTime:[
             //     { type: 'number', message: '只能填写数字',  trigger: 'change' }
@@ -107,8 +130,11 @@ export default {
     },
     watch: {
         birthday(newValue, oldValue) {
-    　　　　var age  = this.$common.GetAgeByBrithday(newValue);
-            this.basicInfo.age = age;
+            if(newValue && newValue!=""){
+                var age  = this.$common.GetAgeByBrithday(newValue);
+                this.basicInfo.age = age;
+            }
+            
     　　}
     },
     created () {
@@ -173,7 +199,7 @@ export default {
      * @param {any} type 
      */
     setCityList(type){
-        debugger
+        
         if(type == 1){
              this.city = this.$common.setCityList(this.basicInfo.incuProvince,this);
             this.basicInfo.incuCity = null;
@@ -189,7 +215,7 @@ export default {
       * @param {any} type 
       */
      setProList(type){
-         debugger
+         
         if(type  == 1){
             this.province = this.$common.setProList(this.b_country,this);
             this.basicInfo.incuProvince = null;
@@ -209,43 +235,86 @@ export default {
       detailBrbrth(obj){
             if(obj && JSON.stringify(obj)!="{}"){
                 if(obj.sourceProvince){
-                    this.s_country = this.$common.isChinaProvince(obj.sourceProvince,this);
+                var ischina = this.$common.isChinaProvince(obj.sourceProvince,this);
+                if(ischina == 1){
+                    //1 代表外国
+                    this.s_country = 1;
+                    this.sourceProvince = this.$common.setProList(this.s_country,this);
+                    // obj.sourceProvince = obj.sourceCity;
+                    this.sourceCity = this.$common.setCityList(obj.sourceProvince,this);
+                    obj.sourceCity = null;
+                }else{
+                    //1 代表 中国
+                    this.s_country = 0;
                     this.sourceProvince = this.$common.setProList(this.s_country,this);
                     this.sourceCity = this.$common.setCityList(obj.sourceProvince,this);
+                    
                 }
-                if(obj.incuProvince){
-                    this.b_country = this.$common.isChinaProvince(obj.incuProvince,this);
-                    this.province = this.$common.setProList(this.b_country,this);
-                    this.city = this.$common.setCityList(obj.incuProvince,this);
-                }
+            }
+            if(obj.incuProvince){
+                this.b_country = this.$common.isChinaProvince(obj.incuProvince,this);
+                this.province = this.$common.setProList(this.b_country,this);
+                this.city = this.$common.setCityList(obj.incuProvince,this);
+            }
             }
       },
       /**
        * 设置空数组
        */
       setNullArray:function(t_obj){
-          if(t_obj && JSON.stringify(t_obj)!="{}"){
-            var obj = JSON.parse(JSON.stringify(t_obj));
-            for(var key in obj){
-                if(obj[key] == "" || !obj[key]){
+        if(t_obj && JSON.stringify(t_obj)!="{}"){
+        var obj = JSON.parse(JSON.stringify(t_obj));
+        //特殊处理一下年龄这个字段
+        var num_key_arry = ["height","weight","dailyDrink","pregnant","birth","age"];
+        for(var key in obj){
+            if(!obj[key]){
+                if(num_key_arry.indexOf(key)!=-1){
                     obj[key] = null;
-                }
-            }
-            var arry_name = ["eatingHabits","heredityHistory","infectionHistory","traumaHistory","contactHistory","meAllergy","allergy"];
-            for(var key in arry_name){
-                if(!obj[arry_name[key]]){
-                    obj[arry_name[key]]= new Array();
                 }else{
-                    try {
-                        obj[arry_name[key]] = JSON.parse(obj[arry_name[key]])
-                    } catch (error) {
-                        obj[arry_name[key]] = new Array();
-                    }
-                    
+                    obj[key] = "";
                 }
             }
-            return obj;
-          }
+        }
+        var arry_name = ["eatingHabits","heredityHistory","infectionHistory","contactHistory","meAllergy","allergy"];
+        for(var key in arry_name){
+            if(!obj[arry_name[key]]){
+                var temp_arry = new Array();
+                if(arry_name[key]!="eatingHabits"){
+                    temp_arry.push("无");
+                }else{
+                    temp_arry.push("非素食者");
+                }
+                obj[arry_name[key]]=temp_arry;
+            }else{
+                try {
+                    if(JSON.stringify(obj[arry_name[key]]) == "[]"){
+                        var temp_arry = new Array();
+                        if(arry_name[key]!="eatingHabits"){
+                            temp_arry.push("无");
+                        }else{
+                            temp_arry.push("非素食者");
+                        }
+                        obj[arry_name[key]]=temp_arry;
+                    }else{
+                        if(typeof obj[arry_name[key]] == "string"){
+                            obj[arry_name[key]] = JSON.parse(obj[arry_name[key]]);
+                        }
+                    }
+                } catch (error) {
+                    debugger
+                    var temp_arry = new Array();
+                    if(arry_name[key]!="eatingHabits"){
+                        temp_arry.push("无");
+                    }else{
+                        temp_arry.push("非素食者");
+                    }
+                    obj[arry_name[key]]=temp_arry;
+                }
+                
+            }
+        }
+        return obj;
+         }
       },
       /**
        * 获取病人信息
@@ -260,10 +329,12 @@ export default {
            }).then(function (response) {
                 //得到个人信息的数据，对个人信息进行处理后绑定
                 if(response.code == "1"){
-                    _that.detailBrbrth(response.data.patientInfo);
-                    var temp_obj = _that.setNullArray(response.data.patientInfo);
-                    if(temp_obj){
-                        _that.basicInfo = temp_obj;
+                    var temp_obj = {};
+                    if(response.data.patientInfo && JSON.stringify(response.data.patientInfo)!="{}"){
+                        
+                        _that.detailBrbrth(response.data.patientInfo);
+                        var temp_obj = _that.setNullArray(response.data.patientInfo);
+                         _that.basicInfo = temp_obj;
                     }
                     _that.setBasicBrxx();
                 }else{
@@ -286,9 +357,9 @@ export default {
          }
          if(params_obj.data){
             this.basicInfo.inquiryId = params_obj.data.inquiryId;
-            if(!params_obj.data.sourceCity){
-                params_obj.data.sourceCity = null;
-            }
+            // if(!params_obj.data.sourceCity){
+            //     params_obj.data.sourceCity = null;
+            // }
             this.detailBrbrth(params_obj.data);
             this.basicInfo.pname = params_obj.data.pname;
             this.basicInfo.age = parseInt(params_obj.data.age);

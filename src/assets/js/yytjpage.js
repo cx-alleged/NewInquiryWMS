@@ -32,12 +32,7 @@ export default {
         }
            
       },
-      search_obj: {
-        　　　　handler(newValue, oldValue) {
-        　　　　　　this.getYytjList();
-        　　　　},
-        　　　　deep: true
-      }
+
     },
     methods: {
       rowClassname() {
@@ -139,6 +134,9 @@ export default {
                   temp_obj1.medicine = null;
                   arry3.push(temp_obj1);
                 }
+                arry1=this.setYwListIndex(arry1,1);
+                arry2=this.setYwListIndex(arry2,2);
+                arry3=this.setYwListIndex(arry3,3);
                 this.tableData.list1 =arry1;
                 this.tableData.list2 = arry2;
                 this.tableData.list3 = arry3;
@@ -146,10 +144,31 @@ export default {
               
           }else{
               var index = list.length/3;
-              this.tableData.list1 = list.slice(0,index);
-              this.tableData.list2 = list.slice(index,index*2);
-              this.tableData.list3 = list.slice(index*2,list.length);
+              var arry1 = list.slice(0,index),
+                  arry2 = list.slice(index,index*2),
+                  arry3 = list.slice(index*2,list.length);
+                 arry1=this.setYwListIndex(arry1,1);
+                 arry2=this.setYwListIndex(arry2,2);
+                 arry3=this.setYwListIndex(arry3,3);
+                this.tableData.list1 =arry1;
+                this.tableData.list2 = arry2;
+                this.tableData.list3 = arry3;
           }
+      },
+      /** 对药物的列表序号排序 type　加几*/
+      setYwListIndex(arry,type){
+        var num = 3;
+        if(arry && arry.length>0){
+          for(var index in arry){
+            if(arry[index] && arry[index].yindex){
+              arry[index].yindex = index*3 + type;
+            }else{
+              
+              arry[index].yindex = null;
+            }
+          }
+        }
+        return arry;
       },
       tableprint(){
         var doc_obj = document.getElementById("wzqktable");

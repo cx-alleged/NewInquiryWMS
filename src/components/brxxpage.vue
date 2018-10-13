@@ -38,7 +38,7 @@
             </el-row>
             <el-row :gutter="20">
                 <el-col :span="12">
-                    <el-form-item label="证件编号">
+                    <el-form-item label="证件编号" prop="certificatesNumber">
                         <el-input v-model="basicInfo.certificatesNumber" placeholder=""></el-input>
                     </el-form-item>
                 </el-col>
@@ -196,7 +196,8 @@
                     <el-row :gutter="20"> 
                         <el-col :span="24">
                             <el-form-item label="饮食习惯" style="margin-bottom:0px;">
-                                 <el-checkbox-group v-model="basicInfo.eatingHabits"  @change="setCheckBox('eatingHabits')">
+                                <!--<el-checkbox-group v-model="basicInfo.eatingHabits"  @change="setCheckBox('eatingHabits')">-->
+                                 <el-checkbox-group v-model="basicInfo.eatingHabits">
                                     <el-checkbox label="非素食者" ></el-checkbox>
                                     <el-checkbox label="完全素食者"></el-checkbox>
                                     <el-checkbox label="奶蛋素食"></el-checkbox>
@@ -370,7 +371,7 @@
                         </el-form-item>
                    </el-col> 
                    <el-col :span="9">
-                        <el-form-item label="戒烟时长" label-width="200px" prop="quitSmokeTime">
+                        <el-form-item label="戒烟时长" label-width="200px">
                             <el-input v-model.number="basicInfo.quitSmokeTime" placeholder=""></el-input>
                         </el-form-item>
                    </el-col> 
@@ -402,7 +403,7 @@
                         </el-form-item>
                    </el-col> 
                    <el-col :span="9">
-                        <el-form-item label="戒酒时长" label-width="200px" prop="quitDrinkTime">
+                        <el-form-item label="戒酒时长" label-width="200px">
                             <el-input v-model.number="basicInfo.quitDrinkTime" placeholder=""></el-input>
                         </el-form-item>
                    </el-col> 
