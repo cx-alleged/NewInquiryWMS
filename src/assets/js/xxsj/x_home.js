@@ -101,7 +101,8 @@ export default {
          */
         onSubmitBrxx() {
           var _that = this;
-          var param =this.form
+          var param =this.form;
+          param.iqDate = _that.$common.dateFormatStr(param.iqDate,"yyyy-MM-dd");
           var loading = _that.$common.openLoading('',_that);
           this.$http.post('/infoGather/newDP',param).then(function (response) {
              loading.close();
@@ -128,6 +129,7 @@ export default {
       onSubmitWjxx(){
         var _that = this;
         var param =this.form
+        param.iqDate = _that.$common.dateFormatStr(param.iqDate,"yyyy-MM-dd");
         var loading = _that.$common.openLoading('',_that);
         debugger
         this.$http.post('/infoGather/newDP',param).then(function (response) {

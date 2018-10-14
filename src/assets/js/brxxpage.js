@@ -245,7 +245,6 @@ export default {
                 //1 代表外国
                 this.s_country = 1;
                 this.sourceProvince = this.$common.setProList(this.s_country,this);
-                obj.sourceProvince = obj.sourceCity;
                 this.sourceCity = this.$common.setCityList(obj.sourceProvince,this);
                 obj.sourceCity = null;
             }else{

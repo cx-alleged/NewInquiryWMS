@@ -225,10 +225,10 @@ export default {
           var loading = this.$common.openLoading("初诊中",_that);
           var param = this.form;
           //特殊处理一下表单  来源为外国的数据
-          if(!param.sourceCity && param.country=="1"){
-              param.sourceCity = param.sourceProvince;
-              param.sourceProvince = param.country;
-          }
+          // if(!param.sourceCity && param.country=="1"){
+          //     param.sourceCity = param.sourceProvince;
+          //     param.sourceProvince = param.country;
+          // }
           this.$http.post('/index/firstDiag',param).then(function (response) {
             if(response.code == "1"){
               loading.close();
