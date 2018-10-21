@@ -84,11 +84,15 @@ export default {
         _that.$http.get(url,{
             params: search_obj
            }).then(function (response) {
+             if(response.code =="1"){
                 if(JSON.stringify(response.data.pageInfo.list)!="[]"){
                     _that.tableData = response.data.pageInfo;
                 }
+             }else{
+               _that.$common.openErrorMsgBox(response.msg,_that);
+             }
             }).catch(function (error) {
-                console.log(error);
+                _that.$common.openErrorMsgBox(error,_that);
             });
       },
       /**
@@ -104,9 +108,11 @@ export default {
               setTimeout(function(){
                 _that.getBrList();
               },1000);
+            }else{
+               _that.$common.openErrorMsgBox(response.msg,_that);
             }
           }).catch(function (error) {
-              console.log(error);
+              _that.$common.openErrorMsgBox(error,_that);
           });
       },
         /**
@@ -119,12 +125,19 @@ export default {
       newInquiry_new(brid){
         var _that = this;
         var param ={patientId:brid};
-        this.$http.post('/inquiry/newInquiry?patientId='+brid,param).then(function (response) {
+        this.$http.post('/inquiry/newInquiry',param).then(function (response) {
+          if(response.code=="1"){
             var brinfo = {pId:brid,inquiryId:response.data.inquiryId};
             _that.getLastInquiry(brinfo);
+          }else{
+            _that.$common.openErrorMsgBox(response.msg,_that);
+          }
         }).catch(function (error) {
           console.log(error);
-          setTimeout(function(){loading.close(); }, 1000);
+          setTimeout(function(){
+            loading.close();
+            _that.$common.openErrorMsgBox(error,_that);
+           }, 1000);
         });
       },
       /**
@@ -159,10 +172,12 @@ export default {
                       _that.$store.dispatch("setPrePathParams", JSON.stringify(prePathParams));
                       _that.$common.GotoPage("bryfpage",brinfo,_that);
                   }
+              }else{
+                _that.$common.openErrorMsgBox(response.msg,_that);
               }
           }).catch(function (error) {
               setTimeout(function(){
-                  _that.openErrorMsgBox(error);
+                  _that.$common.openErrorMsgBox(error,_that);
                }, 1000);
           });
           
@@ -197,7 +212,7 @@ export default {
             if(data.code == "1"){
               _that.$common.openSuccessMsgBox("病人信息同步完成！",_that);
             }else{
-              _that.$common.openErrorMsgBox("病人信息同步失败，请稍后重试",_that);
+              _that.$common.openErrorMsgBox(data.msg,_that);
             } 
         }  
       }  

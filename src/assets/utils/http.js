@@ -22,24 +22,41 @@ axios.defaults.timeout = 6000;
 //http request 拦截器（对发送的数据做提前处理）
 axios.interceptors.request.use(
     config => {
-      
       if(config.method!="get"){
         if(config.url == "/inquiry/getObjFromFile"){
           config.headers = {
             'Content-Type': 'multipart/form-data'
           }
         }else{
-          if(typeof(config.data)=="object"){
-            config.data = JSON.stringify(config.data);
-          }
-          config.headers = {
-            'Content-Type': 'application/json;charset=UTF-8'
+          //更改 post 的 content-type格式
+          if(config.url == "/dataStatistics/getInquiryInfoList" || config.url == "/inquiry/newInquiry"){
+            config.data = qs.stringify(config.data,{ arrayFormat: 'repeat' });
+            config.headers = {
+            'Content-Type':'application/x-www-form-urlencoded;charset=utf-8'
+            }
+          }else if(config.method=="post" && config.post_type && config.post_type == "nojson"){
+              config.data = qs.stringify(config.data,{ arrayFormat: 'repeat' });
+              config.headers = {
+              'Content-Type':'application/x-www-form-urlencoded;charset=utf-8'
+              }
+          }else if(config.post_type && config.post_type == "form-data"){
+            config.headers = {
+            'Content-Type': 'multipart/form-data'
+            }
+          }else{
+              if(typeof(config.data)=="object"){
+                 config.data = JSON.stringify(config.data);
+              }
+              config.headers = {
+                'Content-Type': 'application/json;charset=UTF-8'
+              }
+            
           }
         }
       }else{
         config.data = qs.stringify(config.data);
         config.headers = {
-          'Content-Type':'application/x-www-form-urlencoded'
+          'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'
         }
       }
       console.log(config.data);

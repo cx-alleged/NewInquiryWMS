@@ -85,13 +85,17 @@ export default {
               var _that = this;
               this.$http.get('/infoGather/getPlace')
               .then(function (response) {
-                placeData = response.data;
-                placeData.placeList[0].cityList = _that.updateWgzdm(placeData.placeList[0].cityList);
-                _that.$store.dispatch("changePlaceData", placeData);
-                _that.placeDate = _that.$store.getters.gettersPlaceData;
+                if(response.code=="1"){
+                  placeData = response.data;
+                  placeData.placeList[0].cityList = _that.updateWgzdm(placeData.placeList[0].cityList);
+                  _that.$store.dispatch("changePlaceData", placeData);
+                  _that.placeDate = _that.$store.getters.gettersPlaceData;
+                }else{
+                   _that.$common.openLoading(response.msg,_that);
+                }
               })
               .catch(function (error) {
-                console.log(error);
+                _that.$common.openLoading(error,_that);
               });
             }
         },
@@ -115,7 +119,7 @@ export default {
                    _that.$store.dispatch("setPathParams", JSON.stringify(pathParams));
                   _that.$common.GotoPage("xbrxxpage",pathParams,_that);
               }else{
-                _that.$common.openErrorMsgBox("请求出错,请稍后重试",_that);
+                _that.$common.openErrorMsgBox(response.msg,_that);
               }
           }).catch(function (error) {
             loading.close();
@@ -131,7 +135,6 @@ export default {
         var param =this.form
         param.iqDate = _that.$common.dateFormatStr(param.iqDate,"yyyy-MM-dd");
         var loading = _that.$common.openLoading('',_that);
-        debugger
         this.$http.post('/infoGather/newDP',param).then(function (response) {
            loading.close();
             if(response.code == "1"){
@@ -143,7 +146,7 @@ export default {
                  _that.$store.dispatch("setPathParams", JSON.stringify(pathParams));
                 _that.$common.GotoPage("xwjxxpage",pathParams,_that);
             }else{
-              _that.$common.openErrorMsgBox("请求出错,请稍后重试",_that);
+              _that.$common.openErrorMsgBox(response.msg,_that);
             }
         }).catch(function (error) {
           loading.close();

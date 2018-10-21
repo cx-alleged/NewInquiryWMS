@@ -84,9 +84,11 @@ export default {
            }).then(function (response) {
                if(response.code == "1"){
                    _that.setThreeList(response.data.pageInfo.list);
+               }else{
+                 _that.$common.openErrorMsgBox(response.msg,_that);
                }
             }).catch(function (error) {
-                console.log(error);
+                 _that.$common.openErrorMsgBox(error,_that);
             });
       },
       //跳转到药方界面

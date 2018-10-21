@@ -43,15 +43,9 @@ export default {
             certificatesNumber:[
                 {validator: checkCardNum, trigger: 'change'}
             ],
-            // quitSmokeTime:[
-            //     { type: 'number', message: '只能填写数字',  trigger: 'change' }
-            // ],
             dailyDrink:[
                 { type: 'number', message: '只能填写数字',  trigger: 'change' }
             ],
-            // quitDrinkTime:[
-            //     { type: 'number', message: '只能填写数字',  trigger: 'change' }
-            // ],
             pregnant:[
                 { type: 'number', message: '只能填写数字',  trigger: 'change' }
             ],
@@ -337,10 +331,10 @@ export default {
                      _that.basicInfo = _that.setNullArray(response.data.patientInfo);
                     // _that.basicInfo = response.data.patientInfo;
                  }else{
-                     _that.$common.openErrorMsgBox("获取病人信息失败",_that);
+                     _that.$common.openErrorMsgBox(response.msg,_that);
                  }
              }).catch(function (error) {
-                _that.$common.openErrorMsgBox("获取病人信息失败error",_that);
+                _that.$common.openErrorMsgBox(error,_that);
              });
       },
       setSuBmitParams(obj){
@@ -367,9 +361,11 @@ export default {
                       if(response.code == '1'){
                           _that.$common.openSuccessMsgBox("更新病人信息成功！，即将返回病人管理",_that);
                           _that.goTobrglpage();
+                      }else{
+                          _that.$common.openErrorMsgBox(response.msg,_that);
                       }
                 }).catch(function(error){
-                  _that.$common.openErrorMsgBox("error",_that);
+                  _that.$common.openErrorMsgBox(error,_that);
                 });
             } else {
               _that.$common.openErrorMsgBox("数据项校验未通过",_that);

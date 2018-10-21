@@ -115,10 +115,12 @@ export default {
       .then(function (response) {
         if(response.code == "1"){
           _that.setAnswerFormat(response);
+        }else{
+           _that.$common.openErrorMsgBox(response.msg,_that);
         }
       })
       .catch(function (error) {
-          console.log(error);
+          _that.$common.openErrorMsgBox(error,_that);
       });
     },
     /**
@@ -175,11 +177,20 @@ export default {
       var _that = this;
       var loading = _that.$common.openLoading("提交中",_that);
       _that.$http.post('/inquiry/postInquiryAnswer',params).then(function (response) {
+        if(response.code == "1"){
           _that.$common.openSuccessMsgBox("操作成功",_that);
-          setTimeout(function(){loading.close(); }, 1000);
+        }else{
+          setTimeout(function(){
+            _that.$common.openSuccessMsgBox(response.msg,_that);
+           }, 1000);
+        }
+          
+          
       }).catch(function (error) {
         console.log(error);
-        setTimeout(function(){loading.close(); }, 1000);
+        setTimeout(function(){
+          _that.$common.openSuccessMsgBox(error,_that); 
+        }, 1000);
       });
     }
   }

@@ -169,9 +169,11 @@ export default {
                     var str = JSON.stringify(response.data.diagnoseLabels);
                     str = str.replace(/[\[\]\"]*/g, '');  
                     _that.diagnoseLabels = _that.diagnoseLabels+str;
+                }else{
+                    _that.$common.openErrorMsgBox(response.msg,_that);
                 }
             }).catch(function (error) {
-                console.log(error);
+                 _that.$common.openErrorMsgBox(error,_that);
             });
       },
       /**
@@ -184,14 +186,19 @@ export default {
         _that.$http.get(url,{
             params: search_obj
            }).then(function (response) {
-                if(JSON.stringify(response.data.pageInfo.list)!="[]"){
+               if(response.code == "1"){
+                  if(JSON.stringify(response.data.pageInfo.list)!="[]"){
                     _that.tableData = response.data.pageInfo;
                     setTimeout(()=>{
                         _that.setSelectRow();
                     }, 50);
                 }
+               }else{
+                   _that.$common.openErrorMsgBox(response.msg,_that);
+               }
+               
             }).catch(function (error) {
-                console.log(error);
+                 _that.$common.openErrorMsgBox(error,_that);
             });
       },
       GobackPage(){
@@ -218,18 +225,16 @@ export default {
         console.log(JSON.stringify(params_obj));
         var url = "/dataStatistics/getInquiryInfoList";
 		var loading = _that.$common.openLoading("病历导出中，请耐心等待",_that);
-        _that.$http.get(url,{
-            params: params_obj,
-			paramsSerializer: function(params) {
-				return qs.stringify(params, {arrayFormat: 'repeat'})
-			}
-           }).then(function (response) {
+        _that.$http.post(url, params_obj).then(function (response) {
+                loading.close();
                 if(response.code == "1"){
                     //打印的请求数据成功 把数据传递给打印控件；
 					if(response.data.inquiryInfo && JSON.stringify(response.data.inquiryInfo)!="{}"){
 						_that.$exportPrint(response.data.inquiryInfo,{});
 					}
-					loading.close();
+					
+                }else{
+                    _that.$common.openErrorMsgBox(response.msg,_that);
                 }
             }).catch(function (error) {
 				loading.close();

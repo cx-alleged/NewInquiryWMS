@@ -301,7 +301,6 @@ export default {
                         }
                     }
                 } catch (error) {
-                    debugger
                     var temp_arry = new Array();
                     if(arry_name[key]!="eatingHabits"){
                         temp_arry.push("无");
@@ -338,10 +337,9 @@ export default {
                     }
                     _that.setBasicBrxx();
                 }else{
-                    _that.$common.openErrorMsgBox("获取病人信息失败",_that);
+                    _that.$common.openErrorMsgBox(response.msg,_that);
                 }
             }).catch(function (error) {
-                
                _that.$common.openErrorMsgBox(error.message,_that);
             });
      },
@@ -393,9 +391,11 @@ export default {
                       if(response.code == '1'){
                           _that.$common.openSuccessMsgBox("新增病人信息成功，即将跳转问卷信息",_that);
                           _that.goTowjxxpage();
+                      }else{
+                          _that.$common.openErrorMsgBox(response.msg,_that);
                       }
                 }).catch(function(error){
-                  _that.$common.openErrorMsgBox("error",_that);
+                  _that.$common.openErrorMsgBox(error,_that);
                 });
             } else {
               _that.$common.openErrorMsgBox("数据项校验未通过",_that);

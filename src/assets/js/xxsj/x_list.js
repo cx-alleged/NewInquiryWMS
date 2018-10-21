@@ -57,8 +57,12 @@ export default {
             _that.$common.openSuccessMsgBox("病历删除成功!",_that);
             //重新触发列表加载
             _that.getBlList();
+          }else{
+            _that.$common.openErrorMsgBox(response.msg,_that);
           }
-        }).catch(function (error) {});
+        }).catch(function (error) {
+          _that.$common.openErrorMsgBox(error,_that);
+        });
       },
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
@@ -78,11 +82,15 @@ export default {
         _that.$http.get(url,{
             params: search_obj
            }).then(function (response) {
-                if(JSON.stringify(response.data.pageInfo.list)!="[]"){
+             if(response.code == "1"){
+                  if(JSON.stringify(response.data.pageInfo.list)!="[]"){
                     _that.tableData = response.data.pageInfo;
-                }
+                  }
+             }else{
+                 _that.$common.openErrorMsgBox(response.msg,_that);
+             }
             }).catch(function (error) {
-                console.log(error);
+                 _that.$common.openErrorMsgBox(error,_that);
             });
       },
       /**
@@ -116,7 +124,7 @@ export default {
             document.body.removeChild(link);
         })
         .catch(function (error) {
-            console.log(error);
+            _that.$common.openErrorMsgBox(error,_that);
         });
       }
     }

@@ -2,19 +2,20 @@
     <div class="bryf-container">
         <div class="info-container">
             <div class="wzwt-info-container">
-                <div class="titile-container" @click="setActiveSyle(1)">
-                    <span>
+                <div class="titile-container">
+                    <span @click="setActiveSyle(1)">
                         基本信息
                     </span>
                     <span>
-                        <i v-bind:class="[d_isActive ? 'el-icon-caret-top' : 'el-icon-caret-bottom']"></i>
+                        <i v-bind:class="[d_isActive ? 'el-icon-caret-top' : 'el-icon-caret-bottom']"  @click="setActiveSyle(1)"></i>
                         <!-- <i class="el-icon-caret-bottom"></i> -->
                     </span>
+                    <el-button class="btn-default" @click="newInquiry_new" style="margin-left: 20px">新建问诊</el-button>
                 </div>
                 <div v-bind:class="[{ 'isdisplaynone': d_isActive }, 'wzwt-input-container']">
                     <el-input
                         type="textarea"
-                        :rows="4"
+                        :rows="2"
                         placeholder="请输入诊断标签，以逗号分隔"
                         class="bqms"
                         v-model="diagnoseLabels">
@@ -49,6 +50,7 @@
                 <span class="brxm">{{yfdata.pName}}</span>
                  <el-button class="btn-default" @click="addZf">加主方</el-button>
                  <el-button class="btn-default btn-border-red" @click="clearAllYw">清除</el-button>
+                 <span class="person-info">{{getPersonInfo}}</span>
             </div>
             <div class="mainReList-container-div">
                 <!-- 这里循环遍历药品对象，为空时默认生成null个单元格 每四个就添加一列，不足四个补足四个， -->
@@ -105,6 +107,36 @@
         padding: 30px 35px;
         display: flex;
         overflow-y: auto;
+        .person-info{
+                display: inline-block;
+                line-height: 1;
+                white-space: nowrap;
+                cursor: pointer;
+                background: #fff;
+                border: 1px solid #dcdfe6;
+                color: #606266;
+                -webkit-appearance: none;
+                text-align: center;
+                -webkit-box-sizing: border-box;
+                box-sizing: border-box;
+                outline: 0;
+                margin: 0;
+                -webkit-transition: .1s;
+                transition: .1s;
+                font-weight: 500;
+                padding: 12px 20px;
+                font-size: 14px;
+                font-family: PingFangSC-Regular;
+                font-size: 30px;
+                font-weight: normal;
+                font-stretch: normal;
+                line-height: 46.8px;
+                letter-spacing: 0px;
+                color: #20a0ff;
+                padding: 12px 20px;
+                border-radius: 8px;
+                border: solid 1px #20a0ff;
+        }
         .info-container{
             width: 520px;
             height: 100%;
@@ -112,18 +144,15 @@
             padding: 0px;
             .wzwt-info-container{
                 width: 100%;
-                // height: 580px;
                 height: auto;
                 margin-bottom: 20px;
                 .wzwt-input-container{
-                        // width: 448px;
-                        height: 489px;
+                        height: auto;
                         margin-top:20px;
                 }
             }
             .bqms-info-container{
                 width: 100%;
-                // height: 754px;
                 height: auto;
                 .bqms-input-container{
                     margin-top: 20px;

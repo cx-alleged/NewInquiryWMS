@@ -216,24 +216,83 @@ export default{
         var birthday = new Date(birthdayStr);
         if(typeof(birthday) == "object"){
            var birthdayYear=birthday.getFullYear();
-           var birthdayMonth=birthday.getMonth();
+           var birthdayMonth=birthday.getMonth()+1;
            var birthdayDay=birthday.getDate();
             if(todayYear-birthdayYear<0){
-                alert("出生日期选择错误!");
+                age=0;
             }else{
                 if(todayMonth*1-birthdayMonth*1<0){
-                    age = (todayYear*1-birthdayYear*1)-1;
+                    age = (todayYear*1-birthdayYear*1);
                 }else{
                     if(todayDay-birthdayDay>=0){//alert(thisDay+'-'+brithd+"_ddd");
                         age = (todayYear*1-birthdayYear*1);
                     }else{
-                        age = (todayYear*1-birthdayYear*1)-1;
+                        age = (todayYear*1-birthdayYear*1);
                     }
                 }
             }
             return age*1;
         }else{
-            return -1;
+            return 0;
         }
-       }
+       },
+       /**
+        * 新建问诊id
+        */
+      newInquiry_new:function(brid,_that){
+        var param ={patientId:brid};
+        _that.$http.post('/inquiry/newInquiry',param).then(function (response) {
+          if(response.code=="1"){
+            var brinfo = {pId:brid,inquiryId:response.data.inquiryId};
+            _that.$common.getLastInquiry(brinfo,_that);
+          }else{
+            _that.$common.openErrorMsgBox(response.msg,_that);
+          }
+        }).catch(function (error) {
+          setTimeout(function(){
+            _that.$common.openErrorMsgBox(error,_that);
+           }, 1000);
+        });
+      },
+      /**
+       * 获取病人最近一次问诊信息
+       * 
+       */
+      getLastInquiry(brinfo,_that){
+          var url= "/inquiry/getLatestInquiryInfo?patientId="+brinfo.pId;
+          var inquiryID = '';
+          _that.$http.get(url)
+            .then(function (response) {
+              if(response.code == "1"){
+                  if(JSON.stringify(response.data)!="{}"){
+                      if(response.data.inquiryInfo.inquiryId){
+                          brinfo.lastinquiryId = response.data.inquiryInfo.inquiryId;
+                      }else{
+                          brinfo.lastinquiryId = "";
+                      }
+                      //跳转组件并且 传递pid
+                      var pathParams = new Object();
+                      pathParams.path = 'bryfpage';
+                      pathParams.data = brinfo;
+                      //缓存 目标跳转页面的参数
+                      _that.$store.dispatch("setPathParams", JSON.stringify(pathParams));
+                      var prePathParams = new Object();
+                      prePathParams.path = 'newwz';
+                      prePathParams.data = {};
+                      prePathParams.data.xzfz = "new";
+                      //缓存 跳转页面的参数
+                      _that.$store.dispatch("setPrePathParams", JSON.stringify(prePathParams));
+                     _that.initPage();
+                      //请求药方数据
+                      _that.getyfDate();
+                  }
+              }else{
+                _that.$common.openErrorMsgBox(response.msg,_that);
+              }
+          }).catch(function (error) {
+              setTimeout(function(){
+                 _that.$common.openErrorMsgBox(error,_that);
+               }, 1000);
+          });
+      },
 }

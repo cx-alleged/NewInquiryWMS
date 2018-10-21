@@ -82,7 +82,6 @@ tablePrint.prototype = {
            list_lenght = data_obj.list.length;
        }
        for(var i = 0 ;i < list_lenght; i++){
-         debugger
            var pName = data_obj.list[i].pName ? data_obj.list[i].pName : '';
            var age = data_obj.list[i].age ? data_obj.list[i].age : '';
            var sourceArea = data_obj.list[i].residence ? data_obj.list[i].residence :'';

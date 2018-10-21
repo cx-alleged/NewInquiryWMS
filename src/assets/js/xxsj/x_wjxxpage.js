@@ -178,13 +178,21 @@ export default {
       var loading = _that.$common.openLoading("提交中",_that);
       _that.$http.post('/infoGather/postInquiryAnswer',params).then(function (response) {
            loading.close();
-          _that.$common.openSuccessMsgBox("操作成功",_that);
-          setTimeout(function(){ 
-            _that.$common.GotoPage("xhome",{},_that);
-          }, 1000);
+           if(response.code=="1"){
+              _that.$common.openSuccessMsgBox("操作成功",_that);
+              setTimeout(function(){ 
+                _that.$common.GotoPage("xhome",{},_that);
+              }, 1000);
+           }else{
+            _that.$common.openErrorMsgBox(response.msg,_that);
+           }
+          
       }).catch(function (error) {
         console.log(error);
-        setTimeout(function(){loading.close(); }, 1000);
+        setTimeout(function(){
+          loading.close();
+         _that.$common.openErrorMsgBox(response.msg,_that);
+       }, 1000);
       });
     }
   }

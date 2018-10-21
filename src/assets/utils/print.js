@@ -87,7 +87,7 @@ Print.prototype = {
         }else{
             for(var i = 0; i < obj.arry.length;i++){
                 var ywobj = obj.arry[i];
-                 var remarks = ywobj.remarks && ywobj.remarks!="" ? "（"+ywobj.remarks+"）":"";
+                 var remarks = ywobj.remark && ywobj.remark!="" ? "（"+ywobj.remark+"）":"";
                  var medicine =ywobj.medicine && ywobj.medicine!="" ?  ywobj.medicine+'g':"";
                  ywStr += '<div class="yw-item"><span class="yw-bz">'+remarks+'</span><span class="yw-name">'+medicine+'</span></div>';
             }

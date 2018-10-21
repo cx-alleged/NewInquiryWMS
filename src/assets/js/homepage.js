@@ -102,13 +102,17 @@ export default {
               var _that = this;
               this.$http.get('/index/getPlace')
               .then(function (response) {
-                placeData = response.data;
-                placeData.placeList[0].cityList = _that.updateWgzdm(placeData.placeList[0].cityList);
-                _that.$store.dispatch("changePlaceData", placeData);
-                _that.placeDate = _that.$store.getters.gettersPlaceData;
+                if(response.code=="1"){
+                  placeData = response.data;
+                  placeData.placeList[0].cityList = _that.updateWgzdm(placeData.placeList[0].cityList);
+                  _that.$store.dispatch("changePlaceData", placeData);
+                  _that.placeDate = _that.$store.getters.gettersPlaceData;
+                }else{
+                  _that.$common.openErrorMsgBox(response.msg,_that);
+                }
               })
               .catch(function (error) {
-                console.log(error);
+                 _that.$common.openErrorMsgBox(error,_that);
               });
             }
         },
@@ -135,25 +139,33 @@ export default {
           var _that = this;
           var loading = this.$common.openLoading("新建问诊中",_that);
           var param ={patientId:brid};
-          this.$http.post('/inquiry/newInquiry?patientId='+brid,param).then(function (response) {
+          this.$http.post('/inquiry/newInquiry',param).then(function (response) {
               loading.close();
-              _that.$common.openSuccessMsgBox("初诊成功，请开处方",_that);
-              var brinfo = {pId:brid,inquiryId:response.data.inquiryId};
-              //跳转组件并且 传递pid
-              var pathParams = new Object();
-              pathParams.path = 'bryfpage';
-              pathParams.data = brinfo;
-              //缓存 目标跳转页面的参数
-              _that.$store.dispatch("setPathParams", JSON.stringify(pathParams));
-              var prePathParams = new Object();
-              prePathParams.path = 'xjczbr';
-              prePathParams.data = {};
-              //缓存 跳转页面的参数
-              _that.$store.dispatch("setPrePathParams", JSON.stringify(prePathParams));
-              _that.$common.GotoPage("bryfpage",brinfo,_that);
+              if(response.code == "1"){
+                _that.$common.openSuccessMsgBox("初诊成功，请开处方",_that);
+                var brinfo = {pId:brid,inquiryId:response.data.inquiryId};
+                //跳转组件并且 传递pid
+                var pathParams = new Object();
+                pathParams.path = 'bryfpage';
+                pathParams.data = brinfo;
+                //缓存 目标跳转页面的参数
+                _that.$store.dispatch("setPathParams", JSON.stringify(pathParams));
+                var prePathParams = new Object();
+                prePathParams.path = 'xjczbr';
+                prePathParams.data = {};
+                //缓存 跳转页面的参数
+                _that.$store.dispatch("setPrePathParams", JSON.stringify(prePathParams));
+                _that.$common.GotoPage("bryfpage",brinfo,_that);
+              }else{
+                _that.$common.openErrorMsgBox(response.msg,_that);
+              }
+              
           }).catch(function (error) {
             console.log(error);
-            setTimeout(function(){loading.close(); }, 1000);
+            setTimeout(function(){
+              loading.close();
+            _that.$common.openErrorMsgBox(error,_that);
+           }, 1000);
           });
         },
         /**
@@ -167,11 +179,18 @@ export default {
             var _that = this;
             var param ={patientId:brid};
             this.$http.post('/inquiry/newInquiry?patientId='+brid,param).then(function (response) {
+              if(response.code == "1"){
                 var brinfo = {pId:brid,inquiryId:response.data.inquiryId};
                 _that.getLastInquiry(brinfo);
+              }else{
+                _that.$common.openErrorMsgBox(response.msg,_that);
+              }
+                
             }).catch(function (error) {
               console.log(error);
-              setTimeout(function(){loading.close(); }, 1000);
+              setTimeout(function(){
+                _that.$common.openErrorMsgBox(error,_that);
+               }, 1000);
             });
         },
         /**
@@ -204,10 +223,12 @@ export default {
                         _that.$store.dispatch("setPrePathParams", JSON.stringify(prePathParams));
                         _that.$common.GotoPage("bryfpage",brinfo,_that);
                     }
+                }else{
+                  _that.$common.openErrorMsgBox(response.msg,_that);
                 }
             }).catch(function (error) {
                 setTimeout(function(){
-                    _that.openErrorMsgBox(error);
+                     _that.$common.openErrorMsgBox(error,_that);
                  }, 1000);
             });
             
@@ -230,14 +251,18 @@ export default {
           //     param.sourceProvince = param.country;
           // }
           this.$http.post('/index/firstDiag',param).then(function (response) {
+            loading.close();
             if(response.code == "1"){
-              loading.close();
               //新建病人信息完成，再次新增问诊信息
               _that.newInquiry(response.data.pId);
+            }else{
+              _that.$common.openErrorMsgBox(response.msg,_that);
             }
           }).catch(function (error) {
-            console.log(error);
-            setTimeout(function(){loading.close(); }, 1000);
+            setTimeout(function(){
+              loading.close();
+             _that.$common.openErrorMsgBox(error,_that);
+            }, 1000);
           });
         },
         /**
@@ -281,10 +306,13 @@ export default {
 
                     }
                 }else{
-                    _that.openErrorMsgBox(response.msg,_that);
+                    _that.$common.openErrorMsgBox(response.msg,_that);
                 }
             }).catch(function (error) {
-              setTimeout(function(){loading.close(); }, 1000);
+                setTimeout(function(){
+                  loading.close(); 
+                _that.$common.openErrorMsgBox(error,_that);
+              }, 1000);
             });
         },
         /**

@@ -86,7 +86,7 @@ export default {
                    _that.tableData = [];
                 }
              }else{
-               _that.$common.openErrorMsgBox("数据请求接口报错",_that);
+               _that.$common.openErrorMsgBox(response.msg,_that);
              }
                 
             }).catch(function (error) {

@@ -162,14 +162,19 @@ export default {
         _that.$http.get(url,{
             params: search_obj
            }).then(function (response) {
-                if(JSON.stringify(response.data.pageInfo.list)!="[]"){
-                    _that.tableData = response.data.pageInfo;
-                    setTimeout(()=>{
-                        _that.setSelectRow();
-                    }, 50)
-                }
+               if(response.code=="1"){
+                    if(JSON.stringify(response.data.pageInfo.list)!="[]"){
+                        _that.tableData = response.data.pageInfo;
+                        setTimeout(()=>{
+                            _that.setSelectRow();
+                        }, 50)
+                    }
+               }else{
+                    _that.$common.openErrorMsgBox(response.msg,_that);
+               }
+                
             }).catch(function (error) {
-                console.log(error);
+                _that.$common.openErrorMsgBox(error,_that);
             });
       },
       /**
@@ -191,6 +196,27 @@ export default {
          //缓存 跳转页面的参数
          _that.$store.dispatch("setPrePathParams", JSON.stringify(prePathParams));
          _that.$common.GotoPage("wjxxpage",brinfo,_that);
+      },
+      /**
+       * 删除病人
+       * 
+       * @param {any} row 
+      
+       * 
+       */
+      delDailyPatient(row){
+           var _that = this;
+           var loading = _that.$common.openLoading("删除病人!",_that);
+         _that.$http.delete('/index/deletePatient?patientId='+row.pId).then(function (response) {
+             loading.close();
+            if(response.code=="1"){
+                _that.$common.openSuccessMsgBox("删除成功",_that);
+                _that.getblList();
+            }
+         }).catch(function (error) {
+            loading.close();
+            _that.$common.openErrorMsgBox(error,_that);
+        });
       },
       /** 
        * 查看某次的药方病例
@@ -217,8 +243,9 @@ export default {
        */
       exportBlList(){
           var _that = this;
+          var temp_arry = new Array();
           var params_obj = {};
-          params_obj.inquiryIdList =[];
+          params_obj.inquiryIdList ="";
 		  params_obj.all = false;
 		  params_obj.patientId = null;
         if(JSON.stringify(this.multipleSelectionAll)=='[]'){
@@ -226,27 +253,30 @@ export default {
             return false;
         }else{
             for(var i=0;i<this.multipleSelectionAll.length;i++){
-                params_obj.inquiryIdList.push(this.multipleSelectionAll[i].inquiryId);
+                temp_arry.push(this.multipleSelectionAll[i].inquiryId);
             }
         }
+        params_obj.inquiryIdList = temp_arry;
         console.log(JSON.stringify(params_obj));
         var url = "/dataStatistics/getInquiryInfoList";
 		var loading = _that.$common.openLoading("病历导出中，请耐心等待",_that);
-        _that.$http.get(url,{
-            params: params_obj,
-			paramsSerializer: function(params) {
-				return qs.stringify(params, {arrayFormat: 'repeat'})
-			}
-           }).then(function (response) {
+        //修改以post方式下载文件
+        _that.$http.post(url,params_obj).then(function (response) {
+                loading.close();
                 if(response.code == "1"){
+                    if(JSON.stringify(response.data)!="{}"){
+                        if(response.data.inquiryInfo && JSON.stringify(response.data.inquiryInfo)!="{}"){
+                            _that.$exportPrint(response.data.inquiryInfo,{});
+                        }
+                    }else{
+                        _that.$common.openErrorMsgBox(response.msg,_that);
+                    }
                     //打印的请求数据成功 把数据传递给打印控件；
-					if(response.data.inquiryInfo && JSON.stringify(response.data.inquiryInfo)!="{}"){
-						_that.$exportPrint(response.data.inquiryInfo,{});
-					}
-					loading.close();
+					
+                }else{
+                    _that.$common.openErrorMsgBox(response.msg,_that);
                 }
             }).catch(function (error) {
-				debugger
 				loading.close();
                 _that.$common.openErrorMsgBox(error,_that);
 				

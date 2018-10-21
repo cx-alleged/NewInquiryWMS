@@ -112,7 +112,7 @@ export default {
                     ],
                     "viceReList": [
                       {
-                        "amount": 0,
+                        "amount": null,
                         "isStock": true,
                         "remarks": "先用，与主方同用",
                         "viceMeList": null,
@@ -176,7 +176,7 @@ export default {
                         ]
                       },
                       {
-                        "amount": 0,
+                        "amount": null,
                         "isStock": true,
                         "remarks": "后用，与主方同用",
                         "viceMeList": null,
@@ -240,7 +240,7 @@ export default {
                         ]
                       },
                       {
-                        "amount": 0,
+                        "amount": null,
                         "isStock": true,
                         "remarks": "最后用，与主方同用",
                         "viceMeList": null,
@@ -308,7 +308,7 @@ export default {
                 ]
             },
             mbViceObj:{
-                            "amount": 0,
+                            "amount": null,
                             "isStock": true,
                             "remarks": "副方备注",
                             "viceMeList": null,
@@ -372,7 +372,7 @@ export default {
                             ]
                         },
             mbMainObj:{
-                    "amount": 0,
+                    "amount": null,
                     "isStock": true,
                     "remarks": "",
                     "mainMeList": null,
@@ -664,7 +664,10 @@ export default {
         };
     }
     ,computed: { 
-
+        getPersonInfo:function(){
+            var result_str = this.yfdata.gender+" "+this.yfdata.resisdence+" "+this.yfdata.date+" "+this.yfdata.age+"岁 第"+this.yfdata.times+"次";
+            return result_str;
+        }
     }
     //请求药方数据，
     ,beforeCreate () {
@@ -691,7 +694,9 @@ export default {
                 this.is_display_fh = false;
                 this.is_display_zd = true;
             }
-            
+        }else{
+            this.is_display_fh = true;
+            this.is_display_zd = false;
         }
     },
     setActiveSyle:function(type){
@@ -721,44 +726,6 @@ export default {
       //缓存 跳转页面的参数
       this.$common.GotoPage(JSON.parse(pathParams).path,JSON.parse(pathParams),this);
     },
-    // gotoBryfpage:function(){
-    //      this.$router.push({
-    //          path: '/Index/brglpage'
-    //       })
-    // },
-    /**
-     * 初始化标签
-     */
-    // initDiagnoseLabel:function(){
-    //     var obj_str= window.localStorage.getItem("diagnoseLabels");
-    //     if(obj_str && obj_str!=""){
-    //         this.options = JSON.parse(obj_str);
-    //     }else{
-    //         this.getAllDiagnoseLabel();
-    //     }
-    // },
-    /**
-     * 获取所有的诊断标签
-     */
-    // getAllDiagnoseLabel:function(){
-    //     var _that = this;
-    //     _that.$http.get("/inquiry/getDiagnoseLabels").then(function (response) {
-    //         if(response.code == "1"){
-    //             var lable_all_aryy = new Array();
-    //             var lable_aryy = response.data.diagnoseLabels;
-    //             for(var key in lable_aryy){
-    //                 var temp = new Object();
-    //                 temp.label = lable_aryy[key];
-    //                 temp.value = lable_aryy[key];
-    //                 lable_all_aryy.push(temp);
-    //             }
-    //             _that.options = lable_all_aryy;
-    //             window.localStorage.setItem("diagnoseLabels",JSON.stringify(lable_all_aryy));
-    //         }
-    //     }).catch(function (error) {
-    //         _that.$common.openErrorMsgBox(error,_that);
-    //     });
-    // },
     /** 
      * 清除操作
      *  
@@ -776,20 +743,25 @@ export default {
         var allTotal = 0;
         for(var i in mainRelist){
             var zfObj = mainRelist[i];
-            if(zfObj.amount==""){
-                zfObj.amount = 0;
+            var zf_num = 0;
+            if(!zfObj.amount || zfObj.amount==""){
+                zf_num= 0;
             }else{
-                zfObj.amount =  parseInt(zfObj.amount); 
+                zf_num =  parseInt(zfObj.amount); 
             }
-            allTotal = allTotal+zfObj.amount; 
+            allTotal = allTotal+zf_num; 
             for(var j in mainRelist[i].viceReList){
-                if(mainRelist[i].viceReList[j].amount==""){
-                    mainRelist[i].viceReList[j].amount = 0;
+                var ff_num = 0;
+                if(!mainRelist[i].viceReList[j].amount || mainRelist[i].viceReList[j].amount==""){
+                    ff_num = 0;
                 }else{
-                    mainRelist[i].viceReList[j].amount = parseInt(mainRelist[i].viceReList[j].amount); 
+                    ff_num = parseInt(mainRelist[i].viceReList[j].amount); 
                 }
-                allTotal = allTotal+mainRelist[i].viceReList[j].amount;
+                allTotal = allTotal+ff_num;
             }
+        }
+        if(allTotal == 0){
+            allTotal = null;
         }
         return allTotal;
     },
@@ -853,6 +825,7 @@ export default {
                 resolve(data);
             }).catch(function (error) {
                 reject(error);
+
             });
         });
         return data;
@@ -888,6 +861,7 @@ export default {
                 });
             }
         }, (error) => {
+            loading.close();
             _that.$common.openErrorMsgBox(error,_that);
         });
     },
@@ -910,8 +884,12 @@ export default {
                         _that.diagnoseLabels = d_str.replace(/[\[\]\"]*/g, '');
                     }
                     // _that.diagnoseLabels = JSON.stringify(response.data.diagnoseLabels);
+                }else{
+                    _that.$common.openErrorMsgBox(response.msg,_that);
                 }
-            }).catch(function(error){});
+            }).catch(function(error){
+                 _that.$common.openErrorMsgBox(error,_that);
+            });
             //获取药方信息
             var url = "/inquiry/getInquiryInfo?inquiryId="+lastinquiryId;
             _that.$http.get(url)
@@ -925,17 +903,19 @@ export default {
                         mbMainList.push(obj);
                         yfdataInfo.mainReList = mbMainList;
                         yfdataInfo.inquiryId = inquiryId;
+                         yfdataInfo = _that.setDefaultAmount(yfdataInfo);
                         _that.yfdata = yfdataInfo;
                         _that.allTotal = _that.getAllTotal(yfdataInfo);
                     }else{
                         //主方数据不为空，规范数据然后赋值
+                          yfdataInfo = _that.setDefaultAmount(yfdataInfo);
                           yfdataInfo = _that.normalYwArry(yfdataInfo);
                           yfdataInfo.inquiryId = inquiryId;
                         _that.yfdata = yfdataInfo;
                         _that.allTotal = _that.getAllTotal(yfdataInfo);
                     }
                 }else{
-                    _that.$common.openErrorMsgBox("数据请求失败",_that);
+                    _that.$common.openErrorMsgBox(response.msg,_that);
                 }       
             })
             .catch(function (error) {
@@ -960,8 +940,12 @@ export default {
                     }else{
                         _that.diagnoseLabels = d_str.replace(/[\[\]\"]*/g, '');
                     }
+                }else{
+                    _that.$common.openErrorMsgBox(response.msg,_that);
                 }
-            }).catch(function(error){});
+            }).catch(function(error){
+                 _that.$common.openErrorMsgBox(error,_that);
+            });
             //获取药方数据
             var url = "/inquiry/getInquiryInfo?inquiryId="+inquiryId;
             _that.$http.get(url)
@@ -974,20 +958,22 @@ export default {
                         var obj = JSON.parse(JSON.stringify(_that.mbMainObj));
                         mbMainList.push(obj);
                         yfdataInfo.mainReList = mbMainList;
+                        yfdataInfo = _that.setDefaultAmount(yfdataInfo);
                         _that.yfdata = yfdataInfo;
                         _that.allTotal = _that.getAllTotal(yfdataInfo);
                     }else{
                         //主方数据不为空，规范数据然后赋值
                           yfdataInfo = _that.normalYwArry(yfdataInfo);
+                          yfdataInfo = _that.setDefaultAmount(yfdataInfo);
                         _that.yfdata = yfdataInfo;
                         _that.allTotal = _that.getAllTotal(yfdataInfo);
                     }
                 }else{
-                    _that.$common.openErrorMsgBox("数据请求失败",_that);
+                    _that.$common.openErrorMsgBox(response.msg,_that);
                 }       
             })
             .catch(function (error) {
-                console.log(error);
+                 _that.$common.openErrorMsgBox(error,_that);
             });
         }
     },
@@ -1011,8 +997,43 @@ export default {
      * 页面打印
     */
     printYfPage(){
-        this.yfdata.allTotal = this.allTotal;
-        this.$Print(this.yfdata,{'n_height':760});
+        var _that = this;
+        var loading = _that.$common.openLoading("请稍后!",_that);
+        var r_params = JSON.parse(window.localStorage.getItem('pathParams'));
+        var inquiryId = r_params.data.inquiryId;
+            //获取药方数据
+        var url = "/inquiry/getInquiryInfo?inquiryId="+inquiryId;
+        _that.$http.get(url)
+        .then(function (response) {
+            loading.close();
+            if(response.code == "1"){
+                var yfdataInfo = response.data.inquiryInfo;
+                if(JSON.stringify(yfdataInfo.mainReList) === '[]'){
+                    //代表为空的新数组，复制模版给对象
+                    var mbMainList = new Array();
+                    var obj = JSON.parse(JSON.stringify(_that.mbMainObj));
+                    mbMainList.push(obj);
+                    yfdataInfo.mainReList = mbMainList;
+                    yfdataInfo = _that.setDefaultAmount(yfdataInfo);
+                    _that.yfdata = yfdataInfo;
+                    _that.allTotal = _that.getAllTotal(yfdataInfo);
+                }else{
+                    //主方数据不为空，规范数据然后赋值
+                        yfdataInfo = _that.normalYwArry(yfdataInfo);
+                        yfdataInfo = _that.setDefaultAmount(yfdataInfo);
+                        _that.yfdata = yfdataInfo;
+                        _that.allTotal = _that.getAllTotal(yfdataInfo);
+                }
+                _that.yfdata.allTotal = _that.allTotal;
+                _that.$Print(_that.yfdata,{'n_height':760});
+            }else{
+                _that.$common.openErrorMsgBox(response.msg,_that);
+            }       
+        })
+        .catch(function (error) {
+                _that.$common.openErrorMsgBox(error,_that);
+        });
+        
     },
     /**
      * 删除时的提示确认框
@@ -1227,6 +1248,33 @@ export default {
         }
         return Obj;
     },
+    setDefaultAmount:function(yfdata){
+        if(yfdata){
+            if(yfdata.mainReList && JSON.stringify(yfdata.mainRelist)!="[]"){
+                for(var i = 0;i < yfdata.mainReList.length; i++){
+                    var amount_value = yfdata.mainReList[i].amount;
+                    if(typeof amount_value == "string"){
+                        amount_value = parseInt(amount_value);
+                    }
+                    if(!amount_value || amount_value<=0){
+                        yfdata.mainReList[i].amount = null;
+                    }
+                    if(JSON.stringify(yfdata.mainReList[i].viceReList)!="[]"){
+                        for(var j = 0; j<yfdata.mainReList[i].viceReList.length; j++){
+                            var v_amout_value = yfdata.mainReList[i].viceReList[j].amount;
+                            if(typeof amount_value == "string"){
+                                v_amout_value = parseInt(v_amout_value);
+                            }
+                            if(!yfdata.mainReList[i].viceReList[j].amount || v_amout_value<=0){
+                                yfdata.mainReList[i].viceReList[j].amount = null;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return yfdata;
+    },
     /**
     * 是否为规范的模版数据，如果不是就设置成为规范的模版数据
     * arry 监测数组， type 1 代表为主方药物列表， 2代表 副方药物列表
@@ -1332,7 +1380,19 @@ export default {
                 this.yfdata.mainReList[mindex].viceReList[vindex].viceRecipeDetailList.splice(sz_length-4,4);
             }
         }
-    }
+    },
+    /**
+     *新建问诊
+     */
+    newInquiry_new:function(){
+        var loading = this.$common.openLoading("新建问诊中,请稍等!",this);
+        var r_params = JSON.parse(window.localStorage.getItem('pathParams'));
+        var brid= r_params.data.pId;
+        this.$common.newInquiry_new(brid,this);
+        setTimeout(function(){
+           loading.close();
+        },3000);
+    },
     }
     ,beforeMount () {
         //绑定数据前计算总付数
