@@ -206,8 +206,9 @@ export default {
        */
       delDailyPatient(row){
            var _that = this;
-           var loading = _that.$common.openLoading("删除病人!",_that);
-         _that.$http.delete('/index/deletePatient?patientId='+row.pId).then(function (response) {
+           var loading = _that.$common.openLoading("删除病历!",_that);
+        //  _that.$http.delete('/MrManage/deleteDailyPatient?patientId='+row.pId,{ method: 'delete',data:{patientId:row.pId}}).then(function (response) {
+            _that.$http.delete('/MrManage/deleteDailyPatient?inquiryid='+row.inquiryId).then(function (response) {
              loading.close();
             if(response.code=="1"){
                 _that.$common.openSuccessMsgBox("删除成功",_that);

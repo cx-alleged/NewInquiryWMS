@@ -34,12 +34,17 @@ axios.interceptors.request.use(
             config.headers = {
             'Content-Type':'application/x-www-form-urlencoded;charset=utf-8'
             }
-          }else if(config.method=="post" && config.post_type && config.post_type == "nojson"){
+          }else if(config.post_type && config.post_type == "nojson"){
               config.data = qs.stringify(config.data,{ arrayFormat: 'repeat' });
               config.headers = {
               'Content-Type':'application/x-www-form-urlencoded;charset=utf-8'
               }
-          }else if(config.post_type && config.post_type == "form-data"){
+          }else if(config.post_type && config.post_type == "json"){
+              config.headers = {
+                'Content-Type': 'application/json;charset=UTF-8'
+              }
+          }
+          else if(config.post_type && config.post_type == "form-data"){
             config.headers = {
             'Content-Type': 'multipart/form-data'
             }
