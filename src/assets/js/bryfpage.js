@@ -6,6 +6,7 @@ export default {
             diagnoseLabels:null,
             d_isActive:false,
             b_isActive:false,
+            is_display_xjzd:false,
             is_display_zd:false,
             is_display_fh:true,
             options: [],
@@ -20,7 +21,7 @@ export default {
                 "address":"",
                 mainReList: [
                     {
-                    "amount": 0,
+                    "amount": null,
                     "isStock": true,
                     "remarks": "",
                     "mainMeList": null,
@@ -238,8 +239,8 @@ export default {
                             "remark": null
                           }
                         ]
-                      },
-                      {
+                      }
+                      /*,{
                         "amount": null,
                         "isStock": true,
                         "remarks": "最后用，与主方同用",
@@ -302,13 +303,13 @@ export default {
                             "remark": null
                           }
                         ]
-                      }
+                      }*/
                     ]
                   }
                 ]
             },
             mbViceObj:{
-                            "amount": null,
+                            "amount": 14,
                             "isStock": true,
                             "remarks": "副方备注",
                             "viceMeList": null,
@@ -372,7 +373,7 @@ export default {
                             ]
                         },
             mbMainObj:{
-                    "amount": null,
+                    "amount": 28,
                     "isStock": true,
                     "remarks": "",
                     "mainMeList": null,
@@ -464,7 +465,7 @@ export default {
                     ]
                     ,"viceReList": [
                         {
-                            "amount": 0,
+                            "amount": 14,
                             "isStock": true,
                             "remarks": "先用，与主方同用",
                             "viceMeList": null,
@@ -528,7 +529,7 @@ export default {
                             ]
                         },
                         {
-                            "amount": 0,
+                            "amount": 14,
                             "isStock": true,
                             "remarks": "后用，与主方同用",
                             "viceMeList": null,
@@ -591,9 +592,9 @@ export default {
                             }
                             
                             ]
-                        },
-                        {
-                            "amount": 0,
+                        }
+                        /*,{
+                            "amount": null,
                             "isStock": true,
                             "remarks": "最后用，与主方同用",
                             "viceMeList": null,
@@ -656,7 +657,7 @@ export default {
                             }
                             
                             ]
-                        }
+                        }*/
                         
                     ]
                  },
@@ -688,11 +689,15 @@ export default {
      */
     initPage:function(){
         var prePathParams = JSON.parse(window.localStorage.getItem("prePathParams"));
+        this.is_display_xjzd = true;
         if(prePathParams.path == "brglpage" || prePathParams.path == "grblglpage"){
             //排除从病人管理的新建复诊
             if(prePathParams.data.xzfz != "new"){
                 this.is_display_fh = false;
                 this.is_display_zd = true;
+            }
+            if(prePathParams.path=="grblglpage" && prePathParams.data.xzfz != "new"){
+                this.is_display_xjzd = false;
             }
         }else{
             this.is_display_fh = true;
@@ -734,6 +739,8 @@ export default {
         var model_list = new Array();
         model_list.push(this.mbMainObj);
         this.yfdata.mainReList=model_list;
+        this.allTotal = this.getAllTotal(this.yfdata);
+        this.$common.openSuccessMsgBox("清楚成功!",this);
     },
     /**
      * 遍历计算总付数
@@ -750,7 +757,7 @@ export default {
                 zf_num =  parseInt(zfObj.amount); 
             }
             allTotal = allTotal+zf_num; 
-            for(var j in mainRelist[i].viceReList){
+ /*           for(var j in mainRelist[i].viceReList){
                 var ff_num = 0;
                 if(!mainRelist[i].viceReList[j].amount || mainRelist[i].viceReList[j].amount==""){
                     ff_num = 0;
@@ -758,7 +765,7 @@ export default {
                     ff_num = parseInt(mainRelist[i].viceReList[j].amount); 
                 }
                 allTotal = allTotal+ff_num;
-            }
+            }*/
         }
         if(allTotal == 0){
             allTotal = null;
@@ -1071,6 +1078,8 @@ export default {
         var obj = JSON.parse(JSON.stringify(this.mbMainObj));
         // var obj = Object.assign({}, this.mbMainObj);
         this.yfdata.mainReList.push(obj);
+        this.allTotal=this.getAllTotal(this.yfdata);
+        this.$common.openSuccessMsgBox("主方新增成功!",this);
     },
     /**
      * 移除副方
@@ -1079,12 +1088,16 @@ export default {
      */
     deleteFf:function(mindex,vindex){
         this.yfdata.mainReList[mindex].viceReList.splice(vindex,1);
+        this.updateZfAmount(mindex);
+        this.$common.openSuccessMsgBox("副方移除成功!",this);
     },
     /** 
      * 移除指定的主方
      *  */
     deleteZf:function(mindex){
         this.yfdata.mainReList.splice(mindex,1);
+        this.allTotal = this.getAllTotal(this.yfdata);
+        this.$common.openSuccessMsgBox("主方移除成功!",this);
     },
     
     /** 
@@ -1194,6 +1207,21 @@ export default {
     updateAmount:function(e){
         this.allTotal = this.getAllTotal(this.yfdata);
     },
+    updateZfAmount:function(mrindex){
+        var zf_total_num = null;
+         var mainRelist = this.yfdata.mainReList;
+         for(var j in mainRelist[mrindex].viceReList){
+            var ff_num = 0;
+            if(!mainRelist[mrindex].viceReList[j].amount || mainRelist[mrindex].viceReList[j].amount==""){
+                ff_num = 0;
+            }else{
+                ff_num = parseInt(mainRelist[mrindex].viceReList[j].amount); 
+            }
+            zf_total_num = zf_total_num+ff_num;
+        }
+        this.yfdata.mainReList[mrindex].amount = zf_total_num;
+        this.updateAmount();
+    },
     /**
      * 新增副方药物
      * e 触发事件
@@ -1227,6 +1255,8 @@ export default {
                 obj.remarks = "最后用，与主方同用";
             }
           this.yfdata.mainReList[mrindex].viceReList.push(obj);
+          this.updateZfAmount(mrindex);
+          this.$common.openSuccessMsgBox("新增副方成功!",this);
       },
     /**
     格式化药方的药物列表格式
@@ -1389,9 +1419,10 @@ export default {
         var r_params = JSON.parse(window.localStorage.getItem('pathParams'));
         var brid= r_params.data.pId;
         this.$common.newInquiry_new(brid,this);
+        this.is_display_xjzd = true;
         setTimeout(function(){
            loading.close();
-        },3000);
+        },2500);
     },
     }
     ,beforeMount () {

@@ -177,6 +177,7 @@ export default {
       var _that = this;
       var loading = _that.$common.openLoading("提交中",_that);
       _that.$http.post('/inquiry/postInquiryAnswer',params).then(function (response) {
+        loading.close();
         if(response.code == "1"){
           _that.$common.openSuccessMsgBox("操作成功",_that);
         }else{
@@ -184,9 +185,8 @@ export default {
             _that.$common.openSuccessMsgBox(response.msg,_that);
            }, 1000);
         }
-          
-          
       }).catch(function (error) {
+        loading.close();
         console.log(error);
         setTimeout(function(){
           _that.$common.openSuccessMsgBox(error,_that); 

@@ -21,6 +21,11 @@
                 width="96">
             </el-table-column>
             <el-table-column
+            prop="times"
+            label="序号"
+            width="120">
+            </el-table-column>
+            <el-table-column
             prop="pName"
             label="姓名"
             width="250">
@@ -28,7 +33,7 @@
             <el-table-column
             prop="inquiryDate"
             label="最近就诊时间"
-            width="360">
+            width="260">
             </el-table-column>
             <el-table-column
             label="操作">

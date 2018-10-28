@@ -4,13 +4,13 @@
             <div class="wzwt-info-container">
                 <div class="titile-container">
                     <span @click="setActiveSyle(1)">
-                        基本信息
+                        诊断标签
                     </span>
                     <span>
                         <i v-bind:class="[d_isActive ? 'el-icon-caret-top' : 'el-icon-caret-bottom']"  @click="setActiveSyle(1)"></i>
                         <!-- <i class="el-icon-caret-bottom"></i> -->
                     </span>
-                    <el-button class="btn-default" @click="newInquiry_new" style="margin-left: 20px">新建问诊</el-button>
+                    <el-button :class="[{'isdisplaynone': is_display_xjzd },'btn-default']" class="btn-default" @click="newInquiry_new" style="margin-left: 20px">新建问诊</el-button>
                 </div>
                 <div v-bind:class="[{ 'isdisplaynone': d_isActive }, 'wzwt-input-container']">
                     <el-input
@@ -60,7 +60,7 @@
                     <div class="yp-item" v-for="(h, i) in item.recipeDetailList" :key="i"><input v-model="h.medicine" @blur="updateMainYw(mrindex,i)"/></div>
                 </div>
                 <div class="viceReList-container" v-for="(vice, vindex) in item.viceReList" :key="vindex">
-                        <div class="zf-search-info"><span name="zfname">副方{{vindex+1}}</span><el-input class="new-yfmc"  @keyup.enter.native="addfyfyw($event,vindex,mrindex)"></el-input><el-input class="ywfs"  @change="updateAmount" v-model="vice.amount"></el-input><span>付</span><el-input class="ywbz" v-model="vice.remarks"></el-input><el-checkbox name="isStock" v-model="vice.isStock" class="rk-checkbox">入库</el-checkbox><el-button icon="el-icon-delete" @click="openMegBox('是否删除副方','deleteFf',mrindex,vindex)" class="zf-btn-delete"></el-button></div>
+                        <div class="zf-search-info"><span name="zfname">副方{{vindex+1}}</span><el-input class="new-yfmc"  @keyup.enter.native="addfyfyw($event,vindex,mrindex)"></el-input><el-input class="ywfs"  @change="updateZfAmount(mrindex)" v-model="vice.amount"></el-input><span>付</span><el-input class="ywbz" v-model="vice.remarks"></el-input><el-checkbox name="isStock" v-model="vice.isStock" class="rk-checkbox">入库</el-checkbox><el-button icon="el-icon-delete" @click="openMegBox('是否删除副方','deleteFf',mrindex,vindex)" class="zf-btn-delete"></el-button></div>
                     <div class="mainMeList-container" >
                             <div class="yp-item" v-for="(vim, m) in vice.viceRecipeDetailList" :key="m"><input v-model="vim.medicine" @blur="updateViceYw(mrindex,vindex,m)"/></div>
                         </div>

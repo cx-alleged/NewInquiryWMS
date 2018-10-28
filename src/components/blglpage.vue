@@ -42,7 +42,7 @@
         <el-table-column
         prop="inquiryDate"
         label="就诊时间"
-        width="340">
+        width="280">
         </el-table-column>
         <el-table-column
         prop="gender"

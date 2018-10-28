@@ -142,19 +142,18 @@ export default {
                 this.tableData.list1 =arry1;
                 this.tableData.list2 = arry2;
                 this.tableData.list3 = arry3;
-              }
-              
-          }else{
-              var index = list.length/3;
-              var arry1 = list.slice(0,index),
-                  arry2 = list.slice(index,index*2),
-                  arry3 = list.slice(index*2,list.length);
-                 arry1=this.setYwListIndex(arry1,1);
-                 arry2=this.setYwListIndex(arry2,2);
-                 arry3=this.setYwListIndex(arry3,3);
-                this.tableData.list1 =arry1;
-                this.tableData.list2 = arry2;
-                this.tableData.list3 = arry3;
+              }else{
+                var index = list.length/3;
+                var arry1 = list.slice(0,index),
+                    arry2 = list.slice(index,index*2),
+                    arry3 = list.slice(index*2,list.length);
+                  arry1=this.setYwListIndex(arry1,1);
+                  arry2=this.setYwListIndex(arry2,2);
+                  arry3=this.setYwListIndex(arry3,3);
+                  this.tableData.list1 =arry1;
+                  this.tableData.list2 = arry2;
+                  this.tableData.list3 = arry3;
+            }
           }
       },
       /** 对药物的列表序号排序 type　加几*/

@@ -72,15 +72,19 @@ Print.prototype = {
     },
     //生成方子的对应Str
     createYwListStr:function(obj){
+        var amount = " ";
+        if(obj.amount && obj.amount!=""){
+          amount=amount+obj.amount+"付"
+        }
         var title_str ='',ywStr = '';
         if(obj.type == 1){
           var remarks = obj.remarks && obj.remarks!="" ? "（"+obj.remarks+"）":"";
-            title_str = '<div class="yf-item"><div class="yw-title">主方'+remarks+'</div><div class="yw-list">';
+            title_str = '<div class="yf-item"><div class="yw-title">主方'+remarks+amount+'</div><div class="yw-list">';
         }else{
             var index= '零一二三四五六七八九'.charAt(obj.index+1);
             var remarks = obj.remarks && obj.remarks!="" ? "（"+obj.remarks+"）":"";
             //副方标题
-            title_str = '<div class="yf-item"><div class="yw-title">副方'+index+remarks+'</div><div class="yw-list">';
+            title_str = '<div class="yf-item"><div class="yw-title">副方'+index+remarks+amount+'</div><div class="yw-list">';
         }
         if(JSON.stringify(obj.arry)=="[]"){
             return '';
@@ -108,15 +112,16 @@ Print.prototype = {
 
     },
     //封装参数
-    createdYwParams:function(type,index,t_arry,remarks){
+    createdYwParams:function(type,index,t_arry,remarks,amount){
       var obj = new Object();
       obj.remarks = remarks;
       obj.type=type;
       obj.index = index;
+      obj.amount = amount;
       obj.arry = t_arry;
       return obj;
     },
-    createTable:function(type,index,t_arry,y_str,height,remarks) {
+    createTable:function(type,index,t_arry,y_str,height,remarks,amount) {
         var r_obj = new Object();
         r_obj.ywStr = y_str;
         r_obj.content_str = '';
@@ -125,7 +130,7 @@ Print.prototype = {
           var tmp_height = r_obj.tmp_height + this.autoTableHeight(t_arry);
           if(tmp_height <= this.options.n_height){
               //不需分页 封装参数生成Str
-              var obj= this.createdYwParams(type,index,t_arry,remarks);
+              var obj= this.createdYwParams(type,index,t_arry,remarks,amount);
               var str = this.createYwListStr(obj);
               r_obj.tmp_height = tmp_height;
               r_obj.ywStr = r_obj.ywStr + str;
@@ -137,14 +142,14 @@ Print.prototype = {
               var s_index = num*4;
               var f_arry = t_arry.slice(0,t_arry.length - s_index);
               var new_arry = t_arry.slice(t_arry.length - s_index,t_arry.length);
-              var o_obj= this.createdYwParams(type,index,f_arry,remarks);
+              var o_obj= this.createdYwParams(type,index,f_arry,remarks,amount);
               var y_str = this.createYwListStr(o_obj);
               r_obj.ywStr = r_obj.ywStr + y_str;
               //生成第一页的打印内容
               r_obj.content_str = r_obj.content_str + this.getPrintHtml(r_obj.ywStr);
               //重置 条件以及内容
               r_obj.tmp_height = this.autoTableHeight(new_arry);
-              var n_obj= this.createdYwParams(type,index,new_arry,remarks);
+              var n_obj= this.createdYwParams(type,index,new_arry,remarks,amount);
               r_obj.ywStr = this.createYwListStr(n_obj);
           }
           return r_obj;
@@ -163,7 +168,7 @@ Print.prototype = {
             for(var i = 0; i<mainReList.length; i++){
               //循环生成主方样式
               if(JSON.stringify(mainReList[i].recipeDetailList)!='[]'){
-                  var t_obj = this.createTable(1,i,mainReList[i].recipeDetailList,ywStr,tmp_height,mainReList[i].remarks);
+                  var t_obj = this.createTable(1,i,mainReList[i].recipeDetailList,ywStr,tmp_height,mainReList[i].remarks,mainReList[i].amount);
                   content_str = content_str + t_obj.content_str;
                   ywStr = t_obj.ywStr;
                   tmp_height = t_obj.tmp_height;
@@ -172,7 +177,7 @@ Print.prototype = {
               //第二步再来生成字符串
                   for(var j=0;j<mainReList[i].viceReList.length;j++){
                        if(JSON.stringify(mainReList[i].viceReList[j].viceRecipeDetailList)!='[]'){
-                           var t_obj = this.createTable(2,j,mainReList[i].viceReList[j].viceRecipeDetailList,ywStr,tmp_height,mainReList[i].viceReList[j].remarks);
+                           var t_obj = this.createTable(2,j,mainReList[i].viceReList[j].viceRecipeDetailList,ywStr,tmp_height,mainReList[i].viceReList[j].remarks,mainReList[i].viceReList[j].amount);
                           content_str = content_str + t_obj.content_str;
                           ywStr = t_obj.ywStr;
                           tmp_height = t_obj.tmp_height;

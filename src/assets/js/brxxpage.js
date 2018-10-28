@@ -339,7 +339,7 @@ export default {
       },
       setSuBmitParams(obj){
          var params_obj = JSON.parse(JSON.stringify(obj));
-         var arry_name = ["eatingHabits","heredityHistory","infectionHistory","traumaHistory","contactHistory","meAllergy","allergy"];
+         var arry_name = ["eatingHabits","heredityHistory","infectionHistory","contactHistory","meAllergy","allergy"];
          for(var key in arry_name){
            var temp_str = JSON.stringify(params_obj[arry_name[key]]);
            temp_str = this.$common.decodeToStr(temp_str);
