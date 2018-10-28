@@ -185,8 +185,6 @@ export default {
             _that.$common.openSuccessMsgBox(response.msg,_that);
            }, 1000);
         }
-          
-          
       }).catch(function (error) {
         loading.close();
         console.log(error);
