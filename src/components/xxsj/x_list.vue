@@ -41,7 +41,7 @@
                     label="操作">
                 <template slot-scope="scope">
                         <el-button @click="searchBrxx(scope.row)" type="text" class="btn-font-default">查看</el-button>
-                        <el-button @click="deleteBlObj(scope.row)" type="text" class="btn-font-default">删除</el-button>
+                        <el-button @click="opencomfigMethod('请确认删除？',deleteBlObj,scope.row)" type="text" class="btn-font-default">删除</el-button>
                 </template>
                     </el-table-column>
                 </el-table>

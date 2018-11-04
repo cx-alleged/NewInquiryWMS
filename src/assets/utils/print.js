@@ -44,11 +44,13 @@ Print.prototype = {
     },
     //单页的打印内容拼接
     getPrintHtml: function (content_str) {
+
         return '<div class="print-container">'+this.getPrintHeader()+'<div class="print-info-container">'+content_str+'</div>'+this.getPrintFoot()+"</div>";
     },
   
     //获取打印样式头部
     getPrintHeader:function(){
+      
         var pName = this.YfData.pName ? this.YfData.pName:"";
         var age = this.YfData.age ? this.YfData.age : "";
         var gender = this.YfData.gender ? this.YfData.gender : "";

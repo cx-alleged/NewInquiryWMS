@@ -343,6 +343,9 @@ export default {
                _that.$common.openErrorMsgBox(error.message,_that);
             });
      },
+     opencomfigMethod(msg,method_name,method_params){
+        this.$common.openComfigDialog(msg,method_name,method_params,this);
+      },
       /**
        * 获取病人信息
        * 

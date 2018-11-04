@@ -154,6 +154,9 @@ export default {
         
         this.getblList();
       },
+      opencomfigMethod(msg,method_name,method_params){
+        this.$common.openComfigDialog(msg,method_name,method_params,this);
+      },
       //获取病例table列表
       getblList(){
         var _that = this;
@@ -163,12 +166,10 @@ export default {
             params: search_obj
            }).then(function (response) {
                if(response.code=="1"){
-                    if(JSON.stringify(response.data.pageInfo.list)!="[]"){
                         _that.tableData = response.data.pageInfo;
                         setTimeout(()=>{
                             _that.setSelectRow();
-                        }, 50)
-                    }
+                        }, 50);
                }else{
                     _that.$common.openErrorMsgBox(response.msg,_that);
                }

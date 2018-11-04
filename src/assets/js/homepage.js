@@ -51,6 +51,9 @@ export default {
       },
   
       methods: {
+        opencomfigMethod(msg,method_name,method_params){
+          this.$common.openComfigDialog(msg,method_name,method_params,this);
+        },
         //联动设置 城市 设置为外国时表单的值
         setCityList(value){
           //第一次遍历省份列表
@@ -114,6 +117,28 @@ export default {
               .catch(function (error) {
                  _that.$common.openErrorMsgBox(error,_that);
               });
+            }
+        },
+        changeBirdate(){
+            //第一步：格式化校验数据是否合理
+            if(this.form.birthday){
+              //var reg = /^([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})-(((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)-(0[1-9]|[12][0-9]|30))|(02-(0[1-9]|[1][0-9]|2[0-8])))$/;
+              var reg1 = /^([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})(((0[13578]|1[02])(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)(0[1-9]|[12][0-9]|30))|(02(0[1-9]|[1][0-9]|2[0-8])))$/;
+              var regExp = new RegExp(/^([0-9]{3}[1-9]|[0-9]{2}[1-9][0-9]{1}|[0-9]{1}[1-9][0-9]{2}|[1-9][0-9]{3})-(((0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01]))|((0[469]|11)-(0[1-9]|[12][0-9]|30))|(02-(0[1-9]|[1][0-9]|2[0-8])))$/);
+              var regExp1 = new RegExp(reg1);
+              if(regExp.test(this.form.birthday)&&this.form.birthday.length>7){
+
+              }else if(regExp1.test(this.form.birthday)&&this.form.birthday.length>7){
+                //格式化当前日期格式
+                this.form.birthday = this.form.birthday.substring(0,4)+"-"+this.form.birthday.substring(4,6)+"-"+this.form.birthday.substring(6,8);
+                //this.$common.GetAgeByBrithday(this.form.birthday);
+              }else{
+                this.form.birthday = null;
+                this.form.age = null;
+                //提示  然后值清空 在填
+                this.$common.openErrorMsgBox("请输入正确的日期格式",this);
+              
+              }
             }
         },
         //return  false 属性有空， true时 校验通过

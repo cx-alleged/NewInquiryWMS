@@ -169,6 +169,9 @@ export default {
       obj.answerVOList = p_arry;
       return obj;
     },
+    opencomfigMethod(msg,method_name,method_params){
+        this.$common.openComfigDialog(msg,method_name,method_params,this);
+      },
     /**
      * 问卷信息 保存 提交
      */

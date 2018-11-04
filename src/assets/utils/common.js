@@ -205,6 +205,29 @@ export default{
         _that.$message.error(msg);
      },
      /**
+      * 打开询问操作
+      * 
+      * @param {any} msg 
+      * @param {any} callback 
+      * @param {any} _that 
+     
+      * 
+      */
+     openComfigDialog(msg,callback,cal_params,_that){
+        _that.$confirm(msg, '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          callback(cal_params);
+        }).catch(() => {
+          _that.$message({
+            type: 'info',
+            message: '操作已取消'
+          });          
+        });
+     },
+     /**
       * 依据出生日期计算年龄
       */
      GetAgeByBrithday:function(birthdayStr){

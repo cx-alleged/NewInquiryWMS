@@ -62,7 +62,8 @@
         <el-table-column
         label="操作">
        <template slot-scope="scope">
-            <el-button @click="delDailyPatient(scope.row)" type="text" class="btn-font-default bnt-font-color">删除病历</el-button>
+            <!--<el-button @click="delDailyPatient(scope.row)" type="text" class="btn-font-default bnt-font-color">删除病历</el-button>-->
+           <el-button @click="opencomfigMethod('请确认删除病例',delDailyPatient,scope.row)" type="text" class="btn-font-default bnt-font-color">删除病历</el-button> 
             <el-button @click="gotoWzxxPage(scope.row)" type="text" class="btn-font-default">查看四诊</el-button>
             <el-button @click="gotoyfpage(scope.row)" type="text" class="btn-font-default">查看病历</el-button>
        </template>

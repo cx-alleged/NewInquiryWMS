@@ -772,7 +772,9 @@ export default {
         }
         return allTotal;
     },
-
+    opencomfigMethod(msg,method_name,method_params){
+        this.$common.openComfigDialog(msg,method_name,method_params,this);
+    },
     /**
      * 设置模版数据格式，原因 后端新增串 和返回的串格式一致
      * 把药物对象转化成String
