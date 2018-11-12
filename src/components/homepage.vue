@@ -29,7 +29,7 @@
                   </el-select>
                </el-col>
                <el-col :span="8">
-                 <el-select v-model="form.sourceProvince" style="margin-right:10px;margin-left:10px;width(100% - 20px);" @change="setCityList">
+                 <el-select v-model="form.sourceProvince" filterable popper-class="city" style="margin-right:10px;margin-left:10px;width(100% - 20px);" @change="setCityList">
                      <el-option
                         v-for="item in province"
                         :key="item.id"
@@ -39,7 +39,7 @@
                   </el-select>
                </el-col>
                <el-col :span="8">
-                 <el-select v-model="form.sourceCity" style="margin-left:10px;width(100% - 10px);">
+                 <el-select filterable popper-class="city" v-model="form.sourceCity" style="margin-left:10px;width(100% - 10px);">
                     <el-option
                         v-for="item in city"
                         :key="item.cityId"
@@ -52,7 +52,7 @@
           </el-form-item>
           <div class="el-form-item">
             <div class="el-form-item__content" style="height:70px;text-align:center;line-height:70px;">
-              <button type="button" class="el-button el-button--primary normal-btn-primary" @click="czSubmit"><span>初诊</span></button> 
+              <button type="button" class="el-button el-button--primary normal-btn-primary" @click="czSubmit"><span>初诊</span></button>
               <button type="button" class="el-button el-button--default normal-btn-default" @click="fzSubmit"><span>复诊</span></button>
             </div>
           </div>
@@ -61,7 +61,7 @@
     </div>
 </template>
 <script src="../assets/js/homepage.js">
-</script> 
+</script>
 
   <style lang="scss">
     @import '../assets/css/homepage.scss';
