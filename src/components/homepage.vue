@@ -30,7 +30,7 @@
                   </el-select>
                </el-col>
                <el-col :span="8">
-                 <el-select v-model="form.sourceProvince" style="margin-right:10px;margin-left:10px;width(100% - 20px);" @change="setCityList">
+                 <el-select v-model="form.sourceProvince" filterable popper-class="city" style="margin-right:10px;margin-left:10px;width(100% - 20px);" @change="setCityList">
                      <el-option
                         v-for="item in province"
                         :key="item.id"
@@ -40,7 +40,7 @@
                   </el-select>
                </el-col>
                <el-col :span="8">
-                 <el-select v-model="form.sourceCity" style="margin-left:10px;width(100% - 10px);">
+                 <el-select filterable popper-class="city" v-model="form.sourceCity" style="margin-left:10px;width(100% - 10px);">
                     <el-option
                         v-for="item in city"
                         :key="item.cityId"
@@ -65,7 +65,7 @@
     </div>
 </template>
 <script src="../assets/js/homepage.js">
-</script> 
+</script>
 
   <style lang="scss">
     @import '../assets/css/homepage.scss';

@@ -16,6 +16,21 @@
     width: 100%;
     height: 100%;
   }
+
+  .city .el-scrollbar{
+    height: 800px;
+  }
+
+
+  .city .el-scrollbar .el-select-dropdown__wrap{
+    max-height: 100%;
+  }
+
+  .city .popper__arrow{
+    display: none; //去掉下拉框的三角尖
+  }
+
+
 </style>
 
 <script>
@@ -30,7 +45,7 @@
       created () {
         //向后端请求 省份数据，并且存放到仓库中
 
-        
+
       }
       ,components: {
        "v-header": Vheader
@@ -76,4 +91,3 @@
       }
   }
 </script>
-  
