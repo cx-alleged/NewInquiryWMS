@@ -30,37 +30,18 @@
         stripe
         style="border:1px solid #ebeef5;overflow-y:auto;height:100%;"
         @selection-change="handleSelectionChange">
-        <el-table-column
-            type="selection"
-            width="96">
+        <el-table-column type="selection" width="96"></el-table-column>
+        <el-table-column prop="index" width="100px" label="序号" >
+          <template scope="scope"><span>{{scope.$index+(tableData.pageNum - 1) * tableData.pageSize + 1}} </span></template>
         </el-table-column>
-        <el-table-column
-        prop="pName"
-        label="姓名"
-        width="150">
-        </el-table-column>
-        <el-table-column
-        prop="inquiryDate"
-        label="就诊时间"
-        width="280">
-        </el-table-column>
-        <el-table-column
-        prop="gender"
-        label="性别"
-        width="130">
-        </el-table-column>
-        <el-table-column
-        prop="age"
-        label="年龄"
-        width="130">
-        </el-table-column>
-        <el-table-column
-        prop="residence"
-        label="来源地"
-        width="300">
-        </el-table-column>
-        <el-table-column
-        label="操作">
+
+        <el-table-column prop="pName" label="姓名" width="150"></el-table-column>
+        <el-table-column prop="inquiryDate" label="就诊时间" width="280"></el-table-column>
+        <el-table-column prop="times" label="第几次" width="200"></el-table-column>
+        <el-table-column prop="gender" label="性别" width="130"></el-table-column>
+        <el-table-column prop="age" label="年龄" width="130"></el-table-column>
+        <el-table-column prop="residence" label="来源地" width="300"></el-table-column>
+        <el-table-column label="操作">
        <template slot-scope="scope">
             <el-button @click="delDailyPatient(scope.row)" type="text" class="btn-font-default bnt-font-color">删除病历</el-button>
             <el-button @click="gotoWzxxPage(scope.row)" type="text" class="btn-font-default">查看四诊</el-button>
@@ -72,8 +53,7 @@
 
   <div class="foot-container">
       <div class="page-container">
-        <el-pagination
-        background
+        <el-pagination background
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="tableData.pageNum"
@@ -86,7 +66,7 @@
        <el-button class="btn-default btn-deault-size btn-color-blue" @click="exportBlList">导出病历</el-button>
     </div>
   </div>
-</div> 
+</div>
 </template>
 <style lang="scss">
     // @import "@/assets/css/blglpage.scss"

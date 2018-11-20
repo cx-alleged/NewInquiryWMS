@@ -21,9 +21,9 @@ export default {
     watch: {
         rangeDate: function (newQuestion, oldQuestion) {
           if(newQuestion){
-              this.search_obj.startDate = this.$common.dateFormatStr(this.rangeDate[0],'yyyy-MM-dd');   
+              this.search_obj.startDate = this.$common.dateFormatStr(this.rangeDate[0],'yyyy-MM-dd');
               this.search_obj.endDate = this.$common.dateFormatStr(this.rangeDate[1],'yyyy-MM-dd');
-              this.getWzqkList(); 
+              this.getWzqkList();
           }
         }
     },
@@ -88,7 +88,7 @@ export default {
              }else{
                _that.$common.openErrorMsgBox(response.msg,_that);
              }
-                
+
             }).catch(function (error) {
                 _that.$common.openErrorMsgBox(error,_that);
             });
@@ -105,7 +105,7 @@ export default {
         var data = {};
         data.rangDate = this.search_obj.startDate+' ~ '+this.search_obj.endDate;
         data.list = this.tableData.list;
-        this.$tablePrint(doc_obj,{"data":data,"type":"1"});
+        this.$tablePrint(doc_obj,{"data":data,"type":"1"}); //打印
       }
     }
   }

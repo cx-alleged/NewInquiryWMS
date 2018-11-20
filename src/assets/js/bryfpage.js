@@ -9,6 +9,7 @@ export default {
             is_display_xjzd:false,
             is_display_zd:false,
             is_display_fh:true,
+            is_display_xj: true,
             options: [],
             yfdata:{
                 "pName":"",
@@ -590,7 +591,7 @@ export default {
                                 "dose": null,
                                 "remark": null
                             }
-                            
+
                             ]
                         }
                         /*,{
@@ -655,18 +656,19 @@ export default {
                                 "dose": null,
                                 "remark": null
                             }
-                            
+
                             ]
                         }*/
-                        
+
                     ]
                  },
-            
+            addTime:""
+
         };
     }
-    ,computed: { 
+    ,computed: {
         getPersonInfo:function(){
-            var result_str = this.yfdata.gender+" "+this.yfdata.resisdence+" "+this.yfdata.date+" "+this.yfdata.age+"岁 第"+this.yfdata.times+"次";
+            var result_str =this.yfdata.gender+" , "+this.yfdata.resisdence+" , "+this.yfdata.date+" , "+this.yfdata.age+"岁 , 第"+this.yfdata.times+"次";
             return result_str;
         }
     }
@@ -683,23 +685,80 @@ export default {
     ,watch: {
 
     }
-    ,methods: {
+    ,
+  methods: {
+    //入库
+     ruKu(mrindex){
+         this.yfdata.mainReList[mrindex].isStock = !this.yfdata.mainReList[mrindex].isStock
+     },
+    //副方入库
+    viceRuKu(mrindex,vindex){
+      this.yfdata.mainReList[mrindex].viceReList[vindex].isStock = !this.yfdata.mainReList[mrindex].viceReList[vindex].isStock
+    },
+
+    //清空主方
+    qkMegBox(data,mrindex,vindex){
+      // console.log("清空主方")
+      if(data ==="deleteZf"){
+        this.yfdata.mainReList[mrindex].recipeDetailList.forEach((p)=>{
+          p.detailId= null,
+            p.recipeId= null,
+            p.medicine=""
+          p.dose= null,
+            p.remark=null
+        })
+      }
+      //清空副方
+      else if(data ==="deleteFf"){
+        this.yfdata.mainReList[mrindex].viceReList[vindex].viceRecipeDetailList.forEach((p)=>{
+          p.detailId= null,
+            p.recipeId= null,
+            p.medicine=""
+          p.dose= null,
+            p.remark=null
+        })
+      }
+    }
+
+    ,
+
+    //清空副方
+
     /**
      * 初始化页面的按钮
      */
     initPage:function(){
         var prePathParams = JSON.parse(window.localStorage.getItem("prePathParams"));
-        this.is_display_xjzd = true;
-        if(prePathParams.path == "brglpage" || prePathParams.path == "grblglpage"){
+        console.log("传输的数据",prePathParams)
+        // this.is_display_xjzd = true;
+        // this.is_display_fh = prePathParams.is_display_xj;
+        // this.is_display_fh = prePathParams.is_display_xj;
+        // this.is_display_zd = true;
+        if(prePathParams.path == "brglpage"){
+          console.log("从病人管理页面来")
+          this.is_display_fh = prePathParams.is_display_xj;
+          this.is_display_xj = prePathParams.is_display_fh;
+          console.log(this.is_display_xj)
             //排除从病人管理的新建复诊
-            if(prePathParams.data.xzfz != "new"){
-                this.is_display_fh = false;
-                this.is_display_zd = true;
-            }
-            if(prePathParams.path=="grblglpage" && prePathParams.data.xzfz != "new"){
-                this.is_display_xjzd = false;
-            }
-        }else{
+            // if(prePathParams.data.xzfz != "new"){
+            //     this.is_display_fh = false;
+            //     this.is_display_zd = true;
+            // }
+            // if(prePathParams.path=="grblglpage" && prePathParams.data.xzfz != "new"){
+            //     this.is_display_xjzd = false;
+            //     this.is_display_fh = false; //返回
+            //     this.is_display_xj = false //新建
+            // }
+        }else if(prePathParams.path == "grblglpage"){
+          this.is_display_fh = prePathParams.is_display_xj;
+          this.is_display_xj = prePathParams.is_display_fh;
+        }else if(prePathParams.path == "blglpage"){
+          this.is_display_fh = false
+          this.is_display_xj =false
+          this.is_display_zd =false
+        }
+
+        else{
             this.is_display_fh = true;
             this.is_display_zd = false;
         }
@@ -731,9 +790,9 @@ export default {
       //缓存 跳转页面的参数
       this.$common.GotoPage(JSON.parse(pathParams).path,JSON.parse(pathParams),this);
     },
-    /** 
+    /**
      * 清除操作
-     *  
+     *
      * */
     clearAllYw:function(){
         var model_list = new Array();
@@ -754,15 +813,15 @@ export default {
             if(!zfObj.amount || zfObj.amount==""){
                 zf_num= 0;
             }else{
-                zf_num =  parseInt(zfObj.amount); 
+                zf_num =  parseInt(zfObj.amount);
             }
-            allTotal = allTotal+zf_num; 
+            allTotal = allTotal+zf_num;
  /*           for(var j in mainRelist[i].viceReList){
                 var ff_num = 0;
                 if(!mainRelist[i].viceReList[j].amount || mainRelist[i].viceReList[j].amount==""){
                     ff_num = 0;
                 }else{
-                    ff_num = parseInt(mainRelist[i].viceReList[j].amount); 
+                    ff_num = parseInt(mainRelist[i].viceReList[j].amount);
                 }
                 allTotal = allTotal+ff_num;
             }*/
@@ -817,7 +876,7 @@ export default {
         s_parms.inquiryId = r_params.data.inquiryId;
         //转化字符串为字符数组
         if(this.diagnoseLabels){
-            var str = this.diagnoseLabels.replace(/\uff0c/g, ','); 
+            var str = this.diagnoseLabels.replace(/\uff0c/g, ',');
             var d_arry = str.split(",");
             if(d_arry){
                 s_parms.diagnoseLabels = d_arry;
@@ -827,7 +886,7 @@ export default {
         }else{
               s_parms.diagnoseLabels = null;
         }
-        let data = await new Promise((resolve, reject) => { 
+        let data = await new Promise((resolve, reject) => {
             this.$http.post('/inquiry/postDiagnoseLabels',s_parms).then((data) =>  {
                 resolve(data);
             }).catch(function (error) {
@@ -859,11 +918,11 @@ export default {
                     }else{
                         _that.$common.openErrorMsgBox(response.msg,_that);
                     }
-                    
+
                 }).catch(function (error) {
                     loading.close();
                   setTimeout(function(){
-                    _that.$common.openErrorMsgBox(error,_that); 
+                    _that.$common.openErrorMsgBox(error,_that);
                     }, 1000);
                 });
             }
@@ -923,7 +982,7 @@ export default {
                     }
                 }else{
                     _that.$common.openErrorMsgBox(response.msg,_that);
-                }       
+                }
             })
             .catch(function (error) {
                 console.log(error);
@@ -977,7 +1036,7 @@ export default {
                     }
                 }else{
                     _that.$common.openErrorMsgBox(response.msg,_that);
-                }       
+                }
             })
             .catch(function (error) {
                  _that.$common.openErrorMsgBox(error,_that);
@@ -987,9 +1046,9 @@ export default {
     /**
      * 判断是初诊/复诊
      * 依据问诊id 获取问诊信息
-     * 获取问诊数据 
+     * 获取问诊数据
      * */
-    getyfDate:function(){ 
+    getyfDate:function(){
         var _that = this;
         var r_params = JSON.parse(window.localStorage.getItem('pathParams'));
         var lastinquiryId = r_params.data.lastinquiryId;
@@ -1000,7 +1059,7 @@ export default {
         }
 
     },
-    /** 
+    /**
      * 页面打印
     */
     printYfPage(){
@@ -1035,12 +1094,12 @@ export default {
                 _that.$Print(_that.yfdata,{'n_height':760});
             }else{
                 _that.$common.openErrorMsgBox(response.msg,_that);
-            }       
+            }
         })
         .catch(function (error) {
                 _that.$common.openErrorMsgBox(error,_that);
         });
-        
+
     },
     /**
      * 删除时的提示确认框
@@ -1068,10 +1127,10 @@ export default {
           this.$message({
             type: 'info',
             message: '操作已取消'
-          });          
+          });
         });
       },
-    /** 
+    /**
      * 新增主方方法
     */
     addZf:function(mindex,val){
@@ -1091,7 +1150,7 @@ export default {
         this.updateZfAmount(mindex);
         this.$common.openSuccessMsgBox("副方移除成功!",this);
     },
-    /** 
+    /**
      * 移除指定的主方
      *  */
     deleteZf:function(mindex){
@@ -1099,8 +1158,8 @@ export default {
         this.allTotal = this.getAllTotal(this.yfdata);
         this.$common.openSuccessMsgBox("主方移除成功!",this);
     },
-    
-    /** 
+
+    /**
      * 修改或新增主药方中的药物列表
      * mindex 主方序号
      * val 修改的值 */
@@ -1148,14 +1207,14 @@ export default {
               });
             }
         }
-        
+
     },
     /**
      * 修改或新增副药方的药物列表
      * value 要修改的值
      * vindex 副方序号
      * mindex 主方序号 */
-    
+
     updateViceMe:function(value,vindex,mindex){
         var switch_btn = true;
         var list = this.yfdata.mainReList[mindex].viceReList[vindex].viceRecipeDetailList;
@@ -1201,7 +1260,7 @@ export default {
             }
          }
     },
-    /** 
+    /**
      * 更新总付数
      *  */
     updateAmount:function(e){
@@ -1215,7 +1274,7 @@ export default {
             if(!mainRelist[mrindex].viceReList[j].amount || mainRelist[mrindex].viceReList[j].amount==""){
                 ff_num = 0;
             }else{
-                ff_num = parseInt(mainRelist[mrindex].viceReList[j].amount); 
+                ff_num = parseInt(mainRelist[mrindex].viceReList[j].amount);
             }
             zf_total_num = zf_total_num+ff_num;
         }
@@ -1268,7 +1327,7 @@ export default {
         var normal_zfyw = this.IsMbYwArry(Obj.mainReList[i].recipeDetailList,1);
         Obj.mainReList[i].recipeDetailList = normal_zfyw;
         //第二步 规范副方
-        
+
         if(JSON.stringify(Obj.mainReList[i].viceReList)!="[]"){
             for(var j = 0; j<Obj.mainReList[i].viceReList.length; j++){
                 var normal_ffyw = this.IsMbYwArry(Obj.mainReList[i].viceReList[j].viceRecipeDetailList,2);
@@ -1309,7 +1368,7 @@ export default {
     * 是否为规范的模版数据，如果不是就设置成为规范的模版数据
     * arry 监测数组， type 1 代表为主方药物列表， 2代表 副方药物列表
     * return normal 符合规范的标准数据
-    * 
+    *
     */
     IsMbYwArry:function(arry,type){
         var normal_length = 12;
@@ -1343,7 +1402,7 @@ export default {
             }
         }
         return normal_arry;
-        
+
     },
     /**数组最后四位对象是否为空
      * return true 为空
@@ -1358,9 +1417,9 @@ export default {
         }
         return switch_btn;
     },
-    /** 
+    /**
      * 更新主方药物列表
-     * input失去焦点 
+     * input失去焦点
      * 操作相应的数据
      * mindex 代表主方序号
      * findex 代表药物序号
@@ -1385,7 +1444,7 @@ export default {
             if(sz_length>=16 && flag){
                 this.yfdata.mainReList[mindex].recipeDetailList.splice(sz_length-4,4);
             }
-            
+
         }
         //是更新数据，直接做数据请求操作
     },
@@ -1420,6 +1479,8 @@ export default {
         var brid= r_params.data.pId;
         this.$common.newInquiry_new(brid,this);
         this.is_display_xjzd = true;
+        this.is_display_xj = true;
+        this.is_display_fh = true;
         setTimeout(function(){
            loading.close();
         },2500);

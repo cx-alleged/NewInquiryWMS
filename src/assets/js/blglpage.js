@@ -22,7 +22,7 @@ export default {
             pageNum:1,
             pageSize:10,
             total:0
-          }
+          } ,
       }
     },
     //计算属性
@@ -31,14 +31,19 @@ export default {
     },
     watch: {
         rangeDate: function (newQuestion, oldQuestion) {
-          this.search_obj.startDate = this.$common.dateFormatStr(this.rangeDate[0],'yyyy-MM-dd');   
-          this.search_obj.endDate = this.$common.dateFormatStr(this.rangeDate[1],'yyyy-MM-dd');   
+          this.search_obj.startDate = this.$common.dateFormatStr(this.rangeDate[0],'yyyy-MM-dd');
+          this.search_obj.endDate = this.$common.dateFormatStr(this.rangeDate[1],'yyyy-MM-dd');
         }
     },
     created ()  {
         this.initPage();
     },
     methods: {
+      // 序号
+      typeIndex(index){
+        console.log('序号：',index)
+        return index + (this.pageNum - 1) * this.pageSize + 1;
+      },
       rowClassname() {
         return "rowClassname";
       },
@@ -51,7 +56,7 @@ export default {
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
       },
-      
+
       handleCurrentChange(val) {
         this.changePageCoreRecordData();
         this.search_obj.pageNum = val;
@@ -76,13 +81,14 @@ export default {
                     selectAllIds.push(row[idKey]);
                 })
                 this.$refs.table.clearSelection();
-                for(var i = 0; i < this.tableData.list.length; i++) {                    
+                for(var i = 0; i < this.tableData.list.length; i++) {
                     if (selectAllIds.indexOf(this.tableData.list[i][idKey]) >= 0) {
                         // 设置选中，记住table组件需要使用ref="table"
                         this.$refs.table.toggleRowSelection(this.tableData.list[i], true);
                     }
                 }
             },
+
             // 记忆选择核心方法
             changePageCoreRecordData () {
                 // 标识当前行的唯一键的名称
@@ -151,7 +157,7 @@ export default {
         if(i_params.data.patientId){
           this.search_obj.patientId = i_params.data.patientId;
         }
-        
+
         this.getblList();
       },
       //获取病例table列表
@@ -165,6 +171,7 @@ export default {
                if(response.code=="1"){
                     if(JSON.stringify(response.data.pageInfo.list)!="[]"){
                         _that.tableData = response.data.pageInfo;
+                        console.log( _that.tableData)
                         setTimeout(()=>{
                             _that.setSelectRow();
                         }, 50)
@@ -172,14 +179,14 @@ export default {
                }else{
                     _that.$common.openErrorMsgBox(response.msg,_that);
                }
-                
+
             }).catch(function (error) {
                 _that.$common.openErrorMsgBox(error,_that);
             });
       },
       /**
        * 查看病历的问诊信息
-       * @param {*} row 
+       * @param {*} row
        */
       gotoWzxxPage(row){
         var _that = this;
@@ -199,10 +206,10 @@ export default {
       },
       /**
        * 删除病人
-       * 
-       * @param {any} row 
-      
-       * 
+       *
+       * @param {any} row
+
+       *
        */
       delDailyPatient(row){
            var _that = this;
@@ -219,7 +226,7 @@ export default {
             _that.$common.openErrorMsgBox(error,_that);
         });
       },
-      /** 
+      /**
        * 查看某次的药方病例
       */
       gotoyfpage(row){
@@ -240,7 +247,7 @@ export default {
       },
       /**
        * 导出病历
-       * 
+       *
        */
       exportBlList(){
           var _that = this;
@@ -273,14 +280,14 @@ export default {
                         _that.$common.openErrorMsgBox(response.msg,_that);
                     }
                     //打印的请求数据成功 把数据传递给打印控件；
-					
+
                 }else{
                     _that.$common.openErrorMsgBox(response.msg,_that);
                 }
             }).catch(function (error) {
 				loading.close();
                 _that.$common.openErrorMsgBox(error,_that);
-				
+
             });
       }
     }

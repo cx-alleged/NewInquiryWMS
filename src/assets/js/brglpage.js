@@ -19,7 +19,7 @@ export default {
       }
     },
     created () {
-      //获取页面的初始化数据  
+      //获取页面的初始化数据
       this.initPage();
     },
     methods: {
@@ -97,7 +97,7 @@ export default {
       },
       /**
        * 移除病人信息
-       * @param {object} row 
+       * @param {object} row
        */
       deleteBrInfo(row){
         var _that = this;
@@ -117,9 +117,9 @@ export default {
       },
         /**
          * 新建问诊 返回问诊id
-         * 
+         *
          * @param {String} brid 病人id
-         * 
+         *
          * return 问诊id
          */
       newInquiry_new(brid){
@@ -142,7 +142,7 @@ export default {
       },
       /**
        * 获取病人最近一次问诊信息
-       * 
+       *
        */
       getLastInquiry(brinfo){
           var url= "/inquiry/getLatestInquiryInfo?patientId="+brinfo.pId;
@@ -157,7 +157,7 @@ export default {
                       }else{
                           brinfo.lastinquiryId = "";
                       }
-                      
+
                       //跳转组件并且 传递pid
                       var pathParams = new Object();
                       pathParams.path = 'bryfpage';
@@ -167,6 +167,9 @@ export default {
                       var prePathParams = new Object();
                       prePathParams.path = 'brglpage';
                       prePathParams.data = _that.search_obj;
+                      prePathParams.data = _that.search_obj;
+                      prePathParams.is_display_xj = true //去掉返回
+                      prePathParams.is_display_fh = true //去掉返回
                       prePathParams.data.xzfz = "new";
                       //缓存 跳转页面的参数
                       _that.$store.dispatch("setPrePathParams", JSON.stringify(prePathParams));
@@ -180,32 +183,32 @@ export default {
                   _that.$common.openErrorMsgBox(error,_that);
                }, 1000);
           });
-          
+
       },
-      triggerSelect () {  
-        this.$refs.fileinput.click()  
-      },  
-    
-      selectedFile (e) {  
-        console.log(e.target.files[0])  
-        //根据项目需求做具体处理，比如说获取文件名  
+      triggerSelect () {
+        this.$refs.fileinput.click()
+      },
+
+      selectedFile (e) {
+        console.log(e.target.files[0])
+        //根据项目需求做具体处理，比如说获取文件名
         this.uploadFile();
-      },  
-    
+      },
+
       async uploadFile () {
         var _that = this;
-        //如果不需要用到上传后的返回值可以把 async...await 语法去掉  
-        let files = this.$refs.fileinput.files;  
+        //如果不需要用到上传后的返回值可以把 async...await 语法去掉
+        let files = this.$refs.fileinput.files;
         if(files.length > 0) {
-         var loading =  _that.$common.openLoading("数据同步中",_that);  
-          let form = new FormData();  
-          form.append('file', files[0])  
-          let data = await new Promise((resolve, reject) => { 
-              _that.$http.post("/inquiry/getObjFromFile",form).then(res => {  
-                resolve(res)  
+         var loading =  _that.$common.openLoading("数据同步中",_that);
+          let form = new FormData();
+          form.append('file', files[0])
+          let data = await new Promise((resolve, reject) => {
+              _that.$http.post("/inquiry/getObjFromFile",form).then(res => {
+                resolve(res)
               })
               .catch(err => {
-                reject(err)  
+                reject(err)
               });
             });
             loading.close();
@@ -213,8 +216,8 @@ export default {
               _that.$common.openSuccessMsgBox("病人信息同步完成！",_that);
             }else{
               _that.$common.openErrorMsgBox(data.msg,_that);
-            } 
-        }  
-      }  
+            }
+        }
+      }
     }
   }

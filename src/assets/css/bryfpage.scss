@@ -1,25 +1,29 @@
 /*全局样式  主要是修改element的样式 局部样式无法修改element 组件样式 通过添加最外层的容器避免重盖*/
 .bryf-container{
+    display: flex;
+    .info-container{
+      width: 840px;
+    }
     .info-container .wzwt-info-container .wzwt-input-container textarea{
         font-family: PingFangSC-Medium;
-        font-size: 34px;
+        font-size: 30px;
         font-weight: normal;
         font-stretch: normal;
         letter-spacing: 0px;
         color: #1f2d3d;
-        height: 170px;
-        padding: 30px;
+        height: 233px;
+        padding: 20px;
         resize: none;
     }
     .info-container .bqms-info-container .bqms-input-container textarea{
         font-family: PingFangSC-Medium;
-        font-size: 34px;
+        font-size: 30px;
         font-weight: normal;
         font-stretch: normal;
         letter-spacing: 0px;
         color: #20a0ff;
-        height: 658px;
-        padding: 30px;
+        height: 568px;
+        padding: 20px;
         resize: none;
     }
     .basicInfo_select{
@@ -45,14 +49,13 @@
         width: 200px;
         height: 70px;
         border: solid 1px #20a0ff;
-        height: 70px;
         border-radius: 8px;
         span{
             font-family: PingFangSC-Regular;
             font-size: 30px;
             font-weight: normal;
             font-stretch: normal;
-            line-height: 23.8px;  
+            line-height: 23.8px;
             letter-spacing: 0px;
             color: #20a0ff;
         }
@@ -64,14 +67,14 @@
         }
     }
     .btn-border-red{
-         border: solid 1px #ff4949;
+         border: solid 1px #ff4949!important;
          span{
-             color: #ff4949;
+             color: #ff4949!important;
          }
     }
     .mainReList-container-div{
         .btn-default{
-            width: 134px;
+            width: 200px;
             height: 70px;
             border: solid 1px #20a0ff;
             height: 70px;
@@ -82,7 +85,7 @@
                     font-size: 30px;
                     font-weight: normal;
                     font-stretch: normal;
-                    line-height: 23.8px;  
+                    line-height: 23.8px;
                     letter-spacing: 0px;
                     color: #20a0ff;
                 }
@@ -103,6 +106,20 @@
         height: 72px;
         line-height: 72px;
         display: flex;
+        .icon{
+          margin-top: 5px;
+          width: 60px;
+          height: 60px;
+          margin-right: 6px;
+          .icon_rk{
+              width: 100%;
+              height: 100%;
+               //background:url(../img/ic_ruku1.png);
+        }
+        .icon img:hover {
+          opacity: 0.1;
+        }
+        }
         span{
             height: 42px;
             font-family: PingFangSC-Medium;
@@ -113,25 +130,26 @@
             color: #475669;
         }
         span[name="zfname"]{
-            min-width: 80px;
-            padding-right: 15px;
+            display: inline-block;
+            width: 90px;
+            padding-right: 10px;
         }
         span:nth-child(4){
-            padding-right: 15px;
+            padding-right: 10px;
         }
         :nth-child(6){
-            padding-right: 20px;
+            padding-right: 10px;
         }
         .new-yfmc{
             width: 215px;
             input.el-input__inner{
-                width: 185px;
+                width: 215px;
                 height: 70px;
                 border-radius: 8px;
                 border: solid 1px #c0ccda;
                 background-color: #ffffff;
                 font-family: PingFangSC-Medium;
-                font-size: 32px;
+                font-size: 30px;
                 line-height: 32px;
                 font-weight: normal;
                 font-stretch: normal;
@@ -140,33 +158,38 @@
             }
         }
         .ywfs{
-            width: 80px;
+             width: 80px;
              margin: 0px 20px 0px 0px;
+             text-align: center;
              input.el-input__inner{
-                width: 90px;
+                width: 80px;
                 height: 70px;
                 border-radius: 8px;
                 border: solid 1px #c0ccda;
                 background-color: #ffffff;
                 font-family: PingFangSC-Medium;
-                font-size: 32px;
+                font-size: 30px;
                 line-height: 32px;
                 font-weight: normal;
                 font-stretch: normal;
                 letter-spacing: 0px;
+                text-align: center;
                 color: #475669;
+               margin-left: 10px;
             }
         }
         .ywbz{
-            width: 480px;
-            margin: 0px 20px 0px 0px;
+            display: block;
+            width: 277px;
+            margin: 0px 6px 0px 0px;
             input.el-input__inner{
+                width: 100%;
                 height: 70px;
                 border-radius: 8px;
                 border: solid 1px #c0ccda;
                 background-color: #ffffff;
                 font-family: PingFangSC-Medium;
-                font-size: 32px;
+                font-size: 30px;
                 line-height: 32px;
                 font-weight: normal;
                 font-stretch: normal;
@@ -182,7 +205,7 @@
             span.el-checkbox__input.is-checked{
                 width: 40px;
                 height: 40px;
-                
+
                 span.el-checkbox__inner{
                     width: 40px;
                     height: 40px;
@@ -194,7 +217,7 @@
                     left: 15px;
                     top: 4px;
                     width: 8px;
-                    
+
                 }
             }
             span.el-checkbox__label{
@@ -226,7 +249,7 @@
             margin: 0px 20px;
             input{
                 font-family: PingFangSC-Medium;
-                font-size: 32px;
+                font-size: 30px;
                 line-height: 32px;
                 height: 70px;
                 border-radius: 8px;

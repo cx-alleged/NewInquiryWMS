@@ -21,7 +21,7 @@ export default {
       }
     },
     created () {
-        //获取页面的初始化数据  
+        //获取页面的初始化数据
         this.initPage();
     },
     methods: {
@@ -38,11 +38,16 @@ export default {
            var pathParams = new Object();
            pathParams.path = 'bryfpage';
            pathParams.data = brinfo
+           pathParams.fh_ = brinfo
+
+
            //缓存 目标跳转页面的参数
            _that.$store.dispatch("setPathParams", JSON.stringify(pathParams));
            var prePathParams = new Object();
            prePathParams.path = 'grblglpage';
-           prePathParams.data = this.search_obj;;
+           prePathParams.data = this.search_obj;
+            prePathParams.is_display_xj = false //去掉返回
+            prePathParams.is_display_fh = false //去掉返回
            //缓存 跳转页面的参数
            _that.$store.dispatch("setPrePathParams", JSON.stringify(prePathParams));
            _that.$common.GotoPage("bryfpage",brinfo,_that);
@@ -74,7 +79,7 @@ export default {
             selectAllIds.push(row[idKey]);
         })
         this.$refs.table.clearSelection();
-        for(var i = 0; i < this.tableData.list.length; i++) {                    
+        for(var i = 0; i < this.tableData.list.length; i++) {
             if (selectAllIds.indexOf(this.tableData.list[i][idKey]) >= 0) {
                 // 设置选中，记住table组件需要使用ref="table"
                 this.$refs.table.toggleRowSelection(this.tableData.list[i], true);
@@ -133,13 +138,13 @@ export default {
         this.$refs.multipleTable.clearSelection();
         }
       },
-      /** 
+      /**
        * 从缓存中取出当前页面的数据
       */
       initPage(){
         //从缓存中取出当前页面的参数
         var i_params = JSON.parse(window.localStorage.getItem("pathParams"));
-        
+
         if(i_params.data.pId!="" && i_params.data.pId){
             this.search_obj.patientId = i_params.data.pId;
         }
@@ -160,14 +165,14 @@ export default {
       },
       /**
        * 获取病人的所有诊断标签
-       * @param {*} pId 
+       * @param {*} pId
        */
       getBrDiagnoseLabels(pId){
           var _that = this;
           _that.$http.get("/inquiry/getOnePatientLabels?patientId="+pId).then(function (response) {
                 if(response.code == "1"){
                     var str = JSON.stringify(response.data.diagnoseLabels);
-                    str = str.replace(/[\[\]\"]*/g, '');  
+                    str = str.replace(/[\[\]\"]*/g, '');
                     _that.diagnoseLabels = _that.diagnoseLabels+str;
                 }else{
                     _that.$common.openErrorMsgBox(response.msg,_that);
@@ -178,7 +183,7 @@ export default {
       },
       /**
        * 获取病人的病历列表
-       * @param {*} search_obj 
+       * @param {*} search_obj
        */
       getBrList(search_obj){
         var _that = this;
@@ -196,7 +201,7 @@ export default {
                }else{
                    _that.$common.openErrorMsgBox(response.msg,_that);
                }
-               
+
             }).catch(function (error) {
                  _that.$common.openErrorMsgBox(error,_that);
             });
@@ -206,7 +211,7 @@ export default {
       },
       /**
        * 导出病历
-       * 
+       *
        */
       exportBlList(){
           var _that = this;
@@ -232,14 +237,14 @@ export default {
 					if(response.data.inquiryInfo && JSON.stringify(response.data.inquiryInfo)!="{}"){
 						_that.$exportPrint(response.data.inquiryInfo,{});
 					}
-					
+
                 }else{
                     _that.$common.openErrorMsgBox(response.msg,_that);
                 }
             }).catch(function (error) {
 				loading.close();
                 _that.$common.openErrorMsgBox(error,_that);
-				
+
             });
       }
     }
