@@ -16,7 +16,8 @@
               <el-col :span="6"><el-input class="full-width" v-model="form.age"  placeholder="请输入"></el-input></el-col>
               <el-col :span="18">
                 <label class="el-form-item__label" style="width: 124px;padding-left:20px;padding-right:20px;">生日</label>
-                <el-date-picker type="date" placeholder="请选择日期" v-model="form.birthday" format="yyyy/MM/dd" style="width: calc(100% - 124px);"></el-date-picker>
+                <el-input class="index-input" v-model="form.birthday" @blur="changeBirdate" style="width: calc(100% - 124px);" placeholder="日期yyyymmdd"></el-input>
+                <!--<el-date-picker type="date" placeholder="请选择日期" v-model="form.birthday" format="yyyy/MM/dd" style="width: calc(100% - 124px);"></el-date-picker>-->
               </el-col>
             </el-row>
           </el-form-item>
@@ -52,8 +53,11 @@
           </el-form-item>
           <div class="el-form-item">
             <div class="el-form-item__content" style="height:70px;text-align:center;line-height:70px;">
-              <button type="button" class="el-button el-button--primary normal-btn-primary" @click="czSubmit"><span>初诊</span></button>
-              <button type="button" class="el-button el-button--default normal-btn-default" @click="fzSubmit"><span>复诊</span></button>
+              <!--<button type="button" class="el-button el-button--primary normal-btn-primary" @click="czSubmit"><span>初诊</span></button> -->
+              <button type="button" class="el-button el-button--primary normal-btn-primary" @click="opencomfigMethod('请问是否进行初访?',czSubmit)"><span>初诊</span></button> 
+              <!--<button type="button" class="el-button el-button--default normal-btn-default" @click="fzSubmit"><span>复诊</span></button>-->
+              <button type="button" class="el-button el-button--default normal-btn-default" @click="opencomfigMethod('请问是否进行初访?',fzSubmit)"><span>复诊</span></button>
+              
             </div>
           </div>
         </el-form>

@@ -620,7 +620,7 @@
                 </el-row>
                 <el-row :gutter="20">
                      <el-form-item style="text-align:center;margin-top:40px;">
-                         <el-button type="primary" @click="onSubmit" class="btn-default btn-blue" >保存</el-button>
+                         <el-button type="primary" @click="opencomfigMethod('是否提交问卷信息',onSubmit)" class="btn-default btn-blue" >保存</el-button>
                         <el-button type="primary" @click="gotoBlglpage" class="btn-default" >返回</el-button>
                     </el-form-item>
                 </el-row>

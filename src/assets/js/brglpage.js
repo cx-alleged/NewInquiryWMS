@@ -85,9 +85,7 @@ export default {
             params: search_obj
            }).then(function (response) {
              if(response.code =="1"){
-                if(JSON.stringify(response.data.pageInfo.list)!="[]"){
                     _that.tableData = response.data.pageInfo;
-                }
              }else{
                _that.$common.openErrorMsgBox(response.msg,_that);
              }
@@ -95,11 +93,14 @@ export default {
                 _that.$common.openErrorMsgBox(error,_that);
             });
       },
+      opencomfigMethod(msg,method_name,method_params){
+        this.$common.openComfigDialog(msg,method_name,method_params,this);
+      },
       /**
        * 移除病人信息
        * @param {object} row
        */
-      deleteBrInfo(row){
+      delteBrinfoM(row){
         var _that = this;
         var url = "/index/deletePatient?patientId="+row.pId;
         _that.$http.delete(url).then(function (response) {

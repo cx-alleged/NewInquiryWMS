@@ -347,6 +347,9 @@ export default {
         }
         return params_obj;
       },
+      opencomfigMethod(msg,method_name,method_params){
+        this.$common.openComfigDialog(msg,method_name,method_params,this);
+      },
       /** 
        * 表单提交
        * 

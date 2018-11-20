@@ -71,6 +71,9 @@ export default {
         this.search_obj.pageNum = val;
         this.getBlList();
       },
+      opencomfigMethod(msg,method_name,method_params){
+        this.$common.openComfigDialog(msg,method_name,method_params,this);
+      },
       /**
        * 获取问诊情况列表
        */

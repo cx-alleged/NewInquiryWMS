@@ -168,7 +168,9 @@ export default {
           });          
         });
     },
-
+    opencomfigMethod(msg,method_name,method_params){
+        this.$common.openComfigDialog(msg,method_name,method_params,this);
+      },
     /**
      * 问卷信息 保存 提交
      */
