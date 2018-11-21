@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <v-header :active="active"  v-on:headCallBack="headCall"></v-header>
-    <router-view></router-view>
+    <v-header :active="active"  v-on:headCallBack="headCall" v-if="showPrise"></v-header>
+    <el-main style="width: 100%; overflow: hidden">
+      <router-view></router-view>
+    </el-main>
   </div>
 </template>
 
@@ -29,7 +31,9 @@
   .city .popper__arrow{
     display: none; //去掉下拉框的三角尖
   }
-
+  .el-main{
+    padding: 0px;
+  }
 
 </style>
 
@@ -39,7 +43,8 @@
   export default {
       data() {
         return{
-          active:"/Index/xjczbr"
+          active:"/Index/xjczbr",
+          showPrise:false
         }
       },
       created () {

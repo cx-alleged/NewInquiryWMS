@@ -5,16 +5,14 @@
               <span class="person-info">{{yfdata.pName+" , "+getPersonInfo}}</span>
                 <div class="titile-container"  style="display: flex; justify-content: space-between;">
                   <div class="" @click="setActiveSyle(2)">
-                     <span>
-                        病情描述
-                    </span>
-                    <span>
-                        <i v-bind:class="[b_isActive ? 'el-icon-caret-top' : 'el-icon-caret-bottom']"></i>
-                      <!-- <i class="el-icon-caret-bottom"></i> -->
-                    </span>
+                     <span>病情描述</span>
+                      <span>
+                          <i v-bind:class="[b_isActive ? 'el-icon-caret-top' : 'el-icon-caret-bottom']"></i>
+                        <!-- <i class="el-icon-caret-bottom"></i> -->
+                      </span>
                   </div>
-                  <div class="time">
-                    <el-input v-model="addTime" placeholder="时间"></el-input>
+                  <div class="time1">
+                    <el-input class="el-input1" v-model="addTime" placeholder="时间"></el-input>
                   </div>
 
                 </div>
@@ -91,8 +89,9 @@
                              <img v-if="vice.isStock" src="../assets/img/ic_ruku1.png">
                              <img src="../assets/img/ic_ruku.png" v-else>
                           </el-button>
-                         <el-button class="btn-default icon icon_qk" type="primary" style="padding: 0px; border: none" @click="qkMegBox('deleteFf',mrindex,vindex)" >
+                         <el-button class="btn-default icon icon_qk" type="primary" style="padding: 0px; border: none" @mouseenter="mous_qk()" @click="qkMegBox('deleteFf',mrindex,vindex)" >
                            <img src="../assets/img/ic_qingkong.png">
+
                          </el-button>
                          <el-button class="btn-default icon icon_sc" @click="openMegBox('是否删除副方','deleteFf',mrindex,vindex)"  type="primary" style="padding: 0px; border: none">
                            <img src="../assets/img/ic_shanchu.png">
@@ -136,32 +135,7 @@
 </style>
 
 <style lang="scss" scoped>
-    .titile-container{
-      margin-top: 10px;
-        span{
-            font-family: PingFangSC-Medium;
-            font-size: 30px;
-            font-weight: normal;
-            font-stretch: normal;
-            letter-spacing: 0px;
-            color: #475669;
-        }
-      .time{
-        width: 287px;
-        height: 45px;
-        font-size: 28px;
-        .el-input{
-          height: 45px;
-          width: 287px;
-          /*padding: 2px 0;*/
-          font-size: 28px;
-          .el-input__inner{
-            font-size: 30px;
-            height: 45px!important;
-          }
-        }
-      }
-    }
+
     .isdisplaynone{
         display: none;
     }
@@ -211,8 +185,34 @@
                 .bqms-input-container{
                     margin-top: 10px;
                 }
+              .titile-container{
+                margin-top: 10px;
+                span{
+                  font-family: PingFangSC-Medium;
+                  font-size: 30px;
+                  font-weight: normal;
+                  font-stretch: normal;
+                  letter-spacing: 0px;
+                  color: #475669;
+                }
+                .time1{
+                  width: 287px;
+                  height: 45px;
+                  font-size: 28px;
+                  .el-input1{
+                    height: 45px;
+                    font-size: 28px;
+                    /*border: 1px solid #000;*/
+                    .el-input__inner{
+                      border:none
+                    }
+                  }
+                }
+              }
             }
+
         }
+
     }
     /*右侧药物的列表样式*/
     .yf-info-container{
@@ -243,7 +243,6 @@
     .mainReList-container-div{
         /*margin-top: 40px;*/
         /*margin-left: 20px;*/
-
     }
     .yf-foot-container{
       display: flex;

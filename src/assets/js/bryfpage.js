@@ -374,7 +374,7 @@ export default {
                             ]
                         },
             mbMainObj:{
-                    "amount": 28,
+                    "amount": 0,
                     "isStock": true,
                     "remarks": "",
                     "mainMeList": null,
@@ -681,12 +681,43 @@ export default {
         this.initPage();
         //请求药方数据
         this.getyfDate();
-    }
-    ,watch: {
+        // window.onbeforeunload = function(e) {
+        //   console.log("刷新")
+        //   return "您编辑的信息尚未保存，您确定要离开吗？"//这里内容不会显示在提示框，为了增加语义化。
+        // };
+    },
 
-    }
-    ,
+    //离开之前
+     beforeRouteLeave(to, from, next){
+       this.$confirm('是否离开当前页面', '提示', {
+         confirmButtonText: '确定',
+         cancelButtonText: '取消',
+         type: 'warning',
+         customClass:"qcMessage"
+         }).then(() => {
+           console.log("取消绑定")
+           window.removeEventListener("beforeunload", this.beforeunload(e));
+           next();
+         }).catch(() => {
+
+       });
+     },
+      deactivated(){
+        console.log("取消绑定")
+        window.removeEventListener("beforeunload",this.beforeunload);
+      },
+
+  watch: {},
+
+  mounted() {
+
+    window.addEventListener("beforeunload",this.beforeunload);
+
+  },
   methods: {
+    beforeunload(e){
+      console.log("刷新")
+    },
     //入库
      ruKu(mrindex){
          this.yfdata.mainReList[mrindex].isStock = !this.yfdata.mainReList[mrindex].isStock
@@ -698,26 +729,60 @@ export default {
 
     //清空主方
     qkMegBox(data,mrindex,vindex){
-      // console.log("清空主方")
+       console.log("清空主方")
       if(data ==="deleteZf"){
-        this.yfdata.mainReList[mrindex].recipeDetailList.forEach((p)=>{
-          p.detailId= null,
-            p.recipeId= null,
-            p.medicine=""
-          p.dose= null,
-            p.remark=null
-        })
+        this.$confirm('是否清除主方内容', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          customClass:"qcMessage"
+        }).then(() => {
+          this.yfdata.mainReList[mrindex].recipeDetailList.forEach((p)=>{
+            p.detailId= null,
+              p.recipeId= null,
+              p.medicine=""
+            p.dose= null,
+              p.remark=null
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '操作已取消'
+          });
+        });
+
+
       }
       //清空副方
       else if(data ==="deleteFf"){
-        this.yfdata.mainReList[mrindex].viceReList[vindex].viceRecipeDetailList.forEach((p)=>{
-          p.detailId= null,
-            p.recipeId= null,
-            p.medicine=""
-          p.dose= null,
-            p.remark=null
-        })
+
+        this.$confirm('是否清除该副方内容', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          customClass:"qcMessage"
+        }).then(() => {
+          this.yfdata.mainReList[mrindex].viceReList[vindex].viceRecipeDetailList.forEach((p)=>{
+            p.detailId= null,
+              p.recipeId= null,
+              p.medicine=""
+            p.dose= null,
+              p.remark=null
+          })
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '操作已取消'
+          });
+        });
+
+
+
       }
+    },
+
+    mous_qk(){
+      console.log("移入")
     }
 
     ,
@@ -799,7 +864,7 @@ export default {
         model_list.push(this.mbMainObj);
         this.yfdata.mainReList=model_list;
         this.allTotal = this.getAllTotal(this.yfdata);
-        this.$common.openSuccessMsgBox("清楚成功!",this);
+        this.$common.openSuccessMsgBox("清除成功!",this);
     },
     /**
      * 遍历计算总付数
@@ -1001,6 +1066,7 @@ export default {
         if(inquiryId){
             //获取诊断标签数据
             _that.$http.get("/inquiry/getInquiryLabels?inquiryId="+inquiryId).then(function (response) {
+                console.log('初诊数据',response)
                 if(response.code == "1"){
                     var d_str = JSON.stringify(response.data.diagnoseLabels);
                     if(d_str == "[]"){
@@ -1114,7 +1180,9 @@ export default {
         this.$confirm(msg, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          type: 'warning'
+          type: 'warning',
+          customClass:"qcMessage"
+
         }).then(() => {
             if(callback==="deleteZf"){
                 this.deleteZf(mindex);
@@ -1491,12 +1559,5 @@ export default {
     ,beforeMount () {
         //绑定数据前计算总付数
        this.allTotal = this.getAllTotal(this.yfdata);
-    }
-    ,mounted () {
-        //获取路由参数
-
-    }
-    ,beforeDestroy () {
-
     }
 }

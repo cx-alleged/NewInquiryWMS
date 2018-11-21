@@ -1,41 +1,41 @@
 export default{
   /**
    * 字符串 转义 " 转义为 \"
-   * @param {*} str 
+   * @param {*} str
    */
    decodeToStr(str){
      var r_str = "";
-     if (str.length == 0) return r_str;  
-     r_str = str.replace("\"([^\"]*)\"", "\"");  
+     if (str.length == 0) return r_str;
+     r_str = str.replace("\"([^\"]*)\"", "\"");
      return r_str;
    },
    /**
-    * 将时间对象转化为string 
+    * 将时间对象转化为string
     * @param {Date} date_obj Date对象
     * @param {String} fmt 格式
     */
    dateFormatStr(date_obj,fmt){
-      var o = {   
-        "M+" : date_obj.getMonth()+1,                 //月份   
-        "d+" : date_obj.getDate(),                    //日   
-        "h+" : date_obj.getHours(),                   //小时   
-        "m+" : date_obj.getMinutes(),                 //分   
-        "s+" : date_obj.getSeconds(),                 //秒   
-        "q+" : Math.floor((date_obj.getMonth()+3)/3), //季度   
-        "S"  : date_obj.getMilliseconds()             //毫秒   
-      };   
-      if(/(y+)/.test(fmt))   
-        fmt=fmt.replace(RegExp.$1, (date_obj.getFullYear()+"").substr(4 - RegExp.$1.length));   
-      for(var k in o)   
-        if(new RegExp("("+ k +")").test(fmt))   
-      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+      var o = {
+        "M+" : date_obj.getMonth()+1,                 //月份
+        "d+" : date_obj.getDate(),                    //日
+        "h+" : date_obj.getHours(),                   //小时
+        "m+" : date_obj.getMinutes(),                 //分
+        "s+" : date_obj.getSeconds(),                 //秒
+        "q+" : Math.floor((date_obj.getMonth()+3)/3), //季度
+        "S"  : date_obj.getMilliseconds()             //毫秒
+      };
+      if(/(y+)/.test(fmt))
+        fmt=fmt.replace(RegExp.$1, (date_obj.getFullYear()+"").substr(4 - RegExp.$1.length));
+      for(var k in o)
+        if(new RegExp("("+ k +")").test(fmt))
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
       return fmt;
    },
     /**
      * 判断省份是否在国内，
-     * 
-     * @param {number} value 
-     * @param {any} _that 
+     *
+     * @param {number} value
+     * @param {any} _that
      * @returns 0 代表中国， 1 代表外国
      */
     isChinaProvince(value,_that){
@@ -55,8 +55,8 @@ export default{
     },
     /**
        * 联动设置， 更新城市一栏的值
-       * 
-       * @param {any} selectvalue 
+       *
+       * @param {any} selectvalue
        */
     setCityList(value,_that){
         //第一次遍历省份列表
@@ -70,11 +70,11 @@ export default{
           }
          return JSON.parse(JSON.stringify(city_list));
       },
-      
+
       /**
        * 联动设置， 依据国家 更新省份一栏的值
-       * 
-       * @param {any} selectvalue 
+       *
+       * @param {any} selectvalue
        */
       setProList(selectvalue,_that){
         //依据值修改省份的下拉值
@@ -83,7 +83,7 @@ export default{
         // this.form.sourceProvince=null;
         // this.form.sourceCity=null;
         if(selectvalue=="0"){
-          //代表国内 
+          //代表国内
           var proNameList = _that.$store.getters.gettersPlaceData.placeList;
           proNameList = proNameList.slice(1,proNameList.length-1);
           return JSON.parse(JSON.stringify(proNameList));
@@ -95,9 +95,9 @@ export default{
       },
       /**
        * 处理外国字段名 和 国内省份的命名规则不一致的问题
-       * 
-       * @param {any} proList 
-       * @returns 
+       *
+       * @param {any} proList
+       * @returns
        */
       updateWgzdm(proList){
         var newList = new Array();
@@ -112,7 +112,7 @@ export default{
       },
       /**
        * 获取国家 省份 城市数据
-       * 
+       *
        */
       getPlace(_that,callback,urlpath){
          var url = '/index/getPlace';
@@ -157,10 +157,10 @@ export default{
      * 返回上一个页面
      * @param {Sting} pathName 当前页面名
      * @param {obj} param 当前页面参数对象
-     * @param {object} _that this 
+     * @param {object} _that this
      */
     GoBackPrePage(pathName,param,_that){
-        
+
         var prePageObj = JSON.parse(window.localStorage.getItem("prePathParams"));
        //跳转组件并且 传递pid
        var pathParams = prePageObj
@@ -183,13 +183,13 @@ export default{
          type: 'success'
        });
      },
-     
+
      /**
       * 加载遮罩层
-      * 
-      * @param {String} msg 
-      * @param {any} _that 
-      * @returns 
+      *
+      * @param {String} msg
+      * @param {any} _that
+      * @returns
       */
      openLoading(msg,_that){
          const loading = _that.$loading({
@@ -206,25 +206,26 @@ export default{
      },
      /**
       * 打开询问操作
-      * 
-      * @param {any} msg 
-      * @param {any} callback 
-      * @param {any} _that 
-     
-      * 
+      *
+      * @param {any} msg
+      * @param {any} callback
+      * @param {any} _that
+
+      *
       */
      openComfigDialog(msg,callback,cal_params,_that){
         _that.$confirm(msg, '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
-          type: 'warning'
+          type: 'warning',
+          customClass:"qcMessage"
         }).then(() => {
           callback(cal_params);
         }).catch(() => {
           _that.$message({
             type: 'info',
             message: '操作已取消'
-          });          
+          });
         });
      },
      /**
@@ -279,7 +280,7 @@ export default{
       },
       /**
        * 获取病人最近一次问诊信息
-       * 
+       *
        */
       getLastInquiry(brinfo,_that){
           var url= "/inquiry/getLatestInquiryInfo?patientId="+brinfo.pId;

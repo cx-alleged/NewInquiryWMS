@@ -58,8 +58,8 @@ export default {
         }
     }
     //计算属性 设置属性 获取属性值
-    ,computed: { 
-        //格式化日期 
+    ,computed: {
+        //格式化日期
         formateDate:function(){
             var date = this.nowdate;
             var mat={};
@@ -77,14 +77,14 @@ export default {
         }
     }
     ,created () {
-        
+
     }
     ,watch: {
-        
+
     }
     ,methods: {
         gotopage:function(value){
-            
+
             this.$emit('headCallBack', value);
         },
         //检查是不是为两位数字，不足补全

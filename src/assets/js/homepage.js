@@ -24,7 +24,7 @@ export default {
         }
       },
       created () {
-       
+
       },
       beforeMount () {
          //获取地址请求
@@ -34,7 +34,7 @@ export default {
           birthday() {
       　　　　return this.form.birthday
       　　}
-      },  
+      },
       watch: {
           birthday(newValue, oldValue) {
       　　　　var age  = this.$common.GetAgeByBrithday(newValue);
@@ -49,7 +49,7 @@ export default {
             this.form.sourceCity =1348;
          }
       },
-  
+
       methods: {
         opencomfigMethod(msg,method_name,method_params){
           this.$common.openComfigDialog(msg,method_name,method_params,this);
@@ -76,7 +76,7 @@ export default {
             this.form.sourceProvince=null;
             this.form.sourceCity=null;
           if(selectvalue=="0"){
-            //代表国内 
+            //代表国内
             var proNameList = this.$store.getters.gettersPlaceData.placeList;
             proNameList = proNameList.slice(1,proNameList.length-1);
             this.province = proNameList;
@@ -133,11 +133,11 @@ export default {
                 this.form.birthday = this.form.birthday.substring(0,4)+"-"+this.form.birthday.substring(4,6)+"-"+this.form.birthday.substring(6,8);
                 //this.$common.GetAgeByBrithday(this.form.birthday);
               }else{
-                this.form.birthday = null;
-                this.form.age = null;
+                // this.form.birthday = null;
+                // this.form.age = null;
                 //提示  然后值清空 在填
                 this.$common.openErrorMsgBox("请输入正确的日期格式",this);
-              
+
               }
             }
         },
@@ -156,8 +156,8 @@ export default {
             }
             return boolean_swt;
         },
-        /**  
-         * 
+        /**
+         *
          * 初诊时 新增问诊 获取问诊id
          */
         newInquiry(brid){
@@ -184,7 +184,7 @@ export default {
               }else{
                 _that.$common.openErrorMsgBox(response.msg,_that);
               }
-              
+
           }).catch(function (error) {
             console.log(error);
             setTimeout(function(){
@@ -195,9 +195,9 @@ export default {
         },
         /**
          * 新建问诊 返回问诊id
-         * 
+         *
          * @param {String} brid 病人id
-         * 
+         *
          * return 问诊id
          */
         newInquiry_new(brid){
@@ -210,7 +210,7 @@ export default {
               }else{
                 _that.$common.openErrorMsgBox(response.msg,_that);
               }
-                
+
             }).catch(function (error) {
               console.log(error);
               setTimeout(function(){
@@ -220,7 +220,7 @@ export default {
         },
         /**
          * 获取病人最近一次问诊信息
-         * 
+         *
          */
         getLastInquiry(brinfo){
             var url= "/inquiry/getLatestInquiryInfo?patientId="+brinfo.pId;
@@ -256,7 +256,7 @@ export default {
                      _that.$common.openErrorMsgBox(error,_that);
                  }, 1000);
             });
-            
+
         },
         //提交初访
         czSubmit() {
@@ -292,7 +292,7 @@ export default {
         },
         /**
          * 是否有病人重复
-         * 
+         *
          */
         isRepeat(p_data){
             var _that = this;
@@ -301,10 +301,10 @@ export default {
             this.$http.post('/index/revisit',param).then(function (response) {
                 if(response.code == "1"){
                     if(response.data.isRepeat==0){
-                        //代表没有重复条件的病人 
+                        //代表没有重复条件的病人
                          _that.newInquiry_new(response.data.pId);
                         // _that.$common.GotoPage("bryfpage",brinfo,_that);
-                        
+
                         loading.close();
                         //封装参数 打开开药药方
                     }else if(response.data.isRepeat==1){
@@ -335,19 +335,19 @@ export default {
                 }
             }).catch(function (error) {
                 setTimeout(function(){
-                  loading.close(); 
+                  loading.close();
                 _that.$common.openErrorMsgBox(error,_that);
               }, 1000);
             });
         },
         /**
          * 数据复诊
-         * 
+         *
          */
         fzSubmit() {
             var _that = this;
             if(_that.form.pname){
-                var name = _that.form.pname.replace(/(^\s*)|(\s*$)/g, ""); 
+                var name = _that.form.pname.replace(/(^\s*)|(\s*$)/g, "");
                 if(name!=""){
                     _that.isRepeat(_that.form);
                 }else{
