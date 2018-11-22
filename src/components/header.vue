@@ -1,5 +1,5 @@
 <template>
-<div class="header">
+<div class="header" sty>
       <div class="logo-icon-div">
           <!-- <img src="./assets/header/logo.png" width="135" height="38"> -->
           <img :src="logoImg" width="135" height="38">

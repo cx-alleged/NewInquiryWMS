@@ -44,6 +44,7 @@
         width="176">
         </el-table-column>
     </el-table>
+
     <el-table
         :data="tableData.list2"
         :header-row-class-name="headerClassname"
@@ -65,6 +66,8 @@
         width="176">
         </el-table-column>
     </el-table>
+
+
     <el-table
         :data="tableData.list3"
         :header-row-class-name="headerClassname"
@@ -88,12 +91,12 @@
     </el-table>
   </div>
 
-</div> 
+</div>
 </template>
 <style lang="scss">
   @import "../assets/css/yytjpage.scss"
 </style>
 
 <script src="../assets/js/yytjpage.js">
-  
+
 </script>

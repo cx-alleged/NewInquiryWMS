@@ -29,9 +29,9 @@
                 </div>
             </div>
             <div class="wzwt-info-container">
-              <div class="titile-container" style="margin-top: 10px;">
+              <div class="titile-container" style="margin-top: 10px;font-size: 30px;">
                       <span @click="setActiveSyle(1)">
-                          基本信息
+                          诊断标签
                       </span>
                 <span>
                           <i v-bind:class="[d_isActive ? 'el-icon-caret-top' : 'el-icon-caret-bottom']"  @click="setActiveSyle(1)"></i>
@@ -142,19 +142,19 @@
     /*左侧两个文本框样式*/
     .bryf-container{
         height: calc(100% - 148px);
-        padding: 30px 35px;
+        padding: 20px 35px;
         display: flex;
         overflow-y: auto;
         .person-info{
                 display: inline-block;
                 width: 838px;
-                height: 70px;
-                line-height: 70px;
+                height: 55px;
+                line-height: 55px;
                 box-sizing: border-box;
                 cursor: pointer;
                 background: #fff;
                 text-align: left;
-                padding: 0px 20px;
+                padding: 0px 15px;
                 font-family: PingFangSC-Regular;
                 font-size: 32px;
                 letter-spacing: 0px;
@@ -247,7 +247,7 @@
     .yf-foot-container{
       display: flex;
       justify-content:space-between;
-      margin-top: 30px;
+      margin-top: 20px;
       div{
         width: 33.3%;
         text-align: center;
@@ -261,9 +261,9 @@
     }
     //药品列表样式
     .mainMeList-container{
-        width:980px;
+        width:976px;
         height: auto;
-        margin-top:17px;
+        margin-top:14px;
         margin-bottom:17px;
         display: flex;
         flex-wrap:wrap;
@@ -272,15 +272,15 @@
         overflow: hidden;
         .yp-item{
             width:244px;
-            height: 70px;
+            height: 55px;
             box-sizing: border-box;
-            line-height: 70px;
+            line-height: 55px;
             overflow: hidden;
             input{
               width:244px;
-              height: 70px;
+              height: 55px;
               box-sizing: border-box;
-              padding: 5px 20px;
+              padding: 5px 15px;
               font-family: PingFangSC-Regular;
               font-size: 30px;
               color: #475669;

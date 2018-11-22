@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-header :active="active"  v-on:headCallBack="headCall" v-if="showPrise"></v-header>
+    <v-header :active="active"  v-on:headCallBack="headCall" ></v-header>
     <el-main style="width: 100%; overflow: hidden">
       <router-view></router-view>
     </el-main>
@@ -40,20 +40,31 @@
 <script>
 //导入需要的头部控件
   import Vheader from '@/components/header'
+  import Vheader1 from '@/components/header'
   export default {
       data() {
         return{
           active:"/Index/xjczbr",
-          showPrise:false
+          showPrise: true
         }
       },
       created () {
         //向后端请求 省份数据，并且存放到仓库中
-
-
-      }
-      ,components: {
-       "v-header": Vheader
+      },
+      computed: {
+        // 计算属性的 getter
+        reversedMessage: function () {
+          // `this` 指向 vm 实例
+          return this.message.split('').reverse().join('')
+        },
+        // showPrise:function () {
+        //   console.log("首页判断", this.showPriseP)
+        //   return this.showPriseP
+        // }
+      },
+      components: {
+       "v-header": Vheader,
+       "v-header1": Vheader1
       }
       ,beforeMount () {
         //保证页面刷新后还在原来的界面上
@@ -63,6 +74,7 @@
         this.navGotoPage("/Index/"+currentName);
       }
       ,methods: {
+
         headCall: function (url) {
           // console.log("父页面："+url);
           // this.active = url;
